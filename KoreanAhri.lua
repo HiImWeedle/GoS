@@ -1,5 +1,5 @@
 local KoreanChamps = {"Ahri"}
-if not table.contains(KoreanChamps, myHero.charName) then print("" ..myHero.charName.. " Is Not Supported!") return end
+if not table.contains(KoreanChamps, myHero.charName) then return end
 
 local KoreanAhri = MenuElement({type = MENU, id = "KoreanAhri", name = "KoreanAhri", LeftIcon = "http://static.lolskill.net/img/champions/64/ahri.png"})
 KoreanAhri:MenuElement({type = MENU, id = "Combo", name = "Combo Settings"})
