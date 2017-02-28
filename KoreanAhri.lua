@@ -154,8 +154,8 @@ class "Ahri"
 function Ahri:__init()
 	print("Korean Ahri [v1.1] Loaded succesfully ^^")
 	self.Spells = {
-		Q = {range = 880, delay = 0.25, speed = 1700,  width = 100},
-		W = {range = 550, delay = 0.25, speed = math.huge}, --ITS OVER 9000!!!!
+		Q = {range = 875, delay = 0.25, speed = 1700,  width = 100},
+		W = {range = 700, delay = 0.25, speed = math.huge}, --ITS OVER 9000!!!!
 		E = {range = 950, delay = 0.25, speed = 1600, width = 65, collision = true},
 		R = {range = 850, delay = 0}
 	}
