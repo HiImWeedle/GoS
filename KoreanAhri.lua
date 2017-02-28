@@ -101,6 +101,7 @@ local function GetDistance(p1,p2)
 	return  math.sqrt(math.pow((p2.x - p1.x),2) + math.pow((p2.y - p1.y),2) + math.pow((p2.z - p1.z),2))
 end
 
+
 function IsImmune(unit)
 	if type(unit) ~= "userdata" then error("{IsImmune}: bad argument #1 (userdata expected, got "..type(unit)..")") end
 	for i, buff in pairs(GetBuffs(unit)) do
@@ -135,7 +136,6 @@ function IsImmobileTarget(unit)
 	return false	
 end
 
-
 function IsValidTarget(unit, range, checkTeam, from)
 	local range = range == nil and math.huge or range
 	if type(range) ~= "number" then error("{IsValidTarget}: bad argument #2 (number expected, got "..type(range)..")") end
@@ -147,21 +147,25 @@ function IsValidTarget(unit, range, checkTeam, from)
 	return unit.pos:DistanceTo(from.pos and from.pos or myHero.pos) < range 
 end
 
+
 require("DamageLib")
 
 class "Ahri"
 
 function Ahri:__init()
 	print("Korean Ahri [v1.1] Loaded succesfully ^^")
+
 	self.Spells = {
 		Q = {range = 875, delay = 0.25, speed = 1700,  width = 100},
 		W = {range = 700, delay = 0.25, speed = math.huge}, --ITS OVER 9000!!!!
 		E = {range = 950, delay = 0.25, speed = 1600, width = 65, collision = true},
-		R = {range = 850, delay = 0}
+		R = {range = 850, delay = 0},
+		SummonerDot = {range = 600, dmg = 50+20*myHero.levelData.lvl}
 	}
 	self:Menu()
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
+
 end
 
 function Ahri:Menu()
@@ -169,7 +173,8 @@ function Ahri:Menu()
 	KoreanAhri.Combo:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
 	KoreanAhri.Combo:MenuElement({id = "E", name = "Use Charm (E)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
 	KoreanAhri.Combo:MenuElement({id = "R", name = "Use Spirit Rush (R) [?]", value = true, tooltip = "Uses Smart-R to mouse", leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_SpiritRush.png"})
-  --KoreanAhri.Combo:MenuElement({id = "ComboMode", name = "Korean Combo", value = true })
+    KoreanAhri.Combo:MenuElement({id = "I", name = "Use Ignite", value = true, leftIcon = "http://static.lolskill.net/img/spells/32/14.png"})
+    KoreanAhri.Combo:MenuElement({id = "AI", name = "Always use Ignite in Combo", value = false})
 
 	KoreanAhri.Harass:MenuElement({id = "Q", name = "Use Orb of Deception (Q)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_OrbofDeception.png"})
 	KoreanAhri.Harass:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
@@ -181,7 +186,7 @@ function Ahri:Menu()
 	KoreanAhri.Misc:MenuElement({id = "Q", name = "Use Q to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "W", name = "Use W to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "E", name = "Use E to KS", value = true})
-	KoreanAhri.Misc:MenuElement({id = "R", name = "Use R to KS (beta)", value = true})
+	KoreanAhri.Misc:MenuElement({id = "R", name = "Use R to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "Mana", name = "Min. Mana to KillSteal(%)", value = 20, min = 0, max = 100, step = 1})
 
   	KoreanAhri.Draw:MenuElement({id = "Enabled", name = "Enable Drawings", value = true})
@@ -209,6 +214,8 @@ local ComboQ = KoreanAhri.Combo.Q:Value()
 local ComboW = KoreanAhri.Combo.W:Value()
 local ComboE = KoreanAhri.Combo.E:Value()
 local ComboR = KoreanAhri.Combo.R:Value()
+local ComboI = KoreanAhri.Combo.I:Value()
+local ComboAI = KoreanAhri.Combo.AI:Value()
 	if ComboE and Ready(_E) then
 		if IsValidTarget(target, self.Spells.E.range, true, myHero) and Ready(_E) then
 			if target:GetCollision(self.Spells.E.width, self.Spells.E.speed, self.Spells.E.delay) == 0 then
@@ -256,7 +263,24 @@ local ComboR = KoreanAhri.Combo.R:Value()
 			Control.CastSpell(HK_R, mousePos)
 			Control.CastSpell(HK_R, MousePos)
 		end 
-	end 
+	end
+	if ComboI and ComboAI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+			Control.CastSpell(HK_SUMMONER_1, target)
+		end
+	elseif ComboI and ComboAI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+			Control.CastSpell(HK_SUMMONER_2, target)
+		end
+	elseif ComboI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R) then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+			Control.CastSpell(HK_SUMMONER_1, target)
+		end
+	elseif ComboI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R)  then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+			Control.CastSpell(HK_SUMMONER_2, target)
+		end
+	end
 end
 
 function Ahri:Harass(target)
@@ -288,9 +312,9 @@ if (myHero.mana/myHero.maxMana >= KoreanAhri.Harass.Mana:Value() / 100) then
 		end
 	elseif  HarassQ and Ready(_Q) then 
 			if IsValidTarget(target, self.Spells.Q.range, true, myHero) and Ready(_Q) then
-				local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
+			local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
 				if Qpos then 
-				Control.CastSpell(HK_Q, Qpos)
+					Control.CastSpell(HK_Q, Qpos)
 				end
 			end 
 		if HarassW and Ready(_W) then
