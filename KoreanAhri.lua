@@ -1,8 +1,8 @@
 local KoreanChamps = {"Ahri"}
 if not table.contains(KoreanChamps, myHero.charName) then return end
 
-local KoreanAhri = MenuElement({type = MENU, id = "KoreanAhri", name = "KoreanAhri", LeftIcon = "http://static.lolskill.net/img/champions/64/ahri.png"})
-KoreanAhri:MenuElement({type = MENU, id = "Combo", name = "Combo Settings"})
+local KoreanAhri = MenuElement({type = MENU, id = "KoreanAhri", name = "Korean Ahri", leftIcon = "http://static.lolskill.net/img/champions/64/ahri.png"})
+KoreanAhri:MenuElement({type = MENU, id = "Combo", name = "Korean Combo Settings"})
 KoreanAhri:MenuElement({type = MENU, id = "Harass", name = "Harass Settings"})
 KoreanAhri:MenuElement({type = MENU, id = "Misc", name = "Misc Settings"})
 KoreanAhri:MenuElement({type = MENU, id = "Draw", name = "Drawing Settings"})
@@ -152,7 +152,7 @@ require("DamageLib")
 class "Ahri"
 
 function Ahri:__init()
-	print("KoreanAhri Loaded succesfully ^^")
+	print("Korean Ahri [v1.1] Loaded succesfully ^^")
 	self.Spells = {
 		Q = {range = 880, delay = 0.25, speed = 1700,  width = 100},
 		W = {range = 550, delay = 0.25, speed = math.huge}, --ITS OVER 9000!!!!
@@ -165,17 +165,18 @@ function Ahri:__init()
 end
 
 function Ahri:Menu()
-	KoreanAhri.Combo:MenuElement({id = "Q", name = "Use Orb of Deception (Q)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_OrbofDeception.png"})
-	KoreanAhri.Combo:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
-	KoreanAhri.Combo:MenuElement({id = "E", name = "Use Charm (E)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
-	KoreanAhri.Combo:MenuElement({id = "R", name = "Use Spirit Rush (R) (beta)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_SpiritRush.png"})
+	KoreanAhri.Combo:MenuElement({id = "Q", name = "Use Orb of Deception (Q)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_OrbofDeception.png"})
+	KoreanAhri.Combo:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
+	KoreanAhri.Combo:MenuElement({id = "E", name = "Use Charm (E)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
+	KoreanAhri.Combo:MenuElement({id = "R", name = "Use Spirit Rush (R) [?]", value = true, tooltip = "Uses Smart-R to mouse", leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_SpiritRush.png"})
+  --KoreanAhri.Combo:MenuElement({id = "ComboMode", name = "Korean Combo", value = true })
 
-	KoreanAhri.Harass:MenuElement({id = "Q", name = "Use Orb of Deception (Q)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_OrbofDeception.png"})
-	KoreanAhri.Harass:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
-	KoreanAhri.Harass:MenuElement({id = "E", name = "Use Charm (E)", value = true, LeftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
+	KoreanAhri.Harass:MenuElement({id = "Q", name = "Use Orb of Deception (Q)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_OrbofDeception.png"})
+	KoreanAhri.Harass:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
+	KoreanAhri.Harass:MenuElement({id = "E", name = "Use Charm (E)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
 	KoreanAhri.Harass:MenuElement({id = "Mana", name = "Min. Mana for Harass(%)", value = 40, min = 0, max = 100, step = 1})
 
-  --KoreanAhri.Misc:MenuElement({id = "AutoE", name = "Use auto Charm", value = true})
+ --	KoreanAhri.Misc:MenuElement({id = "AutoE", name = "Use auto Charm", value = true})
 	KoreanAhri.Misc:MenuElement({id = "KS", name = "Enable KillSteal", value = true})
 	KoreanAhri.Misc:MenuElement({id = "Q", name = "Use Q to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "W", name = "Use W to KS", value = true})
@@ -251,7 +252,9 @@ local ComboR = KoreanAhri.Combo.R:Value()
 	end
 	if ComboR and Ready(_R) then 
 		if IsValidTarget(target, self.Spells.R.range, true, myHero) and Ready(_R) then
-				Control.CastSpell(HK_R, target)
+			Control.CastSpell(HK_R, mousePos)
+			Control.CastSpell(HK_R, mousePos)
+			Control.CastSpell(HK_R, MousePos)
 		end 
 	end 
 end
@@ -334,7 +337,7 @@ local KSR = KoreanAhri.Misc.E:Value()
 					end
 				end
 				if KSW and IsValidTarget(target, self.Spells.W.range, true, myHero) and Ready(_W) then
-					if getdmg("W", target, myHero) > target.health and Ready(_W) then
+					if getdmg("W", target, myHero)*3 > target.health and Ready(_W) then
 						Control.CastSpell(HK_W, target)
 					end 
 				end
@@ -349,25 +352,23 @@ local KSR = KoreanAhri.Misc.E:Value()
 end
 
 
-
-
 function Ahri:Draw()
 	if not myHero.dead then
 		if KoreanAhri.Draw.Enabled:Value() then 
 			if KoreanAhri.Draw.Q:Value() then
-			Draw.Circle(myHero.pos, self.Spells.Q.range, 1, Draw.Color(255, 255, 255, 255))
+			Draw.Circle(myHero.pos, self.Spells.Q.range, 1, Draw.Color(255, 52, 221, 221))
 			end
 			if KoreanAhri.Draw.W:Value() then
 			Draw.Circle(myHero.pos, self.Spells.W.range, 1, Draw.Color(255, 255, 255, 255))
 			end
 			if KoreanAhri.Draw.E:Value() then
-			Draw.Circle(myHero.pos, self.Spells.E.range, 1, Draw.Color(255, 255, 255, 255))
+			Draw.Circle(myHero.pos, self.Spells.E.range, 1, Draw.Color(255, 255, 0, 128))
 			end
 			if KoreanAhri.Draw.R:Value() then
-			Draw.Circle(myHero.pos, self.Spells.R.range, 1, Draw.Color(255, 255, 255, 255))
+			Draw.Circle(myHero.pos, self.Spells.R.range, 1, Draw.Color(255, 000, 255, 000))
 		end
 	end
 end
 end
 
-if _G[myHero.charName]() then print("Welcome back " ..myHero.name.. " Have a nice day! <3 ") end
+if _G[myHero.charName]() then print("Welcome back " ..myHero.name.. ", Have a nice day my friend! <3 ") end
