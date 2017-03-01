@@ -265,11 +265,11 @@ local ComboAI = KoreanAhri.Combo.AI:Value()
 		end 
 	end
 	if ComboI and ComboAI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) then
-		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+		if IsValidTarget(target, 600, true, myHero) and Ready(SUMMONER_1) then
 			Control.CastSpell(HK_SUMMONER_1, target)
 		end
 	elseif ComboI and ComboAI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) then
-		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+		if IsValidTarget(target, 600, true, myHero) and Ready(SUMMOMER_2) then
 			Control.CastSpell(HK_SUMMONER_2, target)
 		end
 	elseif ComboI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R) then
