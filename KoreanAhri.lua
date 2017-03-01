@@ -187,6 +187,7 @@ function Ahri:Menu()
 	KoreanAhri.Misc:MenuElement({id = "W", name = "Use W to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "E", name = "Use E to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "R", name = "Use R to KS", value = true})
+	KoreanAhri.Misc:MenuElement({id = "I", name = "Use Ignite to KS", value = true})
 	KoreanAhri.Misc:MenuElement({id = "Mana", name = "Min. Mana to KillSteal(%)", value = 20, min = 0, max = 100, step = 1})
 
   	KoreanAhri.Draw:MenuElement({id = "Enabled", name = "Enable Drawings", value = true})
@@ -265,11 +266,11 @@ local ComboAI = KoreanAhri.Combo.AI:Value()
 		end 
 	end
 	if ComboI and ComboAI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) then
-		if IsValidTarget(target, 600, true, myHero) and Ready(SUMMONER_1) then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
 			Control.CastSpell(HK_SUMMONER_1, target)
 		end
 	elseif ComboI and ComboAI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) then
-		if IsValidTarget(target, 600, true, myHero) and Ready(SUMMOMER_2) then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
 			Control.CastSpell(HK_SUMMONER_2, target)
 		end
 	elseif ComboI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R) then
@@ -338,6 +339,7 @@ local KSQ = KoreanAhri.Misc.Q:Value()
 local KSW = KoreanAhri.Misc.W:Value()
 local KSE = KoreanAhri.Misc.E:Value()
 local KSR = KoreanAhri.Misc.E:Value()
+local KSI = KoreanAhri.Misc.I:Value()
 	for i = 1, Game.HeroCount() do
 		local target = Game.Hero(i)
 		if (myHero.mana/myHero.maxMana >= KoreanAhri.Misc.Mana:Value() / 100) then
@@ -369,7 +371,17 @@ local KSR = KoreanAhri.Misc.E:Value()
 					if getdmg("R", target, myHero) > target.health and Ready(_R) then
 						Control.CastSpell(HK_R, target)
 					end 
-				end 
+				end
+				if KSI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R) then
+					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+						Control.CastSpell(HK_SUMMONER_1, target)
+					end
+				end
+				if KSI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R)  then
+					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+						Control.CastSpell(HK_SUMMONER_2, target)
+					end
+				end
 			end 
 		end
 	end
