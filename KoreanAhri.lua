@@ -173,8 +173,10 @@ function Ahri:Menu()
 	KoreanAhri.Combo:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
 	KoreanAhri.Combo:MenuElement({id = "E", name = "Use Charm (E)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
 	KoreanAhri.Combo:MenuElement({id = "R", name = "Use Spirit Rush (R) [?]", value = true, tooltip = "Uses Smart-R to mouse", leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_SpiritRush.png"})
-    KoreanAhri.Combo:MenuElement({id = "I", name = "Use Ignite", value = true, leftIcon = "http://static.lolskill.net/img/spells/32/14.png"})
-    KoreanAhri.Combo:MenuElement({id = "AI", name = "Always use Ignite in Combo", value = false})
+	KoreanAhri.Combo:MenuElement({id = "I", name = "Use Ignite in Combo when Killable", value = true, leftIcon = "http://static.lolskill.net/img/spells/32/14.png"})
+	KoreanAhri.Combo:MenuElement({id = "ION", name = "Enable ustom Ignite Settings", value = true})
+	KoreanAhri.Combo:MenuElement({id = "IFAST", name = "Uses Ignite when target hp%", value = 0.5, min = 0.1, max = 1, step = 0.01})
+
 
 	KoreanAhri.Harass:MenuElement({id = "Q", name = "Use Orb of Deception (Q)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_OrbofDeception.png"})
 	KoreanAhri.Harass:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
@@ -216,7 +218,8 @@ local ComboW = KoreanAhri.Combo.W:Value()
 local ComboE = KoreanAhri.Combo.E:Value()
 local ComboR = KoreanAhri.Combo.R:Value()
 local ComboI = KoreanAhri.Combo.I:Value()
-local ComboAI = KoreanAhri.Combo.AI:Value()
+local ComboION = KoreanAhri.Combo.ION:Value()
+local ComboIFAST = KoreanAhri.Combo.IFAST:Value()
 	if ComboE and Ready(_E) then
 		if IsValidTarget(target, self.Spells.E.range, true, myHero) and Ready(_E) then
 			if target:GetCollision(self.Spells.E.width, self.Spells.E.speed, self.Spells.E.delay) == 0 then
@@ -265,12 +268,12 @@ local ComboAI = KoreanAhri.Combo.AI:Value()
 			Control.CastSpell(HK_R, MousePos)
 		end 
 	end
-	if ComboI and ComboAI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) then
-		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+	if ComboI and ComboION and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) then
+		if IsValidTarget(target, 600, true, myHero) and target.health/target.maxHealth <= ComboIFAST then
 			Control.CastSpell(HK_SUMMONER_1, target)
 		end
-	elseif ComboI and ComboAI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) then
-		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+	elseif ComboI and ComboION and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) then
+		if IsValidTarget(target, 600, true, myHero) and target.health/target.maxHealth <= ComboIFAST then
 			Control.CastSpell(HK_SUMMONER_2, target)
 		end
 	elseif ComboI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R) then
