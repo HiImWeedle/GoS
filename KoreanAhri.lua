@@ -191,7 +191,7 @@ function Ahri:Menu()
 	KoreanAhri.Combo:MenuElement({id = "W", name = "Use Fox-Fire (W)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_FoxFire.png"})
 	KoreanAhri.Combo:MenuElement({id = "E", name = "Use Charm (E)", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_Charm.png"})
 	KoreanAhri.Combo:MenuElement({id = "R", name = "Use Spirit Rush (R) [?]", value = true, tooltip = "Uses Smart-R to mouse", leftIcon = "http://static.lolskill.net/img/abilities/64/Ahri_SpiritRush.png"})
-	KoreanAhri.Combo:MenuElement({id = "I", name = "Use Ignite in Combo when Killable", value = true, leftIcon = "http://static.lolskill.net/img/spells/32/14.png"})
+	KoreanAhri.Combo:MenuElement({id = "I", name = "Use Ignite in Combo (when Killable)", value = true, leftIcon = "http://static.lolskill.net/img/spells/32/14.png"})
 	KoreanAhri.Combo:MenuElement({id = "ION", name = "Enable ustom Ignite Settings", value = true})
 	KoreanAhri.Combo:MenuElement({id = "IFAST", name = "Uses Ignite when target hp%", value = 0.5, min = 0.1, max = 1, step = 0.01})
 
