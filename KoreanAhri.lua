@@ -171,7 +171,7 @@ require("DamageLib")
 class "Ahri"
 
 function Ahri:__init()
-	print("Korean Ahri [v1.1] Loaded succesfully ^^")
+	print("Korean Ahri [v2.0] Loaded succesfully ^^")
 
 	self.Spells = {
 		Q = {range = 875, delay = 0.25, speed = 1700,  width = 100},
