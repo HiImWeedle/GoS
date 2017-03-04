@@ -253,10 +253,10 @@ end
 function Diana:Tick()
 	if myHero.dead then return end
 
-	local target = Orbwalker:GetTarget(2000)
-	if target and Orbwalker.GetMode() == "Combo" then
+	local target =  _G.SDK.TargetSelector:GetTarget(2000)
+	if target and _G.SDK.Orbwalker.Modes[_G.SDK.ORBWALKER_MODE_COMBO] then
 		self:Combo(target)
-	elseif target and Orbwalker.GetMode() == "Harass" then
+	elseif target and _G.SDK.Orbwalker.Modes[_G.SDK.ORBWALKER_MODE_HARASS] then
 		self:Harass(target)
 	end
 	self:KS()
@@ -469,4 +469,3 @@ end
 end
 
 if _G[myHero.charName]() then print("Welcome back " ..myHero.name.. ", Have a nice day my friend! <3 ") end
-
