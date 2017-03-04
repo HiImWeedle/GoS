@@ -1,2 +1,2 @@
-# GoS
+# GoS Ext
 &lt;3
