@@ -422,7 +422,7 @@ local KSI = KoreanDiana.KS.I:Value()
 					end
 				end
 				if KSQ and Ready(_Q) then
-					if target.valid and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range then
+					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range then
   					local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
       					if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range and getdmg("Q", target, myHero) > target.health then
         					Control.CastSpell(HK_Q, Qpos)
@@ -434,12 +434,12 @@ local KSI = KoreanDiana.KS.I:Value()
     					Control.CastSpell(HK_R, target)
     				end
     			end
-    			if KSI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R) then
+    			if KSI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W)  and not Ready(_R) then
 					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
 						Control.CastSpell(HK_SUMMONER_1, target)
 					end
 				end
-				if KSI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) and not Ready(_Q) and not Ready(_W) and not Ready(_E) and not Ready(_R)  then
+				if KSI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) and not Ready(_Q) and not Ready(_W)  and not Ready(_R)  then
 					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
 						Control.CastSpell(HK_SUMMONER_2, target)
 					end
