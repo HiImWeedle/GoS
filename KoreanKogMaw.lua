@@ -183,7 +183,7 @@ require("DamageLib")
 class "KogMaw"
 
 function KogMaw:__init()
-	print("Korean KogMaw [v0.5] Loaded succesfully ^^")
+	print("Korean KogMaw [v1.2] Loaded succesfully ^^")
 	self.Icons =  { Q = "http://static.lolskill.net/img/abilities/64/KogMaw_CausticSpittle.png",
 				  	W = "http://static.lolskill.net/img/abilities/64/KogMaw_BioArcaneBarrage.png",
 				  	E = "http://static.lolskill.net/img/abilities/64/KogMaw_VoidOoze.png",
