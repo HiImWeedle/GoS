@@ -144,26 +144,7 @@ function HasBuff(unit, buffname)
 	return false
 end
 
-function Orbwalker:GetEnemyTowers()
-    if self._EnemyTowers then return self._EnemyTowers end    
-      for i = 0,Game.ObjectCount() do
-        local o = Game.Object(i)
-        if o.isEnemy and (o.name:find("HQ_T") or o.name:find("Barracks_T")) then
-          if self._EnemyTowers == nil then self._EnemyTowers = {} end
-          table.insert(self._EnemyTowers, o)
-        end
-    end
-    if self._EnemyTowers ~= nil then
-        for i = 1, Game.TurretCount() do
-            local turret = Game.Turret(i)
-            if turret.isEnemy then
-                table.insert(self._EnemyTowers, turret)
-            end
-        end
-    end
-  if self._EnemyTowers then return self._EnemyTowers end
-  return {}
-end
+
 
 function IsImmobileTarget(unit)
 	for i = 0, unit.buffCount do
@@ -201,7 +182,7 @@ require("DamageLib")
 class "Diana"
 
 function Diana:__init()
-	print("Korean Diana [v0.5] Loaded succesfully ^^")
+	print("Korean Diana [v0.7] Loaded succesfully ^^")
 	self.Icons = { Q = "http://static.lolskill.net/img/abilities/64/Diana_Q_MoonsEdge.png",
 				   W = "http://static.lolskill.net/img/abilities/64/Diana_W_LunarShower.png",
 				   E = "http://static.lolskill.net/img/abilities/64/Diana_E_MoonFall.png",
@@ -222,7 +203,8 @@ function Diana:Menu()
 	KoreanDiana.Combo:MenuElement({id = "W", name = "Use Pale Cascade (W)", value = true, leftIcon = self.Icons.W})
 	KoreanDiana.Combo:MenuElement({id = "E", name = "Use Moonfall (E)", value = true, leftIcon = self.Icons.E})
 	KoreanDiana.Combo:MenuElement({id = "R", name = "Use Lunar Rush (R)", value = true, leftIcon = self.Icons.R})
-	KoreanDiana.Combo:MenuElement({id = "DR", name = "Use Korean R in Combo [?]", value = true, tooltip = "Uses 2nd R in Combo and R when didn't hit Q", leftIcon = "http://2.1m.yt/NtPMS9.png"})
+	KoreanDiana.Combo:MenuElement({id = "DR", name = "Use Korean R in Combo [?]", value = true, tooltip = "Uses 2nd R in Combo and R when hit Q", leftIcon = "http://2.1m.yt/NtPMS9.png"})
+	KoreanDiana.Combo:MenuElement({id = "SR", name = "Safe Mode Enabled [?]", value = false, tooltip = "Only Uses R1 and R2 if Q hit"})
   --KoreanDiana.Combo:MenuElement({id = "NT", name = "Enable Towerdive [?]", value = false, tooltip = "Tip: Enable this for ganks/late-game etc"})
 	KoreanDiana.Combo:MenuElement({id = "I", name = "Use Ignite in Combo when Killable", value = true, leftIcon = "http://static.lolskill.net/img/spells/32/14.png"})
 	KoreanDiana.Combo:MenuElement({id = "ION", name = "Enable custom Ignite Settings", value = true})
@@ -269,6 +251,7 @@ local ComboW = KoreanDiana.Combo.W:Value()
 local ComboE = KoreanDiana.Combo.E:Value()
 local ComboR = KoreanDiana.Combo.R:Value() 
 local ComboDR = KoreanDiana.Combo.DR:Value() 
+local ComboSR = KoreanDiana.Combo.SR:Value()
 --local ComboET = KoreanDiana.Combo.ET:Value()
 local ComboI = KoreanDiana.Combo.I:Value()
 local ComboION = KoreanDiana.Combo.ION:Value()
@@ -309,22 +292,27 @@ local ComboIFAST = KoreanDiana.Combo.IFAST:Value()
 			end
 		end 
     end
-    if ComboR and Ready(_R) then
+    if ComboR and ComboSR and Ready(_R) then
     	if IsValidTarget(target, self.Spells.R.range, true, myHero) and HaveDianaBuff(target) and Ready(_R) then
     		Control.CastSpell(HK_R, target)
     	end
     	if ComboR and ComboDR  and Ready(_R) then
-    		if IsValidTarget(target, self.Spells.R.range, true, myHero) and Ready(_R) then
+    		if IsValidTarget(target, self.Spells.R.range, true, myHero) and Ready(_R) and not Ready(_E) and not Ready(_Q) then
     			Control.CastSpell(HK_R, target)
     		end
     	end 
     else
-    	if ComboR and ComboDR and not Ready(_Q) and Ready(_R) then
-    		if IsValidTarget(target, self.Spells.R.range, true, myHero) and Ready(_R) then
-    		Control.CastSpell(HK_R, target)
+    	if ComboR and ComboDR and not Ready(_Q) and Ready(_W) and Ready(_R) then
+    		if IsValidTarget(target, self.Spells.R.range, true, myHero) and Ready(_R) and getdmg("R", target, myHero)+(getdmg("W", target, myHero)*4) >= target.health then
+    		DelayAction(function()Control.CastSpell(HK_R, target)end,1000)
     		end
     	end
-    end 
+    end
+    if ComboR and Ready(_R) and not ComboSR and not Ready(_Q) then
+   	 	if IsValidTarget(target, self.Spells.R.range, true, myHero) and Ready(_R) then
+    		Control.CastSpell(HK_R, target)
+    	end
+	end
     if ComboI and ComboION and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) then
 		if IsValidTarget(target, 600, true, myHero) and target.health/target.maxHealth <= ComboIFAST then
 			Control.CastSpell(HK_SUMMONER_1, target)
@@ -334,11 +322,11 @@ local ComboIFAST = KoreanDiana.Combo.IFAST:Value()
 			Control.CastSpell(HK_SUMMONER_2, target)
 		end
 	elseif ComboI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q)   and not Ready(_R) then
-		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health*1.1 then
 			Control.CastSpell(HK_SUMMONER_1, target)
 		end
 	elseif ComboI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) and not Ready(_Q)  and not Ready(_R)  then
-		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+		if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health*1.1 then
 			Control.CastSpell(HK_SUMMONER_2, target)
 		end
 	end
@@ -415,14 +403,14 @@ local KSI = KoreanDiana.KS.I:Value()
 		if (myHero.mana/myHero.maxMana >= KoreanDiana.KS.Mana:Value() / 100) then
 			if KSON then
 				if KSW and Ready(_W) then
-					if IsValidTarget(target, self.Spells.W.range, true, myHero) and Ready(_W) then
+					if IsValidTarget(target, self.Spells.W.range, true, myHero) and not target.isDead and Ready(_W) then
 						if getdmg("W", target, myHero)*4 > target.health and Ready(_W) then
 							Control.CastSpell(HK_W, target)
 						end
 					end
 				end
 				if KSQ and Ready(_Q) then
-					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range then
+					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range and not target.isDead then
   					local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
       					if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range and getdmg("Q", target, myHero) > target.health then
         					Control.CastSpell(HK_Q, Qpos)
@@ -430,17 +418,17 @@ local KSI = KoreanDiana.KS.I:Value()
      				end
      			end
      			if KSR and Ready(_R) and not Ready(_Q) then 
-     				if IsValidTarget(target, self.Spells.R.range, true, myHero) and getdmg("Q", target, myHero) > target.health and target.distance >= 300 and Ready(_R) then
+     				if IsValidTarget(target, self.Spells.R.range, true, myHero) and getdmg("Q", target, myHero) > target.health and target.distance >= 300 and not target.isDead and Ready(_R) then
     					Control.CastSpell(HK_R, target)
     				end
     			end
     			if KSI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W)  and not Ready(_R) then
-					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health*1.1 then
 						Control.CastSpell(HK_SUMMONER_1, target)
 					end
 				end
 				if KSI and myHero:GetSpellData(SUMMONER_2).name == "SummonerDot" and Ready(SUMMONER_2) and not Ready(_Q) and not Ready(_W)  and not Ready(_R)  then
-					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health then
+					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health*1.1 then
 						Control.CastSpell(HK_SUMMONER_2, target)
 					end
 				end
