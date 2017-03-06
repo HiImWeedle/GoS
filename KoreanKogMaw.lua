@@ -207,6 +207,8 @@ function KogMaw:Menu()
 	KoreanKogMaw.Combo:MenuElement({id = "R", name = "Use Living Artillery (R) [?]", value = true, tooltip = "Uses Smart-R when not in AA range", leftIcon = self.Icons.R})
 	KoreanKogMaw.Combo:MenuElement({id = "RHP", name = "Max Enemy HP to R in Combo(%)", value = 40, min = 0, max = 100, step = 1})
 	KoreanKogMaw.Combo:MenuElement({type = MENU, id = "IT", name = "Items", })
+	KoreanKogMaw.Combo.IT:MenuElement({id = "YG", name = "Use Youmuu's Ghostblade", value = true, leftIcon = "http://static.lolskill.net/img/items/32/3142.png"})
+	KoreanKogMaw.Combo.IT:MenuElement({id = "YGR", name = "Use Youmuu's Ghostblade when target distance", value = 1500, min = 0, max = 2500, step = 100})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BC", name = "Use Bilgewater Cutlass", value = true, leftIcon = "http://static.lolskill.net/img/items/32/3144.png"})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BCHP", name = "Max Enemy HP to BC in Combo(%)", value = 60, min = 0, max = 100, step = 1})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BOTRK", name = "Use Blade Of the Ruined King", value = true, leftIcon = "http://static.lolskill.net/img/items/32/3153.png"})
@@ -245,7 +247,8 @@ function KogMaw:Menu()
 	KoreanKogMaw.Draw:MenuElement({id = "Q", name = "Draw Q", value = true, leftIcon = self.Icons.Q})
 	KoreanKogMaw.Draw:MenuElement({id = "W", name = "Draw W", value = true, leftIcon = self.Icons.W})
 	KoreanKogMaw.Draw:MenuElement({id = "E", name = "Draw E", value = true, leftIcon = self.Icons.E})
-	KoreanKogMaw.Draw:MenuElement({id = "R", name = "Draw R", value = true, leftIcon = self.Icons.R})
+	KoreanKogMaw.Draw:MenuElement({type = MENU, id = "RD", name = "Draw R", leftIcon = self.Icons.R})
+	KoreanKogMaw.Draw.RD:MenuElement({id = "R", name = "Draw R at level", value = 2, min = 1, max = 3, step = 1})
 end
 
 function KogMaw:Tick()
@@ -256,7 +259,9 @@ function KogMaw:Tick()
 		self:Combo(target)
 	elseif target and _G.SDK.Orbwalker.Modes[_G.SDK.ORBWALKER_MODE_HARASS] then
 		self:Harass(target)
-	elseif _G.SDK.Orbwalker.Modes[_G.SDK.ORBWALKER_MODE_CLEAR] then
+	elseif _G.SDK.Orbwalker.Modes[_G.SDK.ORBWALKER_MODE_LANECLEAR] then
+		self:Clear()
+	elseif _G.SDK.Orbwalker.Modes[_G.SDK.ORBWALKER_MODE_JUNGLECLEAR] then
 		self:Clear()
 	end
   --self:KS()
@@ -268,6 +273,8 @@ local ComboW = KoreanKogMaw.Combo.W:Value()
 local ComboE = KoreanKogMaw.Combo.E:Value()
 local ComboR = KoreanKogMaw.Combo.R:Value()
 local ComboRHP = KoreanKogMaw.Combo.RHP:Value()
+local ComboYG = KoreanKogMaw.Combo.IT.YG:Value()
+local ComboYGR = KoreanKogMaw.Combo.IT.YGR:Value()
 local ComboBC = KoreanKogMaw.Combo.IT.BC:Value()
 local ComboBCHP = KoreanKogMaw.Combo.IT.BCHP:Value()
 local ComboBOTRK = KoreanKogMaw.Combo.IT.BOTRK:Value()
@@ -288,13 +295,26 @@ local ComboRMana = KoreanKogMaw.Combo.MM.RMana:Value()
 				if Rpos and GetDistance(Rpos,myHero.pos) < 1610 and Ready(_R) then
 					Control.CastSpell(HK_R, Rpos)
 				end
-	else
-		if IsValidTarget(target, 1950 , true, myHero) and target.distance >= 710 and (target.health/target.maxHealth) <= (ComboRHP/100) and Ready(_R) then
+	elseif IsValidTarget(target, 1950 , true, myHero) and target.distance >= 710 and (target.health/target.maxHealth) <= (ComboRHP/100) and Ready(_R) then
 		local Rpos = target:GetPrediction(self.Spells.R.speed, self.Spells.R.delay)
 			if Rpos and GetDistance(Rpos,myHero.pos) < 1910 and Ready(_R) then
 				Control.CastSpell(HK_R, Rpos)
 			end
-		end
+	end
+	if ComboYG and target.distance <= ComboYGR and GetItemSlot(myHero, 3142) > 0  then
+		if myHero:GetItemData(ITEM_1).itemID == 3142 and Ready(ITEM_1) then
+			Control.CastSpell(HK_ITEM_1)
+	elseif myHero:GetItemData(ITEM_2).itemID == 3142 and Ready(ITEM_2) then
+			Control.CastSpell(HK_ITEM_2)
+	elseif myHero:GetItemData(ITEM_3).itemID == 3142 and Ready(ITEM_3) then
+			Control.CastSpell(HK_ITEM_3)
+	elseif myHero:GetItemData(ITEM_4).itemID == 3142 and Ready(ITEM_4) then
+			Control.CastSpell(HK_ITEM_4)
+	elseif myHero:GetItemData(ITEM_5).itemID == 3142 and Ready(ITEM_5) then
+			Control.CastSpell(HK_ITEM_5)
+	elseif myHero:GetItemData(ITEM_6).itemID == 3142 and Ready(ITEM_6) then
+			Control.CastSpell(HK_ITEM_6)
+		end	
 	end
 	if ComboBC and GetItemSlot(myHero, 3144) > 0 and (target.health/target.maxHealth) <= (ComboBCHP/100) then
 		if myHero:GetItemData(ITEM_1).itemID == 3144 and Ready(ITEM_1) then
@@ -342,7 +362,7 @@ local ComboRMana = KoreanKogMaw.Combo.MM.RMana:Value()
 			end
 		end
 		if ComboW and Ready(_W) then
-			if target.valid and Ready(_W) and target.distance <= (1.1 * (500 + (110 + 20 * myHero:GetSpellData(W).level))) and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
+			if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
 				Control.CastSpell(HK_W, target)
 			end 
 		end
@@ -354,13 +374,13 @@ local ComboRMana = KoreanKogMaw.Combo.MM.RMana:Value()
      			end
 			end
 			if ComboW and Ready(_W) then
-				if target.valid and Ready(_W) and target.distance <= (1.1 * (500 + (110 + 20 * myHero:GetSpellData(W).level))) and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
+				if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
 					Control.CastSpell(HK_W, target)
 				end 
 			end
 	else
 		if ComboW and Ready(_W) then
-			if target.valid and Ready(_W) and target.distance <= (1.1 * (500 + (110 + 20 * myHero:GetSpellData(W).level))) and (myHero.mana/myHero.maxMana >= ComboWMana / 100)  then
+			if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100)  then
 				Control.CastSpell(HK_W, target)
 			end 
 		end
@@ -391,7 +411,7 @@ local HarassEMana = KoreanKogMaw.Harass.MM.EMana:Value()
 			end
 		end
 		if HarassW and Ready(_W) and (myHero.mana/myHero.maxMana >= HarassWMana / 100) then
-			if target.valid and Ready(_W) and target.distance <= (1.1 * (500 + (110 + 20 * myHero:GetSpellData(W).level))) then
+			if target.valid and Ready(_W) and target.distance <= 710 then
 				Control.CastSpell(HK_W, target)
 			end 
 		end
@@ -404,13 +424,13 @@ local HarassEMana = KoreanKogMaw.Harass.MM.EMana:Value()
 			end
 		end
 		if HarassW and Ready(_W) and (myHero.mana/myHero.maxMana >= HarassWMana / 100) then
-			if target.valid and Ready(_W) and target.distance <= (1.1 * (500 + (110 + 20 * myHero:GetSpellData(W).level))) then
+			if target.valid and Ready(_W) and target.distance <= 710 then
 				Control.CastSpell(HK_W, target)
 			end 
 		end
 	else
 		if HarassW and Ready(_W) and (myHero.mana/myHero.maxMana >= HarassWMana / 100) then
-			if target.valid and Ready(_W) and target.distance <= (1.1 * (500 + (110 + 20 * myHero:GetSpellData(W).level))) then
+			if target.valid and Ready(_W) and target.distance <= 710 then
 				Control.CastSpell(HK_W, target)
 			end 
 		end
@@ -510,11 +530,18 @@ function KogMaw:Draw()
 			if KoreanKogMaw.Draw.E:Value() then
 			Draw.Circle(myHero.pos, self.Spells.E.range, 1, Draw.Color(255, 255, 0, 128))
 			end
-			if KoreanKogMaw.Draw.R:Value() then
-			Draw.Circle(myHero.pos, myHero:GetSpellData(_R).range, 1, Draw.Color(255, 000, 255, 000))
+			if KoreanKogMaw.Draw.RD.R:Value() == 1 then
+			Draw.Circle(myHero.pos, 1200, 1, Draw.Color(255, 000, 255, 000))
+			end
+			if KoreanKogMaw.Draw.RD.R:Value() == 2 then
+			Draw.Circle(myHero.pos, 1500, 1, Draw.Color(255, 000, 255, 000))
+			end
+			if KoreanKogMaw.Draw.RD.R:Value() == 3 then
+			Draw.Circle(myHero.pos, 1800, 1, Draw.Color(255, 000, 255, 000))
+			end
 		end
 	end
 end
-end
+
 
 if _G[myHero.charName]() then print("Welcome back " ..myHero.name.. ", Have a nice day my friend! <3 ") end
