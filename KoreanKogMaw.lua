@@ -183,7 +183,7 @@ require("DamageLib")
 class "KogMaw"
 
 function KogMaw:__init()
-	print("Korean KogMaw [v1.2] Loaded succesfully ^^")
+	print("Korean KogMaw [v1.5] Loaded succesfully ^^")
 	self.Icons =  { Q = "http://static.lolskill.net/img/abilities/64/KogMaw_CausticSpittle.png",
 				  	W = "http://static.lolskill.net/img/abilities/64/KogMaw_BioArcaneBarrage.png",
 				  	E = "http://static.lolskill.net/img/abilities/64/KogMaw_VoidOoze.png",
@@ -206,14 +206,15 @@ function KogMaw:Menu()
 	KoreanKogMaw.Combo:MenuElement({id = "E", name = "Use Void Ooze (E)", value = true, leftIcon = self.Icons.E})
 	KoreanKogMaw.Combo:MenuElement({id = "R", name = "Use Living Artillery (R) [?]", value = true, tooltip = "Uses Smart-R when not in AA range", leftIcon = self.Icons.R})
 	KoreanKogMaw.Combo:MenuElement({id = "RHP", name = "Max Enemy HP to R in Combo(%)", value = 40, min = 0, max = 100, step = 1})
-	KoreanKogMaw.Combo:MenuElement({type = MENU, id = "IT", name = "Items", })
+	KoreanKogMaw.Combo:MenuElement({id = "Mode", name = "Combo Mode", drop = {"AP Combo", "AD Combo"}})
+	KoreanKogMaw.Combo:MenuElement({type = MENU, id = "IT", name = "Items" })
 	KoreanKogMaw.Combo.IT:MenuElement({id = "YG", name = "Use Youmuu's Ghostblade", value = true, leftIcon = "http://static.lolskill.net/img/items/32/3142.png"})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "YGR", name = "Use Youmuu's Ghostblade when target distance", value = 1500, min = 0, max = 2500, step = 100})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BC", name = "Use Bilgewater Cutlass", value = true, leftIcon = "http://static.lolskill.net/img/items/32/3144.png"})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BCHP", name = "Max Enemy HP to BC in Combo(%)", value = 60, min = 0, max = 100, step = 1})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BOTRK", name = "Use Blade Of the Ruined King", value = true, leftIcon = "http://static.lolskill.net/img/items/32/3153.png"})
 	KoreanKogMaw.Combo.IT:MenuElement({id = "BOTRKHP", name = "Max Enemy HP to BOTRK in Combo(%)", value = 60, min = 0, max = 100, step = 1})
-	KoreanKogMaw.Combo:MenuElement({type = MENU, id = "MM", name = "Mana Manager", leftIcon = "http://4.1m.yt/6cv8UEB.png"})
+	KoreanKogMaw.Combo:MenuElement({type = MENU, id = "MM", name = "Mana Manager"})
 	KoreanKogMaw.Combo.MM:MenuElement({id = "QMana", name = "Min Mana to Q in Combo(%)", value = 10, min = 0, max = 100, step = 1, leftIcon = self.Icons.Q})
 	KoreanKogMaw.Combo.MM:MenuElement({id = "WMana", name = "Min Mana to W in Combo(%)", value = 10, min = 0, max = 100, step = 1, leftIcon = self.Icons.W})
 	KoreanKogMaw.Combo.MM:MenuElement({id = "EMana", name = "Min Mana to E in Combo(%)", value = 10, min = 0, max = 100, step = 1, leftIcon = self.Icons.E})
@@ -222,7 +223,7 @@ function KogMaw:Menu()
 	KoreanKogMaw.Harass:MenuElement({id = "Q", name = "Use Caustic Spittle (Q)", value = true, leftIcon = self.Icons.Q})
 	KoreanKogMaw.Harass:MenuElement({id = "W", name = "Use Bio-Arcane Barrage (W)", value = true, leftIcon = self.Icons.W})
 	KoreanKogMaw.Harass:MenuElement({id = "E", name = "Use Void Ooze (E)", value = true, leftIcon = self.Icons.E})
-	KoreanKogMaw.Harass:MenuElement({type = MENU, id = "MM", name = "Mana Manager", leftIcon = "http://4.1m.yt/6cv8UEB.png"})
+	KoreanKogMaw.Harass:MenuElement({type = MENU, id = "MM", name = "Mana Manager"})
 	KoreanKogMaw.Harass.MM:MenuElement({id = "QMana", name = "Min Mana to Q in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.Q})
 	KoreanKogMaw.Harass.MM:MenuElement({id = "WMana", name = "Min Mana to W in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.W})
 	KoreanKogMaw.Harass.MM:MenuElement({id = "EMana", name = "Min Mana to E in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.E})
@@ -231,7 +232,7 @@ function KogMaw:Menu()
 	KoreanKogMaw.Clear:MenuElement({id = "WC", name = "Min amount of minions to W", value = 3, min = 1, max = 7, step = 1})
 	KoreanKogMaw.Clear:MenuElement({id = "R", name = "Use Living Artillery (R) [beta]", value = false, leftIcon = self.Icons.R})
 	KoreanKogMaw.Clear:MenuElement({id = "RC", name = "Min amount of minions to R", value = 3, min = 1, max = 7, step = 1})
-	KoreanKogMaw.Clear:MenuElement({type = MENU, id = "MM", name = "Mana Manager", leftIcon = "http://4.1m.yt/6cv8UEB.png"})
+	KoreanKogMaw.Clear:MenuElement({type = MENU, id = "MM", name = "Mana Manager"})
 	KoreanKogMaw.Clear.MM:MenuElement({id = "WMana", name = "Min Mana to W in Clear(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.W})
 	KoreanKogMaw.Clear.MM:MenuElement({id = "RMana", name = "Min Mana to R in Clear(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.R})
 
@@ -248,7 +249,7 @@ function KogMaw:Menu()
 	KoreanKogMaw.Draw:MenuElement({id = "W", name = "Draw W", value = true, leftIcon = self.Icons.W})
 	KoreanKogMaw.Draw:MenuElement({id = "E", name = "Draw E", value = true, leftIcon = self.Icons.E})
 	KoreanKogMaw.Draw:MenuElement({type = MENU, id = "RD", name = "Draw R", leftIcon = self.Icons.R})
-	KoreanKogMaw.Draw.RD:MenuElement({id = "R", name = "Draw R at level", value = 2, min = 1, max = 3, step = 1})
+	KoreanKogMaw.Draw.RD:MenuElement({id = "R", name = "Draw R at level", value = 1, min = 1, max = 3, step = 1})
 end
 
 function KogMaw:Tick()
@@ -272,6 +273,7 @@ local ComboQ = KoreanKogMaw.Combo.Q:Value()
 local ComboW = KoreanKogMaw.Combo.W:Value()
 local ComboE = KoreanKogMaw.Combo.E:Value()
 local ComboR = KoreanKogMaw.Combo.R:Value()
+local ComboMode = KoreanKogMaw.Combo.Mode:Value()
 local ComboRHP = KoreanKogMaw.Combo.RHP:Value()
 local ComboYG = KoreanKogMaw.Combo.IT.YG:Value()
 local ComboYGR = KoreanKogMaw.Combo.IT.YGR:Value()
@@ -346,27 +348,49 @@ local ComboRMana = KoreanKogMaw.Combo.MM.RMana:Value()
 			Control.CastSpell(HK_ITEM_6, target)
 		end	
 	end
-	if ComboE and Ready(_E) then
-		if target.valid and Ready(_E) and target.distance <= 1.1 * self.Spells.E.range and (myHero.mana/myHero.maxMana >= ComboEMana / 100) then
-  		local Epos = target:GetPrediction(self.Spells.E.speed, self.Spells.E.delay)
-      		if Epos and GetDistance(Epos,myHero.pos) < self.Spells.E.range then
-        		Control.CastSpell(HK_E, Epos)
-     		end
-		end
-		if ComboQ and Ready(_Q) then
-			if target.valid and Ready(_Q) and target:GetCollision(self.Spells.Q.width, self.Spells.Q.speed, self.Spells.Q.delay) == 0 and target.distance <= 1.1 * self.Spells.Q.range and (myHero.mana/myHero.maxMana >= ComboQMana / 100) then
-  			local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
-      			if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range then
-        			Control.CastSpell(HK_Q, Qpos)
+	if ComboMode == 1 then
+		if ComboE and Ready(_E) then
+			if target.valid and Ready(_E) and target.distance <= 1.1 * self.Spells.E.range and (myHero.mana/myHero.maxMana >= ComboEMana / 100) then
+  			local Epos = target:GetPrediction(self.Spells.E.speed, self.Spells.E.delay)
+      			if Epos and GetDistance(Epos,myHero.pos) < self.Spells.E.range then
+        			Control.CastSpell(HK_E, Epos)
      			end
 			end
+			if ComboQ and Ready(_Q) then
+				if target.valid and Ready(_Q) and target:GetCollision(self.Spells.Q.width, self.Spells.Q.speed, self.Spells.Q.delay) == 0 and target.distance <= 1.1 * self.Spells.Q.range and (myHero.mana/myHero.maxMana >= ComboQMana / 100) then
+  				local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
+      				if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range then
+        				Control.CastSpell(HK_Q, Qpos)
+     				end
+				end
+			end
+			if ComboW and Ready(_W) then
+				if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
+					Control.CastSpell(HK_W, target)
+				end 
+			end
+		elseif ComboQ and Ready(_Q) then
+				if target.valid and Ready(_Q) and target:GetCollision(self.Spells.Q.width, self.Spells.Q.speed, self.Spells.Q.delay) == 0 and target.distance <= 1.1 * self.Spells.Q.range and (myHero.mana/myHero.maxMana >= ComboQMana / 100) then
+  				local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
+      				if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range then
+        				 Control.CastSpell(HK_Q, Qpos)
+     				end
+				end
+				if ComboW and Ready(_W) then
+					if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
+						Control.CastSpell(HK_W, target)
+					end 
+				end
+		else
+			if ComboW and Ready(_W) then
+				if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100)  then
+					Control.CastSpell(HK_W, target)
+				end 
+			end
 		end
-		if ComboW and Ready(_W) then
-			if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
-				Control.CastSpell(HK_W, target)
-			end 
-		end
-	elseif ComboQ and Ready(_Q) then
+	else
+		if ComboMode == 2 then 
+		if ComboQ and Ready(_Q) then
 			if target.valid and Ready(_Q) and target:GetCollision(self.Spells.Q.width, self.Spells.Q.speed, self.Spells.Q.delay) == 0 and target.distance <= 1.1 * self.Spells.Q.range and (myHero.mana/myHero.maxMana >= ComboQMana / 100) then
   			local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
       			if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range then
@@ -374,18 +398,45 @@ local ComboRMana = KoreanKogMaw.Combo.MM.RMana:Value()
      			end
 			end
 			if ComboW and Ready(_W) then
-				if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100) then
+				if target.valid and Ready(_W) and target.distance <= 750 and (myHero.mana/myHero.maxMana >= ComboWMana / 100)  then
 					Control.CastSpell(HK_W, target)
 				end 
 			end
-	else
-		if ComboW and Ready(_W) then
-			if target.valid and Ready(_W) and target.distance <= 710 and (myHero.mana/myHero.maxMana >= ComboWMana / 100)  then
-				Control.CastSpell(HK_W, target)
-			end 
+			if ComboE and Ready(_E) then
+				if target.valid and Ready(_E) and target.distance <= 1.1 * self.Spells.E.range and (myHero.mana/myHero.maxMana >= ComboEMana / 100) then
+  				local Epos = target:GetPrediction(self.Spells.E.speed, self.Spells.E.delay)
+      				if Epos and GetDistance(Epos,myHero.pos) < self.Spells.E.range then
+        				Control.CastSpell(HK_E, Epos)
+     				end
+				end
+			end
+		elseif ComboW and Ready(_W) then
+				if target.valid and Ready(_W) and target.distance <= 750 and (myHero.mana/myHero.maxMana >= ComboWMana / 100)  then
+					Control.CastSpell(HK_W, target)
+				end 
+			end
+			if ComboE and Ready(_E) then
+				if target.valid and Ready(_E) and target.distance <= 1.1 * self.Spells.E.range and (myHero.mana/myHero.maxMana >= ComboEMana / 100) then
+  				local Epos = target:GetPrediction(self.Spells.E.speed, self.Spells.E.delay)
+      				if Epos and GetDistance(Epos,myHero.pos) < self.Spells.E.range then
+        				Control.CastSpell(HK_E, Epos)
+     				end
+				end
+			end
+		else
+			if ComboE and Ready(_E) then
+				if target.valid and Ready(_E) and target.distance <= 1.1 * self.Spells.E.range and (myHero.mana/myHero.maxMana >= ComboEMana / 100) and not Ready(_Q) then
+  				local Epos = target:GetPrediction(self.Spells.E.speed, self.Spells.E.delay)
+      				if Epos and GetDistance(Epos,myHero.pos) < self.Spells.E.range then
+        				Control.CastSpell(HK_E, Epos)
+     				end
+				end
+			end
 		end
 	end
 end
+
+
 
 function KogMaw:Harass(target)
 local HarassQ = KoreanKogMaw.Harass.Q:Value()
