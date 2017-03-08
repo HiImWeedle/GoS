@@ -403,14 +403,14 @@ local KSI = KoreanDiana.KS.I:Value()
 		if (myHero.mana/myHero.maxMana >= KoreanDiana.KS.Mana:Value() / 100) then
 			if KSON then
 				if KSW and Ready(_W) then
-					if IsValidTarget(target, self.Spells.W.range, true, myHero) and not target.isDead and Ready(_W) then
+					if IsValidTarget(target, self.Spells.W.range, true, myHero) and not target.isDead and Ready(_W) and target.isTargetable then
 						if getdmg("W", target, myHero)*4 > target.health and Ready(_W) then
 							Control.CastSpell(HK_W, target)
 						end
 					end
 				end
 				if KSQ and Ready(_Q) then
-					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range and not target.isDead and target.IsTargetable then
+					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range and not target.isDead and target.isTargetable then
   					local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
       					if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range and getdmg("Q", target, myHero) > target.health then
         					Control.CastSpell(HK_Q, Qpos)
@@ -418,11 +418,11 @@ local KSI = KoreanDiana.KS.I:Value()
      				end
      			end
      			if KSR and Ready(_R) and not Ready(_Q) then 
-     				if IsValidTarget(target, self.Spells.R.range, true, myHero) and getdmg("Q", target, myHero) > target.health and target.distance >= 300 and not target.isDead and Ready(_R) then
+     				if IsValidTarget(target, self.Spells.R.range, true, myHero) and getdmg("Q", target, myHero) > target.health and target.distance >= 300 and not target.isDead and Ready(_R) and target.isTargetable then
     					Control.CastSpell(HK_R, target)
     				end
     			end
-    			if KSI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W)  and not Ready(_R) then
+    			if KSI and myHero:GetSpellData(SUMMONER_1).name == "SummonerDot" and Ready(SUMMONER_1) and not Ready(_Q) and not Ready(_W)  and not Ready(_R)  then
 					if IsValidTarget(target, 600, true, myHero) and 50+20*myHero.levelData.lvl > target.health*1.1 then
 						Control.CastSpell(HK_SUMMONER_1, target)
 					end
