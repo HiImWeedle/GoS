@@ -410,7 +410,7 @@ local KSI = KoreanDiana.KS.I:Value()
 					end
 				end
 				if KSQ and Ready(_Q) then
-					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range and not target.isDead then
+					if target.valid and target.isEnemy and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range and not target.isDead and target.IsTargetable then
   					local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
       					if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range and getdmg("Q", target, myHero) > target.health then
         					Control.CastSpell(HK_Q, Qpos)
