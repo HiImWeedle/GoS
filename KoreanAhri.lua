@@ -361,7 +361,7 @@ local KSI = KoreanAhri.Misc.I:Value()
 		local target = Game.Hero(i)
 		if (myHero.mana/myHero.maxMana >= KoreanAhri.Misc.Mana:Value() / 100) then
 			if KSON then 
-				if KSE and target.valid and Ready(_E) and target:GetCollision(self.Spells.E.width, self.Spells.E.speed, self.Spells.E.delay) == 0 and target.distance <= 1.1 * self.Spells.E.range then
+				if KSE and target.valid and Ready(_E) and target:GetCollision(self.Spells.E.width, self.Spells.E.speed, self.Spells.E.delay) == 0 and target.distance <= 1.1 * self.Spells.E.range and target.isEnemy and not target.dead then
 					if getdmg("E", target, myHero) > target.health and Ready(_E) then
   					local Epos = target:GetPrediction(self.Spells.E.speed, self.Spells.E.delay)
       					if Epos and GetDistance(Epos,myHero.pos) < self.Spells.E.range then
@@ -369,7 +369,7 @@ local KSI = KoreanAhri.Misc.I:Value()
      					end
      				end 
 				end
-				if KSQ and target.valid and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range then
+				if KSQ and target.valid and Ready(_Q) and target.distance <= 1.1 * self.Spells.Q.range and target.isEnemy and not target.dead then
 					if getdmg("Q", target, myHero) > target.health and Ready(_Q) then
 					local Qpos = target:GetPrediction(self.Spells.Q.speed, self.Spells.Q.delay)
 						if Qpos and GetDistance(Qpos,myHero.pos) < self.Spells.Q.range then
@@ -377,7 +377,7 @@ local KSI = KoreanAhri.Misc.I:Value()
 						end
 					end
 				end
-				if KSW and IsValidTarget(target, self.Spells.W.range, true, myHero) and Ready(_W) then
+				if KSW and IsValidTarget(target, self.Spells.W.range, true, myHero) and Ready(_W) and target.isEnemy and not target.dead then
 					if getdmg("W", target, myHero)*3 > target.health and Ready(_W) then
 						Control.CastSpell(HK_W, target)
 					end 
