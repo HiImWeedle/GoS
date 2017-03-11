@@ -209,7 +209,7 @@ local Stacks = (RStacks(target) + 1)
 local basedmg = (({0, 100, 200, 300})[level] + (0.75 * AD))
 
 local stacksdmg = (  (({0, 100, 200, 300})[level]) * ((({0, 0.2, 0.4, 0.6, 0.8, 1})[Stacks]) ) )
-local Rdmg =  ((basedmg + stacksdmg) + ((({0, 30 * KoreanDarius.KS.XX:Value(), 90 * KoreanDarius.KS.XX:Value(), 123 * KoreanDarius.KS.XX:Value()})[level]) * (({0, 0.2, 0.4, 0.6, 0.8, 1})[Stacks]))) --CalcPhysicalDamage(myHero, target, ((basedmg + stacksdmg)))
+local Rdmg =  ((basedmg + stacksdmg) + ((({0, 30 * KoreanDarius.KS.XX:Value(), 75 * KoreanDarius.KS.XX:Value(), 123 * KoreanDarius.KS.XX:Value()})[level]) * (({0, 0.2, 0.4, 0.6, 0.8, 1})[Stacks]))) --CalcPhysicalDamage(myHero, target, ((basedmg + stacksdmg)))
 	return Rdmg
 	end
 end
