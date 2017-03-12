@@ -690,7 +690,7 @@ function Darius:Draw()
 			Draw.Circle(myHero.pos, self.Spells.R.range, 1, Draw.Color(255, 000, 255, 000))
 			end
 			if KoreanDarius.Draw.DMG:Value() then 
-				if GetDariusRdmg(target) ~= nil then 
+				if GetDariusRdmg(target) ~= nil and GetDariusRdmg(target) > 1 and Ready(_R) then 
 				Draw.Text("R DMG " .. tostring(math.floor(GetDariusRdmg(target))), 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 0, 0)) --	Draw.Text("E DMG " .. tostring(0.1*math.floor(1000 * math.min(1, SmartTwitch:GetEDamage(hero) / hero.health))) .. "%", 15, textPos.x - 20, textPos.y + 60, Draw.Color(255, 255, 0, 0))
 				end
 			end
