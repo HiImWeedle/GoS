@@ -221,7 +221,7 @@ require("DamageLib")
 class "Darius"
 
 function Darius:__init()
-	print("Korean Darius [v1.0] Loaded succesfully ^^")
+	print("Korean Darius [v1.1] Loaded succesfully ^^")
 	self.Icons =  { Q = "http://static.lolskill.net/img/abilities/64/Darius_Icon_Decimate.png",
 				  	W = "http://static.lolskill.net/img/abilities/64/Darius_Icon_Hamstring.png",
 				  	E = "http://static.lolskill.net/img/abilities/64/Darius_Icon_Axe_Grab.png",
