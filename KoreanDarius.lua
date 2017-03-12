@@ -702,4 +702,4 @@ function Darius:Draw()
 	end
 end
 
-if _G[myHero.charName]() then print("Thanks " ..myHero.name.. " for using Korean Darius, remember post your suggestions and feedback.") end
+if _G[myHero.charName]() then print("Thanks " ..myHero.name.. " for using Korean Darius, remember to post your suggestions and feedback.") end
