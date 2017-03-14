@@ -1326,7 +1326,7 @@ function KogMaw:Menu()
 	KoreanMechanics.Harass.MM:MenuElement({id = "EMana", name = "Min Mana to E in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.E})
 
 	KoreanMechanics.Clear:MenuElement({id = "W", name = "Use Bio-Arcane Barrage (W)", value = true, leftIcon = self.Icons.W})
-	KoreanMechanics.Clear:MenuElement({id = "WC", name = "Min amount of minions to W", value = 3, min = 1, max = 7, step = 1})
+	KoreanMechanics.Clear:MenuElement({id = "WC", name = "Min amount of minions to W", value = 4, min = 1, max = 7, step = 1})
 	KoreanMechanics.Clear:MenuElement({id = "R", name = "Use Living Artillery (R) [beta]", value = false, leftIcon = self.Icons.R})
 	KoreanMechanics.Clear:MenuElement({id = "RC", name = "Min amount of minions to R", value = 3, min = 1, max = 7, step = 1})
 	KoreanMechanics.Clear:MenuElement({type = MENU, id = "MM", name = "Mana Manager"})
