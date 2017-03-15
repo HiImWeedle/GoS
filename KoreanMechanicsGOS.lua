@@ -571,10 +571,10 @@ function Darius:Menu()
 	KoreanMechanics.Harass.MM:MenuElement({id = "WMana", name = "Min Mana to W in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.W})
 	KoreanMechanics.Harass.MM:MenuElement({id = "EMana", name = "Min Mana to E in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.E})
 
---	KoreanMechanics.Clear:MenuElement({id = "Q", name = "Use Decimate (Q)", value = true, leftIcon = self.Icons.Q})
---	KoreanMechanics.Clear:MenuElement({id = "QC", name = "Min amount of minions to Q", value = 3, min = 1, max = 7, step = 1})
---	KoreanMechanics.Clear:MenuElement({id = "W", name = "Use Crippling Strike (W)", value = false, leftIcon = self.Icons.W})
---	KoreanMechanics.Clear:MenuElement({id = "Mana", name = "Min Mana to Clear (%)", value = 40, min = 0, max = 100, step = 1})
+	KoreanMechanics.Clear:MenuElement({id = "Q", name = "Use Decimate (Q)", value = true, leftIcon = self.Icons.Q})
+	KoreanMechanics.Clear:MenuElement({id = "QC", name = "Min amount of minions to Q", value = 3, min = 1, max = 7, step = 1})
+	KoreanMechanics.Clear:MenuElement({id = "W", name = "Use Crippling Strike (W)", value = false, leftIcon = self.Icons.W})
+	KoreanMechanics.Clear:MenuElement({id = "Mana", name = "Min Mana to Clear (%)", value = 40, min = 0, max = 100, step = 1})
 
 	KoreanMechanics.KS:MenuElement({id = "ON", name = "Enable Free Elo [?]", value = true, tooltip = "Enable Smart-R to Killsteal"})
 	KoreanMechanics.KS:MenuElement({id = "XX", name = "Dmg Calculate Factor [?]", value = 1.5, min = 0, max = 2.0, step = 0.05, tooltip = "Turn down with 0.05 only if u miss ults"})
@@ -1326,7 +1326,7 @@ function KogMaw:Menu()
 	KoreanMechanics.Harass.MM:MenuElement({id = "EMana", name = "Min Mana to E in Harass(%)", value = 40, min = 0, max = 100, step = 1, leftIcon = self.Icons.E})
 
 	KoreanMechanics.Clear:MenuElement({id = "W", name = "Use Bio-Arcane Barrage (W)", value = true, leftIcon = self.Icons.W})
-	KoreanMechanics.Clear:MenuElement({id = "WC", name = "Min amount of minions to W", value = 4, min = 1, max = 7, step = 1})
+	KoreanMechanics.Clear:MenuElement({id = "WC", name = "Min amount of minions to W", value = 3, min = 1, max = 7, step = 1})
 	KoreanMechanics.Clear:MenuElement({id = "R", name = "Use Living Artillery (R) [beta]", value = false, leftIcon = self.Icons.R})
 	KoreanMechanics.Clear:MenuElement({id = "RC", name = "Min amount of minions to R", value = 3, min = 1, max = 7, step = 1})
 	KoreanMechanics.Clear:MenuElement({type = MENU, id = "MM", name = "Mana Manager"})
@@ -1953,7 +1953,7 @@ function Blitzcrank:Draw()
 			Draw.Circle(myHero.pos, self.Spells.Q.range, 1, Draw.Color(255, 52, 221, 221))
 			end
 			if KoreanMechanics.Draw.W:Value() then
-			Draw.Circle(myHero.pos, KoreanMechanics.Combo.WR:Value() , 1, Draw.Color(255, 255, 255, 255))
+			Draw.Circle(myHero.pos, self.Spells.W.range, 1, Draw.Color(255, 255, 255, 255))
 			end
 			if KoreanMechanics.Draw.E:Value() then
 			Draw.Circle(myHero.pos, self.Spells.E.range, 1, Draw.Color(255, 255, 0, 128))
