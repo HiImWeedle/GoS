@@ -1958,7 +1958,7 @@ function Blitzcrank:Draw()
 			Draw.Circle(myHero.pos, self.Spells.Q.range, 1, Draw.Color(255, 52, 221, 221))
 			end
 			if KoreanMechanics.Draw.W:Value() then
-			Draw.Circle(myHero.pos, self.Spells.W.range, 1, Draw.Color(255, 255, 255, 255))
+			Draw.Circle(myHero.pos, KoreanMechanics.Combo.WR:Value(), 1, Draw.Color(255, 255, 255, 255))
 			end
 			if KoreanMechanics.Draw.E:Value() then
 			Draw.Circle(myHero.pos, self.Spells.E.range, 1, Draw.Color(255, 255, 0, 128))
