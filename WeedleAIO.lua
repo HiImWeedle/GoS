@@ -150,21 +150,21 @@ local function GetPred(unit,speed,delay)
 	end
 end
 
-local isCasting = 0 
-function KoreanCast(key, pos)
-local Cursor = mousePos
-    if pos == nil or isCasting == 1 then return end
-    isCasting = 1
-        Control.SetCursorPos(pos)
-        DelayAction(function()
-        	if Control.IsKeyDown(key) == false then
-       		 Control.SetCursorPos(Cursor)
-        	end
-        DelayAction(function()
-         isCasting = 0
-        end, 0.002)
-        end, (KoreanMechanics.delay:Value() + Game.Latency()) / 1000)
-end 
+--local isCasting = 0 
+--function KoreanCast(key, pos)
+--local Cursor = mousePos
+--   if pos == nil or isCasting == 1 then return end
+--  isCasting = 1
+--      Control.SetCursorPos(pos)
+--     DelayAction(function()
+--     	if Control.IsKeyDown(key) == false then
+--    		 Control.SetCursorPos(Cursor)
+--     	end
+--    DelayAction(function()
+--     isCasting = 0
+--    end, 0.002)
+--    end, (KoreanMechanics.delay:Value() + Game.Latency()) / 1000)
+-- end 
 
 
 class "Ezreal"
