@@ -196,6 +196,10 @@ function Ezreal:Menu()
     KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
     KoreanMechanics.Draw.WD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
     KoreanMechanics.Draw.WD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)}) 
 end
 
 function Ezreal:Tick()
@@ -206,6 +210,9 @@ function Ezreal:Tick()
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
 		end
+		if KoreanMechanics.Spell.E:Value() then
+			self:E()
+		end		
 		if KoreanMechanics.Spell.R:Value() then
 			self:R()
 		end
@@ -224,6 +231,10 @@ local target =  _G.SDK.TargetSelector:GetTarget(1100)
 if target == nil then return end 		
 	local pos = GetPred(target, 1200, 0.25 + Game.Latency()/1000)
 	KoreanCast("W" ,pos)
+end
+
+function Ezreal:E()
+	KoreanCast("E", mousePos)
 end
 
 function Ezreal:R()	
@@ -249,6 +260,9 @@ function Ezreal:Draw()
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
+	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, 750, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	end	    	
 	    end		
 	end
 end
