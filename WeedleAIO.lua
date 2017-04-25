@@ -1248,6 +1248,8 @@ end
 function Orianna:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
 	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1225, min = 0, max = 1225, step = 25})
+	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})	
+	KoreanMechanics.Spell:MenuElement({id = "EMode", name = "self E Toggle", key = string.byte("T"), toggle = true})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Max Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -1260,6 +1262,9 @@ function Orianna:Tick()
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
+		if KoreanMechanics.Spell.E:Value() then
+			self:E()
+		end
 	end
 end
 
@@ -1269,6 +1274,12 @@ if target == nil then return end
 	local pos = GetPred(target, 1200, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
 end	
+
+function Orianna:E()
+	if KoreanMechanics.Spell.EMode:Value() then
+		Control.CastSpell(HK_E, myHero)
+	end
+end		
 
 function Orianna:Draw()
 	if not myHero.dead then
@@ -1280,6 +1291,12 @@ function Orianna:Draw()
 			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
+			if KoreanMechanics.Spell.EMode:Value() then
+				Draw.Text("Self E ON", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Spell.EMode:Value()  then 
+				Draw.Text("Self E OFF", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
+			end 				
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
 			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
