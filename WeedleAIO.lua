@@ -12,7 +12,7 @@ KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})
 KoreanMechanics:MenuElement({id = "delay", name = "SpellCast Delay", value = 100, min = 0, max = 500, step = 10})	
-KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.2 BETA by Weedle"})		
+KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.2 by Weedle"})		
 
 
 local _AllyHeroes
