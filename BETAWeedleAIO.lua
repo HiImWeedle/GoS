@@ -1139,7 +1139,7 @@ end
 function Cassiopeia:E()
 local target =  _G.SDK.TargetSelector:GetTarget(800)
 if target == nil then return end 	
-	KoreanCast("E", pos)
+	KoreanCast("E", target.pos)
 end		
 
 function Cassiopeia:R()
