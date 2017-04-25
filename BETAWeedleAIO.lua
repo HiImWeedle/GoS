@@ -185,7 +185,6 @@ function Ezreal:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
 	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1250, min = 0, max = 1250, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
