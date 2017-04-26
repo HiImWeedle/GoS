@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -153,18 +153,18 @@ end
 --local isCasting = 0 
 --function KoreanCast(key, pos)
 --local Cursor = mousePos
---   if pos == nil or isCasting == 1 then return end
---  isCasting = 1
---      Control.SetCursorPos(pos)
---     DelayAction(function()
---     	if Control.IsKeyDown(key) == false then
---    		 Control.SetCursorPos(Cursor)
---     	end
---    DelayAction(function()
---     isCasting = 0
---    end, 0.002)
---    end, (KoreanMechanics.delay:Value() + Game.Latency()) / 1000)
--- end 
+--    if pos == nil or isCasting == 1 then return end
+--    isCasting = 1
+--        Control.SetCursorPos(pos)
+--        DelayAction(function()
+--        	if Control.IsKeyDown(key) == false then
+--       		 Control.SetCursorPos(Cursor)
+--        	end
+--        DelayAction(function()
+--         isCasting = 0
+--        end, 0.002)
+--        end, (KoreanMechanics.delay:Value() + Game.Latency()) / 1000)
+--end 
 
 
 class "Ezreal"
@@ -181,9 +181,6 @@ function Ezreal:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
 	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})
-	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1250, min = 0, max = 1250, step = 10})
-	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -194,10 +191,6 @@ function Ezreal:Menu()
     KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
     KoreanMechanics.Draw.WD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
     KoreanMechanics.Draw.WD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
-    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
-    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
-    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
-    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)}) 
 end
 
 function Ezreal:Tick()
@@ -207,10 +200,7 @@ function Ezreal:Tick()
 		end
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
-		end
-		if KoreanMechanics.Spell.E:Value() then
-			self:E()
-		end		
+		end	
 		if KoreanMechanics.Spell.R:Value() then
 			self:R()
 		end
@@ -218,28 +208,30 @@ function Ezreal:Tick()
 end
 
 function Ezreal:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1250)
 if target == nil then return end 	
 	local pos = GetPred(target, 1400, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
 end
+end
 
 function Ezreal:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(1100)	
 if target == nil then return end 		
 	local pos = GetPred(target, 1200, 0.25 + Game.Latency()/1000)
 	Control.CastSpell(HK_W, pos)
 end
-
-function Ezreal:E()
-	Control.CastSpell(HK_E, mousePos)
 end
 
 function Ezreal:R()	
+	if Ready(_R) then
 local targety =  _G.SDK.TargetSelector:GetTarget(20000)
 	if targety == nil then return end 	
 	local pos = GetPred(targety, 2000, 0.25 + Game.Latency()/1000)
 	Control.CastSpell(HK_R, pos)
+end
 end
 
 function Ezreal:Draw()
@@ -257,10 +249,7 @@ function Ezreal:Draw()
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
-	    	end
-	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 750, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
-	    	end	    	
+	    	end  	
 	    end		
 	end
 end
@@ -297,16 +286,20 @@ function Zed:Tick()
 end	
 
 function Zed:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1100, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
 end
+end
 
 function Zed:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(850)
 if target == nil then return end 	
 	Control.CastSpell(HK_R, target.pos)
+end
 end	
 
 function Zed:Draw()
@@ -363,17 +356,21 @@ function Ahri:Tick()
 end
 
 function Ahri:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1000)
 if target == nil then return end 	
 	local pos = GetPred(target, 1700, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Ahri:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(1050)
 if target == nil then return end 	
 	local pos = GetPred(target, 1600, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_E, pos)
+end
 end	
 
 function Ahri:Draw()
@@ -424,10 +421,12 @@ function Blitzcrank:Tick()
 end	
 
 function Blitzcrank:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1025)
 if target == nil then return end 	
 	local pos = GetPred(target, 1800, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end
 
 function Blitzcrank:Draw()
@@ -488,23 +487,29 @@ function Caitlyn:Tick()
 end
 
 function Caitlyn:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1350)
 if target == nil then return end 	
 	local pos = GetPred(target, 2200, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Caitlyn:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(850)
 if target == nil then return end 	
 	local pos = GetPred(target, 2000, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_E, pos)
+end
 end	
 
 function Caitlyn:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(3000)
 if target == nil then return end 	
 	Control.CastSpell(HK_R, target.pos)
+end
 end		
 
 function Caitlyn:Draw()
@@ -577,29 +582,37 @@ function Brand:Tick()
 end
 
 function Brand:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1150)
 if target == nil then return end 	
 	local pos = GetPred(target, 1400, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end		
 
 function Brand:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(1000)	
 if target == nil then return end 		
 	local pos = GetPred(target, math.huge, 0.625 + Game.Latency()/1000)
 	Control.CastSpell(HK_W, pos)
+end
 end	
 
 function Brand:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(750)	
 if target == nil then return end 		
 	Control.CastSpell(HK_E, target.pos)
+end
 end	
 
 function Brand:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(850)
 if target == nil then return end 	
 	Control.CastSpell(HK_R, target.pos)
+end
 end		
 
 function Brand:Draw()
@@ -675,31 +688,39 @@ function Ziggs:Tick()
 end
 
 function Ziggs:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1750, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Ziggs:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1750, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_W, pos)
+end
 end	
 
 function Ziggs:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1750, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_E, pos)
+end
 end	
 
 function Ziggs:R()
+	if Ready(_R) then
 local targety =  _G.SDK.TargetSelector:GetTarget(20000)
 	if targety == nil then return end 	
 	local pos = GetPred(targety, 1750, 0.25 + Game.Latency()/1000)
 	Control.CastSpell(HK_R, pos)
+end
 end
 
 function Ziggs:Draw()
@@ -762,17 +783,21 @@ function Morgana:Tick()
 end
 
 function Morgana:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1400)
 if target == nil then return end 	
 	local pos = GetPred(target, 1200, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Morgana:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(1000)
 if target == nil then return end 	
 	local pos = GetPred(target, math.huge, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_W, pos)
+end
 end	
 
 function Morgana:Draw()
@@ -845,30 +870,38 @@ function Syndra:Tick()
 end
 
 function Syndra:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(900)
 if target == nil then return end 	
 	local pos = GetPred(target, 1750, 0.25 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Syndra:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(1025)
 if target == nil then return end 	
 	local pos = GetPred(target, 1450, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_W, pos)
+end
 end		
 
 function Syndra:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(900)
 if target == nil then return end 	
 	local pos = GetPred(target, 902, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_E, pos)
+end
 end	
 
 function Syndra:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(845)
 if target == nil then return end 	
 	Control.CastSpell(HK_R, target.pos)
+end
 end		
 
 function Syndra:Draw()
@@ -939,24 +972,30 @@ function KogMaw:Tick()
 end
 
 function KogMaw:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1600, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function KogMaw:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 100, (0.33 + Game.Latency())/1000)
 	Control.CastSpell(HK_E, pos)
+end
 end	
 
 function KogMaw:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(1900)
 if target == nil then return end 	
 	local pos = GetPred(target, math.huge, 1 + (Game.Latency()/1000))
 	Control.CastSpell(HK_R, pos)
+end
 end	
 
 local function GetRlvl()
@@ -1010,6 +1049,7 @@ end
 function Lux:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
 	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1175, min = 0, max = 1175, step = 10})
+	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
 	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1200, min = 0, max = 1200, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
@@ -1033,6 +1073,9 @@ function Lux:Tick()
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
+		if KoreanMechanics.Spell.W:Value() then
+			self:W()
+		end		
 		if KoreanMechanics.Spell.E:Value() and myHero:GetSpellData(_E).name == "LuxLightStrikeKugel" then
 			self:E()
 		end
@@ -1043,24 +1086,43 @@ function Lux:Tick()
 end
 
 function Lux:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1200, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
+function Lux:W()
+	if Ready(_W) then
+local Heroes = nil
+	for i = 1, Game.HeroCount() do
+	local Heroes = Game.Hero(i)
+		if Heroes.distance < 1000 and Heroes.isAlly and not Heroes.dead and Heroes.charName ~= "Lux" then
+			local pos = GetPred(Heroes, 1400, (0.25 + Game.Latency())/1000)
+			Control.CastSpell(HK_W, pos)
+		end
+	end
+end
+end
+
 function Lux:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1300, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_E, pos)
+end
 end	
 
 function Lux:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(3440)
 if target == nil then return end 	
 	local pos = GetPred(target, 3000, 1 + (Game.Latency()/1000))
 	Control.CastSpell(HK_R, pos)
+end
 end	
 
 function Lux:Draw()
@@ -1135,30 +1197,38 @@ function Cassiopeia:Tick()
 end
 
 function Cassiopeia:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(950)
 if target == nil then return end 	
 	local pos = GetPred(target, math.huge, 0.41 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Cassiopeia:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(900)
 if target == nil then return end 	
 	local pos = GetPred(target, 1500, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_W, pos)
+end
 end		
 
 function Cassiopeia:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(800)
 if target == nil then return end 	
 	Control.CastSpell(HK_E, target)
+end
 end		
 
 function Cassiopeia:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(925)
 if target == nil then return end 	
 	local pos = GetPred(target, 1500, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_R, pos)
+end
 end			
 
 function Cassiopeia:Draw()
@@ -1229,26 +1299,30 @@ function Karma:Tick()
 end
 
 function Karma:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1050)
 if target == nil then return end 	
 	local pos = GetPred(target, math.huge, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Karma:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(775)
 if target == nil then return end 	
 	Control.CastSpell(HK_W, target)
 end
+end
 
 function Karma:E()
+	if Ready(_E) then
 	if KoreanMechanics.Spell.EMode:Value() then
 		Control.CastSpell(HK_E, myHero)
 	end
 	Control.CastSpell(HK_E, mousePos)
 end
-
-
+end
 
 function Karma:Draw()
 	if not myHero.dead then
@@ -1312,16 +1386,20 @@ function Orianna:Tick()
 end
 
 function Orianna:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1225)
 if target == nil then return end 	
 	local pos = GetPred(target, 1200, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Orianna:E()
+if Ready(_E) then
 	if KoreanMechanics.Spell.EMode:Value() then
 		Control.CastSpell(HK_E, myHero)
 	end
+end
 end		
 
 function Orianna:Draw()
@@ -1393,22 +1471,28 @@ function Ryze:Tick()
 end
 
 function Ryze:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1100)
 if target == nil then return end 	
 	local pos = GetPred(target, 1700, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Ryze:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(800)
 if target == nil then return end 	
 	Control.CastSpell(HK_W, pos)
+end
 end	
 
 function Ryze:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(800)
 if target == nil then return end 	
 	Control.CastSpell(HK_E, target)
+end
 end	
 
 function Ryze:Draw()
@@ -1478,23 +1562,29 @@ function Jhin:Tick()
 end
 
 function Jhin:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(800)
 if target == nil then return end 	
 	Control.CastSpell(HK_Q, target)
+end
 end		
 
 function Jhin:W()
+	if Ready(_W) then	
 local target =  _G.SDK.TargetSelector:GetTarget(2600)
 if target == nil then return end 	
 	local pos = GetPred(target, 5000, 0.25 + (Game.Latency()/1000))
 	Control.CastSpell(HK_W, pos)
+end
 end	
 
 function Jhin:R()
+	if Ready(_R) or myHero:GetSpellData(_R).name == "JhinRShot" then
 local target =  _G.SDK.TargetSelector:GetTarget(3100)
 if target == nil then return end 	
 	local pos = GetPred(target, 1200, 1 + (Game.Latency()/1000))
 	Control.CastSpell(HK_R, pos)
+end
 end	
 
 function Jhin:Draw()
@@ -1548,10 +1638,12 @@ function Jayce:Tick()
 end
 
 function Jayce:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1600)
 if target == nil then return end 	
 	local pos = GetPred(target, 1382, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Jayce:Draw()
@@ -1599,10 +1691,12 @@ function Kennen:Tick()
 end
 
 function Kennen:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1050)
 if target == nil then return end 	
 	local pos = GetPred(target, 1700, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Kennen:Draw()
@@ -1655,13 +1749,16 @@ function Thresh:Tick()
 end
 
 function Thresh:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1500)
 if target == nil then return end 	
 	local pos = GetPred(target, 1900, 0.5 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Thresh:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(600)
 if target == nil then return end 
 	local pos = GetPred(target, 2000, 0.25 + (0.25 + Game.Latency())/1000)
@@ -1670,6 +1767,7 @@ if target == nil then return end
 				Control.CastSpell(HK_E, pos2)
 	end
 	Control.CastSpell(HK_E, pos)
+end
 end
 
 function Thresh:Draw()
@@ -1723,10 +1821,12 @@ function Amumu:Tick()
 end
 
 function Amumu:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1200)
 if target == nil then return end 	
 	local pos = GetPred(target, 2000, 0.15 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Amumu:Draw()
@@ -1793,19 +1893,24 @@ function Elise:Tick()
 end
 
 function Elise:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(725)
 if target == nil then return end 	
 	Control.CastSpell(HK_Q, pos)
+end
 end	
 
 function Elise:W()
+	if Ready(_W) then
 local target =  _G.SDK.TargetSelector:GetTarget(1050)
 if target == nil then return end 	
 	local pos = GetPred(target, 2000, 0.25 + (Game.Latency()/1000))
 	Control.CastSpell(HK_W, pos)
+end
 end	
 
 function Elise:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(1175)
 if target == nil then return end
 	local pos = GetPred(target, 1600, 0.25 + (Game.Latency()/1000))
@@ -1816,6 +1921,7 @@ if target == nil then return end
 			Control.CastSpell(HK_E, target)
 	end
 	Control.CastSpell(HK_E, mousePos)
+end
 end
 
 function Elise:Draw()
@@ -1902,13 +2008,16 @@ function Zilean:Tick()
 end
 
 function Zilean:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(1000)
 if target == nil then return end 	
 	local pos = GetPred(target, KoreanMechanics.Speed:Value(), 0.25 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
+end 
 end	
 
 function Zilean:E()
+	if Ready(_E) then
 local target =  _G.SDK.TargetSelector:GetTarget(850)
 	if KoreanMechanics.Spell.EMode:Value() then 
 		if target == nil then 	Control.CastSpell(HK_E, myHero) end
@@ -1921,8 +2030,10 @@ local target =  _G.SDK.TargetSelector:GetTarget(850)
 		Control.CastSpell(HK_E, mousePos)
 	end
 end
+end
 
 function Zilean:R()
+	if Ready(_R) then
 local Heroes = nil
 	if KoreanMechanics.Spell.RS.R:Value() and Ready(_R) then
 		local target =  _G.SDK.TargetSelector:GetTarget(1500)
@@ -1930,7 +2041,7 @@ local Heroes = nil
 		if target then
 			for i = 1, Game.HeroCount() do
 			local Heroes = Game.Hero(i)
-				if Heroes.distance < 900 and Heroes.isAlly and not Heroes.dead and Heroes.distance < 900 and (Heroes.health/Heroes.maxHealth) < (KoreanMechanics.Spell.RS.RHP:Value()/100) then
+				if Heroes.distance < 900 and Heroes.isAlly and not Heroes.dead and (Heroes.health/Heroes.maxHealth) < (KoreanMechanics.Spell.RS.RHP:Value()/100) then
 					Control.CastSpell(HK_R, Heroes)
 				end
 			end
@@ -1939,6 +2050,7 @@ local Heroes = nil
 			end
 		end
 	end
+end
 end
 
 function Zilean:Draw()
@@ -2007,17 +2119,21 @@ function Corki:Tick()
 end	
 
 function Corki:Q()
+	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(925)
 if target == nil then return end 	
 	local pos = GetPred(target, 1125, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_Q, pos)
 end
+end
 
 function Corki:R()
+	if Ready(_R) then
 local target =  _G.SDK.TargetSelector:GetTarget(1400)
 if target == nil then return end 	
 	local pos = GetPred(target, 2000, (0.25 + Game.Latency())/1000)
 	Control.CastSpell(HK_R, pos)
+end
 end	
 
 function Corki:Draw()
@@ -2036,6 +2152,59 @@ function Corki:Draw()
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.RR:Value(), KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end	 	    	
+	    end		
+	end
+end
+
+class "Sivir"
+
+function Sivir:__init()
+	print("Weedle's Sivir Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end	
+
+function Sivir:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1200, min = 0, max = 1200, step = 25})
+
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+end
+
+function Sivir:Tick()
+	if KoreanMechanics.Spell.Enabled:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+	end
+end	
+
+function Sivir:Q()
+	if Ready(_Q) then
+local target =  _G.SDK.TargetSelector:GetTarget(1300)
+if target == nil then return end 	
+	local pos = GetPred(target, 1350, 0.25 + (Game.Latency()/1000))
+	Control.CastSpell(HK_Q, pos)
+end
+end
+
+function Sivir:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Spell.Enabled:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
 	    end		
 	end
 end
