@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -12,7 +12,7 @@ KoreanMechanics:MenuElement({type = MENU, id = "Spell", name = "Spell Settings"}
 KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})	
-KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.2 by Weedle"})		
+KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.22 by Weedle"})		
 
 
 local _AllyHeroes
@@ -2206,6 +2206,80 @@ function Sivir:Draw()
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
+	    end		
+	end
+end
+
+class "Aatrox"
+
+function Aatrox:__init()
+	print("Weedle's Aatrox Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end	
+
+function Aatrox:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 650, min = 0, max = 650, step = 10})
+	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
+	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1075, min = 0, max = 1075, step = 10})	
+
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)}) 
+end
+
+function Aatrox:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+		if KoreanMechanics.Spell.E:Value() then
+			self:E()
+		end		
+	end
+end	
+
+function Aatrox:Q()
+	if Ready(_Q) then
+local target =  _G.SDK.TargetSelector:GetTarget(750)
+if target == nil then return end 	
+	local pos = GetPred(target, 2000, 0.6 + (Game.Latency()/1000))
+	Control.CastSpell(HK_Q, pos)
+end
+end
+
+function Aatrox:E()
+	if Ready(_E) then
+local target =  _G.SDK.TargetSelector:GetTarget(1350)
+if target == nil then return end 	
+	local pos = GetPred(target, 1250, 0.25 + (Game.Latency()/1000))
+	Control.CastSpell(HK_E, pos)
+end
+end
+
+function Aatrox:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	end		    	
 	    end		
 	end
 end
