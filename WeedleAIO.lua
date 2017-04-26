@@ -6,8 +6,9 @@ local function Ready(spell)
 end
 
 local KoreanMechanics = MenuElement({type = MENU, id = "KoreanMechanics", name = "WeedleAIO", leftIcon = "http://4.1m.yt/d5VbDBm.png"})
+KoreanMechanics:MenuElement({id = "Hold", name = "Hold Enable Key", key = string.byte(" ")})
+KoreanMechanics:MenuElement({id = "Enabled", name = "Toggle Enable Key", key = string.byte("M"), toggle = true})
 KoreanMechanics:MenuElement({type = MENU, id = "Spell", name = "Spell Settings"})
-	KoreanMechanics.Spell:MenuElement({id = "Enabled", name = "Enabled", key = string.byte(" "), toggle = true})
 KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})	
@@ -194,7 +195,7 @@ function Ezreal:Menu()
 end
 
 function Ezreal:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -238,10 +239,10 @@ function Ezreal:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -275,7 +276,7 @@ function Zed:Menu()
 end
 
 function Zed:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -306,10 +307,10 @@ function Zed:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -345,7 +346,7 @@ function Ahri:Menu()
 end
 
 function Ahri:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -377,10 +378,10 @@ function Ahri:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 					Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -413,7 +414,7 @@ function Blitzcrank:Menu()
 end 
 
 function Blitzcrank:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -433,10 +434,10 @@ function Blitzcrank:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -473,7 +474,7 @@ function Caitlyn:Menu()
 end
 
 function Caitlyn:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -516,10 +517,10 @@ function Caitlyn:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -565,7 +566,7 @@ function Brand:Menu()
 end
 
 function Brand:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -619,10 +620,10 @@ function Brand:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -671,7 +672,7 @@ function Ziggs:Menu()
 end
 
 function Ziggs:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -727,10 +728,10 @@ function Ziggs:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -772,7 +773,7 @@ function Morgana:Menu()
 end
 
 function Morgana:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -804,10 +805,10 @@ function Morgana:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -853,7 +854,7 @@ function Syndra:Menu()
 end
 
 function Syndra:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -908,10 +909,10 @@ function Syndra:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -958,7 +959,7 @@ function KogMaw:Menu()
 end
 
 function KogMaw:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1018,10 +1019,10 @@ function KogMaw:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1069,7 +1070,7 @@ function Lux:Menu()
 end
 
 function Lux:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1129,10 +1130,10 @@ function Lux:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1180,7 +1181,7 @@ function Cassiopeia:Menu()
 end
 
 function Cassiopeia:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1235,10 +1236,10 @@ function Cassiopeia:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1285,7 +1286,7 @@ function Karma:Menu()
 end
 
 function Karma:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1328,10 +1329,10 @@ function Karma:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end
 			if KoreanMechanics.Spell.EMode:Value() then
@@ -1375,7 +1376,7 @@ function Orianna:Menu()
 end
 
 function Orianna:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1406,10 +1407,10 @@ function Orianna:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Spell.EMode:Value() then
@@ -1457,7 +1458,7 @@ function Ryze:Menu()
 end
 
 function Ryze:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1499,10 +1500,10 @@ function Ryze:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1548,7 +1549,7 @@ function Jhin:Menu()
 end
 
 function Jhin:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1591,10 +1592,10 @@ function Jhin:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1630,7 +1631,7 @@ function Jayce:Menu()
 end
 
 function Jayce:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "JayceShockBlast" then
 			self:Q()
 		end
@@ -1650,10 +1651,10 @@ function Jayce:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1683,7 +1684,7 @@ function Kennen:Menu()
 end
 
 function Kennen:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1703,10 +1704,10 @@ function Kennen:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1738,7 +1739,7 @@ function Thresh:Menu()
 end
 
 function Thresh:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "ThreshQ" then
 			self:Q()
 		end
@@ -1774,10 +1775,10 @@ function Thresh:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end
 			if KoreanMechanics.Spell.EMode:Value() then
@@ -1813,7 +1814,7 @@ function Amumu:Menu()
 end
 
 function Amumu:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1833,10 +1834,10 @@ function Amumu:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -1879,7 +1880,7 @@ function Elise:Menu()
 end
 
 function Elise:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1928,10 +1929,10 @@ function Elise:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end
 			if KoreanMechanics.Spell.EMode:Value() then
@@ -1994,7 +1995,7 @@ function Zilean:Menu()
 end
 
 function Zilean:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2057,10 +2058,10 @@ function Zilean:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
-			if KoreanMechanics.Spell.Enabled:Value() then
+			if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end
 			if KoreanMechanics.Spell.EMode:Value() then
@@ -2108,7 +2109,7 @@ function Corki:Menu()
 end
 
 function Corki:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2140,10 +2141,10 @@ function Corki:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
@@ -2176,7 +2177,7 @@ function Sivir:Menu()
 end
 
 function Sivir:Tick()
-	if KoreanMechanics.Spell.Enabled:Value() then
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2196,10 +2197,10 @@ function Sivir:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
-	   		if KoreanMechanics.Spell.Enabled:Value() then
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
 			end
-			if not KoreanMechanics.Spell.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
