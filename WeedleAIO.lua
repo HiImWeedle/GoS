@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -12,7 +12,7 @@ KoreanMechanics:MenuElement({type = MENU, id = "Spell", name = "Spell Settings"}
 KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})	
-KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.22 by Weedle"})		
+KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.23 by Weedle and Sofie"})		
 
 
 local _AllyHeroes
@@ -151,21 +151,21 @@ local function GetPred(unit,speed,delay)
 	end
 end
 
---local isCasting = 0 
---function KoreanCast(key, pos)
---local Cursor = mousePos
---    if pos == nil or isCasting == 1 then return end
---    isCasting = 1
---        Control.SetCursorPos(pos)
---        DelayAction(function()
---        	if Control.IsKeyDown(key) == false then
---       		 Control.SetCursorPos(Cursor)
---        	end
---        DelayAction(function()
---         isCasting = 0
---        end, 0.002)
---        end, (KoreanMechanics.delay:Value() + Game.Latency()) / 1000)
---end 
+local isCasting = 0 
+function KoreanCast(key, pos)
+local Cursor = mousePos
+    if pos == nil or isCasting == 1 then return end
+    isCasting = 1
+        Control.SetCursorPos(pos)
+        DelayAction(function()
+        	if Control.IsKeyDown(key) == false then
+       		 Control.SetCursorPos(Cursor)
+        	end
+        DelayAction(function()
+         isCasting = 0
+        end, 0.002)
+        end, (KoreanMechanics.delay:Value() + Game.Latency()) / 1000)
+end 
 
 
 class "Ezreal"
@@ -228,7 +228,7 @@ end
 
 function Ezreal:R()	
 	if Ready(_R) then
-local targety =  _G.SDK.TargetSelector:GetTarget(20000)
+local targety =  _G.SDK.TargetSelector:GetTarget()
 	if targety == nil then return end 	
 	local pos = GetPred(targety, 2000, 0.25 + Game.Latency()/1000)
 	Control.CastSpell(HK_R, pos)
@@ -717,7 +717,7 @@ end
 
 function Ziggs:R()
 	if Ready(_R) then
-local targety =  _G.SDK.TargetSelector:GetTarget(20000)
+local targety =  _G.SDK.TargetSelector:GetTarget()
 	if targety == nil then return end 	
 	local pos = GetPred(targety, 1750, 0.25 + Game.Latency()/1000)
 	Control.CastSpell(HK_R, pos)
@@ -2280,6 +2280,93 @@ function Aatrox:Draw()
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end		    	
+	    end		
+	end
+end
+
+class "Jinx"
+
+function Jinx:__init()
+	print("Weedle's Jinx Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end	
+
+function Jinx:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1500, min = 0, max = 1500, step = 25})
+	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("R")})
+	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 900, min = 0, max = 900, step = 25})
+	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})	
+
+	KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
+    KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.WD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.WD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})  
+end
+
+function Jinx:Tick()
+	if KoreanMechanics.Enabled:Value() then
+		if KoreanMechanics.Spell.W:Value() then
+			self:W()
+		end
+		if KoreanMechanics.Spell.E:Value() then
+			self:E()
+		end		
+		if KoreanMechanics.Spell.R:Value() then
+			self:R()
+		end			
+	end
+end
+
+function Jinx:W()
+	if Ready(_W) then
+local target =  _G.SDK.TargetSelector:GetTarget(1600)
+if target == nil then return end 	
+	local pos = GetPred(target, 1500, (0.25 + Game.Latency())/1000)
+	Control.CastSpell(HK_W, pos)
+end
+end
+
+function Jinx:E()
+	if Ready(_E) then
+local target =  _G.SDK.TargetSelector:GetTarget(925)
+if target == nil then return end 	
+	local pos = GetPred(target, 900, (0.25 + Game.Latency())/1000)
+	Control.CastSpell(HK_E, pos)
+end
+end
+
+function Jinx:R()	
+	if Ready(_R) then
+local targety =  _G.SDK.TargetSelector:GetTarget()
+	if targety == nil then return end 	
+	local pos = GetPred(targety, 2500, 0.25 + Game.Latency()/1000)
+	Control.CastSpell(HK_R, pos)
+end
+end
+
+function Jinx:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.WD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	end	 	    	
 	    end		
 	end
 end
