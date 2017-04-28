@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -2404,6 +2404,55 @@ function Jinx:Draw()
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	 	    	
+	    end		
+	end
+end
+
+class "Warwick"
+
+function Warwick:__init()
+	print("Weedle's Warwick Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end	
+
+function Warwick:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
+
+    KoreanMechanics.Draw:MenuElement({id = "RD", name = "Draw R range", type = MENU})
+    KoreanMechanics.Draw.RD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.RD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.RD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})  
+end
+
+function Warwick:Tick()
+	if KoreanMechanics.Enabled:Value() then
+		if KoreanMechanics.Spell.R:Value() then
+			self:R()
+		end			
+	end
+end
+
+function Warwick:R()	
+	if Ready(_R) then
+local targety =  _G.SDK.TargetSelector:GetTarget()
+	if targety == nil then return end 	
+	local pos = GetPred(targety, myHero:GetSpellData(R).range, 0.25 + Game.Latency()/1000)
+	Control.CastSpell(HK_R, pos)
+end
+end
+
+function Warwick:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 	    	
 	    end		
 	end
 end
