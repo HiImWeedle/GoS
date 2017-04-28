@@ -12,7 +12,7 @@ KoreanMechanics:MenuElement({type = MENU, id = "Spell", name = "Spell Settings"}
 KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})	
-KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.23 by Weedle and Sofie"})		
+KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.24 by Weedle and Sofie"})		
 
 
 local _AllyHeroes
@@ -2415,7 +2415,10 @@ function Warwick:Draw()
 			end
 			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
-			end 	    	
+			end
+			if KoreanMechanics.Draw.RD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, myHero:GetSpellData(R).range, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	end	    	
 	    end		
 	end
 end
