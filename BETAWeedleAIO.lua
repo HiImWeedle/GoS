@@ -1,4 +1,4 @@
-local KoreanChamps = {"Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bardo", "Ashe", "Annie", "Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -181,7 +181,6 @@ function Ezreal:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
 	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})	
 	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
@@ -196,7 +195,7 @@ function Ezreal:Menu()
 end
 
 function Ezreal:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -204,9 +203,6 @@ function Ezreal:Tick()
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
 		end	
-		if KoreanMechanics.Spell.E:Value() then
-			self:E()
-		end		
 		if KoreanMechanics.Spell.R:Value() then
 			self:R()
 		end
@@ -230,13 +226,6 @@ if target == nil then return end
 	Control.CastSpell(HK_W, pos)
 end
 end
-
-function Ezreal:E()
-	if Ready(_E) then
-	Control.CastSpell(HK_E, mousePos)
-	end
-end	
-
 
 function Ezreal:R()	
 	if Ready(_R) then
@@ -288,7 +277,7 @@ function Zed:Menu()
 end
 
 function Zed:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -359,7 +348,7 @@ function Ahri:Menu()
 end
 
 function Ahri:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -428,7 +417,7 @@ function Blitzcrank:Menu()
 end 
 
 function Blitzcrank:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -489,7 +478,7 @@ function Caitlyn:Menu()
 end
 
 function Caitlyn:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -582,7 +571,7 @@ function Brand:Menu()
 end
 
 function Brand:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -689,7 +678,7 @@ function Ziggs:Menu()
 end
 
 function Ziggs:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -791,7 +780,7 @@ function Morgana:Menu()
 end
 
 function Morgana:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -873,8 +862,8 @@ function Syndra:Menu()
 end
 
 function Syndra:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -979,8 +968,8 @@ function KogMaw:Menu()
 end
 
 function KogMaw:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1091,8 +1080,8 @@ function Lux:Menu()
 end
 
 function Lux:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1203,8 +1192,8 @@ function Cassiopeia:Menu()
 end
 
 function Cassiopeia:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1309,8 +1298,8 @@ function Karma:Menu()
 end
 
 function Karma:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1400,8 +1389,8 @@ function Orianna:Menu()
 end
 
 function Orianna:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1483,8 +1472,8 @@ function Ryze:Menu()
 end
 
 function Ryze:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1575,8 +1564,8 @@ function Jhin:Menu()
 end
 
 function Jhin:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1658,8 +1647,8 @@ function Jayce:Menu()
 end
 
 function Jayce:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "JayceShockBlast" then
 			self:Q()
 		end
@@ -1712,8 +1701,8 @@ function Kennen:Menu()
 end
 
 function Kennen:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1768,8 +1757,8 @@ function Thresh:Menu()
 end
 
 function Thresh:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "ThreshQ" then
 			self:Q()
 		end
@@ -1844,8 +1833,8 @@ function Amumu:Menu()
 end
 
 function Amumu:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1911,8 +1900,8 @@ function Elise:Menu()
 end
 
 function Elise:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2027,8 +2016,8 @@ function Zilean:Menu()
 end
 
 function Zilean:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2142,7 +2131,7 @@ function Corki:Menu()
 end
 
 function Corki:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -2211,7 +2200,7 @@ function Sivir:Menu()
 end
 
 function Sivir:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -2271,7 +2260,7 @@ function Aatrox:Menu()
 end
 
 function Aatrox:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
@@ -2347,7 +2336,7 @@ function Jinx:Menu()
 end
 
 function Jinx:Tick()
-	if myHero.attackData.state == STATE_WINDUP then return end	
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() then
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
@@ -2427,6 +2416,7 @@ function Warwick:Menu()
 end
 
 function Warwick:Tick()
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() then
 		if KoreanMechanics.Spell.R:Value() then
 			self:R()
@@ -2444,7 +2434,6 @@ function Warwick:R()
 end
 
 function Warwick:Draw()
-	local range = myHero:GetSpellData(R).range
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
@@ -2454,6 +2443,7 @@ function Warwick:Draw()
 			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end
+			local range = myHero:GetSpellData(_R).range			
 			if range == nil then return end
 			if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, range, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
@@ -2488,6 +2478,7 @@ function Annie:Menu()
 end
 
 function Annie:Tick()
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() then
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
@@ -2554,13 +2545,10 @@ function Ashe:Menu()
     KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
     KoreanMechanics.Draw.WD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
     KoreanMechanics.Draw.WD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
-    KoreanMechanics.Draw:MenuElement({id = "RD", name = "Draw R range", type = MENU})
-    KoreanMechanics.Draw.RD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
-    KoreanMechanics.Draw.RD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
-    KoreanMechanics.Draw.RD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})  
 end
 
 function Ashe:Tick()
+	if myHero.attackData.state == STATE_WINDUP then return end
 	if KoreanMechanics.Enabled:Value() then
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
@@ -2590,7 +2578,6 @@ end
 end
 
 function Ashe:Draw()
-	local range = myHero:GetSpellData(R).range
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
@@ -2603,24 +2590,20 @@ function Ashe:Draw()
 			if KoreanMechanics.Draw.WD.Enabled:Value() then
 				Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 			end
-			if range == nil then return end
-			if KoreanMechanics.Draw.RD.Enabled:Value() then
-				Draw.Circle(myHero.pos, range, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
-			end
 		end	 	    	
 	end		
 end
 
-class "Bardo"
+class "Bard"
 
-function Bardo:__init()
-	print("Weedle's Bardo Loaded")
+function Bard:__init()
+	print("Weedle's Bard Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
 	self:Menu()
 end	
 
-function Bardo:Menu()
+function Bard:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
 	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 925, min = 0, max = 925, step = 25})
 
@@ -2630,25 +2613,25 @@ function Bardo:Menu()
     KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
 end
 
-function Bardo:Tick()
-	if KoreanMechanics.Enabled:Value() then
+function Bard:Tick()
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end	
 	end
 end
 
-function Bardo:Q()
+function Bard:Q()
 	if Ready(_Q) then
-local target =  _G.SDK.TargetSelector:GetTarget(1600)
+local target =  _G.SDK.TargetSelector:GetTarget(1025)
 if target == nil then return end 	
-	local pos = GetPred(target, 925, (0.25 + Game.Latency())/1000)
+	local pos = GetPred(target, 925, 0.25 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
 end
 end
 
-function Bardo:Draw()
-	local range = myHero:GetSpellData(R).range
+function Bard:Draw()
 	if not myHero.dead then
 		if KoreanMechanics.Draw.Enabled:Value() then
 			local textPos = myHero.pos:To2D()
@@ -2685,8 +2668,9 @@ function LeeSin:Menu()
 end
 
 function LeeSin:Tick()
-	if KoreanMechanics.Enabled:Value() then
-		if KoreanMechanics.Spell.Q:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "BlindMonkQOne" then
 			self:Q()
 		end
 	end
@@ -2696,10 +2680,8 @@ function LeeSin:Q()
 	if Ready(_Q) then
 		local target = _G.SDK.TargetSelector:GetTarget(1350)
 		if target == nil then return end
-		local pos = GetPred(target, range, (0.25 + Game.Latency())/1000)
-		if myHero:GetSpellData(_Q).name == "BlindMonkQOne" then
-			Control.CastSpell(HK_Q, pos)
-		end
+		local pos = GetPred(target, 1800, 0.25 + (Game.Latency()/1000))
+		Control.CastSpell(HK_Q, pos)
 	end
 end
 
@@ -2731,7 +2713,7 @@ end
 
 function Lissandra:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 725, min = 0, max = 725, step = 25})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 700, min = 0, max = 700, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
 	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1050, min = 0, max = 1050, step = 25})
 
@@ -2746,7 +2728,8 @@ function Lissandra:Menu()
 end
 
 function Lissandra:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2758,9 +2741,9 @@ end
 
 function Lissandra:Q()
 	if Ready(_Q) then
-local target = _G.SDK.TargetSelector:GetTarget(950)
+local target = _G.SDK.TargetSelector:GetTarget(800)
 if target == nil then return end
-    local pos = GetPred(target, 725, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 2200, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_Q, pos)
 end
 end
@@ -2769,7 +2752,7 @@ function Lissandra:E()
 	if Ready(_E) then
 local target = _G.SDK.TargetSelector:GetTarget(1250)
 if target == nil then return end
-    local pos = GetPred(target, 1050, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 850, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_E, pos)
 end
 end
@@ -2820,7 +2803,8 @@ function Nami:Menu()
 end
 
 function Nami:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2834,7 +2818,7 @@ function Nami:Q()
 	if Ready(_Q) then
 local target = _G.SDK.TargetSelector:GetTarget(925)
 if target == nil then return end
-    local pos = GetPred(target, 875, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 875, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_Q, pos)
 end
 end
@@ -2843,7 +2827,7 @@ function Nami:R()
 	if Ready(_R) then
 local target = _G.SDK.TargetSelector:GetTarget(2850)
 if target == nil then return end
-    local pos = GetPred(target, 2750, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 2750, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_R, pos)
 end
 end
@@ -2888,7 +2872,8 @@ function Rengar:Menu()
 end
 
 function Rengar:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:E()
 		end
@@ -2899,7 +2884,7 @@ function Rengar:E()
 	if Ready(_E) then
 local target = _G.SDK.TargetSelector:GetTarget(1250)
 if target == nil then return end
-    local pos = GetPred(target, 1000, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 1500, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_E, pos)
 end
 end
@@ -2959,7 +2944,8 @@ function Veigar:Menu()
 end
 
 function Veigar:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2979,7 +2965,7 @@ function Veigar:Q()
 	if Ready(_Q) then
 local target = _G.SDK.TargetSelector:GetTarget(1100)
 if target == nil then return end
-    local pos = GetPred(target, 950, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 2000, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_Q, pos)
 end
 end
@@ -2988,7 +2974,7 @@ function Veigar:W()
 	if Ready(_W) then
 local target = _G.SDK.TargetSelector:GetTarget(1100)
 if target == nil then return end
-    local pos = GetPred(target, 900, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, math.huge, 1.35 + (Game.Latency()/1000))
     Control.CastSpell(HK_W, pos)
 end
 end
@@ -2997,17 +2983,16 @@ function Veigar:E()
 	if Ready(_E) then
 local target = _G.SDK.TargetSelector:GetTarget(925)
 if target == nil then return end
-    local pos = GetPred(target, 700, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 700, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_E, pos)
 end
 end
 
 function Veigar:R()
 	if Ready(_R) then
-local target = _G.SDK.TargetSelector:GetTarget(925)
+local target = _G.SDK.TargetSelector:GetTarget(750)
 if target == nil then return end
-    local pos = GetPred(target, 650, (0.25 + Game.Latency())/1000)
-    Control.CastSpell(HK_R, pos)
+    Control.CastSpell(HK_R, target.pos)
 end
 end
 
@@ -3063,7 +3048,8 @@ function Soraka:Menu()
 end
 
 function Soraka:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -3077,7 +3063,7 @@ function Soraka:Q()
 	if Ready(_Q) then
 local target = _G.SDK.TargetSelector:GetTarget(950)
 if target == nil then return end
-    local pos = GetPred(target, 800, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 1750, 0.5 + (Game.Latency()/1000))
     Control.CastSpell(HK_Q, pos)
 end
 end
@@ -3086,7 +3072,7 @@ function Soraka:E()
 	if Ready(_E) then
 local target = _G.SDK.TargetSelector:GetTarget(1000)
 if target == nil then return end
-    local pos = GetPred(target, 925, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 925, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_E, pos)
 end
 end
@@ -3131,7 +3117,8 @@ function Skarner:Menu()
 end
 
 function Skarner:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.E:Value() then
 			self:E()
 		end
@@ -3142,7 +3129,7 @@ function Skarner:E()
 	if Ready(_E) then
 local target = _G.SDK.TargetSelector:GetTarget(1250)
 if target == nil then return end
-    local pos = GetPred(target, 1000, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 1500, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_E, pos)
 end
 end
@@ -3184,7 +3171,8 @@ function Twitch:Menu()
 end
 
 function Twitch:Tick()
-	if KoreanMechanics.Enabled:Value() then
+	if myHero.attackData.state == STATE_WINDUP then return end
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.W:Value() then
 			self:W()
 		end
@@ -3195,7 +3183,7 @@ function Twitch:W()
 	if Ready(_W) then
 local target = _G.SDK.TargetSelector:GetTarget(1100)
 if target == nil then return end
-    local pos = GetPred(target, 950, (0.25 + Game.Latency())/1000)
+    local pos = GetPred(target, 1400, 0.25 + (Game.Latency()/1000))
     Control.CastSpell(HK_W, pos)
 end
 end
