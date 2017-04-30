@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -80,6 +80,15 @@ local function GetBuffs(unit)
 		end
 	end
 	return t
+end
+
+function HasBuff(unit, buffname)
+	for K, Buff in pairs(GetBuffs(unit)) do
+		if Buff.name:lower() == buffname:lower() then
+			return true
+		end
+	end
+	return false
 end
 
 local sqrt = math.sqrt 
@@ -3201,6 +3210,119 @@ function Twitch:Draw()
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
+	    end		
+	end
+end
+
+class "TwistedFate"
+
+function TwistedFate:__init()
+	print("Weedle's Twisted Fate Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+	Color = 0	
+    LastW = 0	
+end
+
+function TwistedFate:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1450, min = 0, max = 1450, step = 25}) --1000 speed
+
+	KoreanMechanics.Spell:MenuElement({id = "WG", name = "Gold Card Key", key = " "})
+	KoreanMechanics.Spell:MenuElement({id = "WB", name = "Blue Card Key", key = "E"})	
+	KoreanMechanics.Spell:MenuElement({id = "WR", name = "Red Card Key", key = "T"})
+	KoreanMechanics.Spell:MenuElement({id = "RS", name = "R Settings", type = MENU})	
+	KoreanMechanics.Spell.RS:MenuElement({id = "R", name = "Ult Gold Card", value = true})	
+
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "RD", name = "Draw R range", type = MENU})
+    KoreanMechanics.Draw.RD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.RD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.RD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+end
+
+
+function TwistedFate:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+		if KoreanMechanics.Spell.WG:Value() then
+			Color = 1
+			self:W()
+		end
+		if KoreanMechanics.Spell.WB:Value() then
+			Color = 2
+			self:W()
+		end
+		if KoreanMechanics.Spell.WR:Value() then
+			Color = 3
+			self:W()
+		end
+		if Color == 1 and myHero:GetSpellData(_W).name == "GoldCardLock" then 
+			Control.CastSpell(HK_W)	
+			DelayAction(function()
+			Color = 0
+			end, 0.1)			
+		end 
+		if Color == 2 and myHero:GetSpellData(_W).name == "BlueCardLock" then 
+			Control.CastSpell(HK_W)	
+			DelayAction(function()
+			Color = 0
+			end, 0.1)			
+		end 
+		if Color == 3 and myHero:GetSpellData(_W).name == "RedCardLock" then 
+			Control.CastSpell(HK_W)	
+			DelayAction(function()
+			Color = 0
+			end, 0.1)			
+		end 
+		if KoreanMechanics.Spell.RS.R:Value() then
+			if HasBuff(myHero, "Gate") then
+				Color = 1
+				self:W()
+			end
+		end				
+	end
+end	
+
+function TwistedFate:Q()
+	if Ready(_Q) then
+local target = _G.SDK.TargetSelector:GetTarget(1550)
+if target == nil then return end
+    local pos = GetPred(target, 1000, 0.25 + (Game.Latency()/1000))
+    Control.CastSpell(HK_Q, pos)
+end
+end
+
+function TwistedFate:W()
+	if Ready(_W) and myHero:GetSpellData(_W).name == "PickACard" and GetTickCount() > LastW + 400 then
+		Control.CastSpell(HK_W)
+		LastW = GetTickCount()		
+	end
+end
+
+
+function TwistedFate:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
+	    	    Draw.CircleMinimap(myHero.pos, 5500, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	end	 	    	
 	    end		
 	end
 end
