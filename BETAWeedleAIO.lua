@@ -863,7 +863,7 @@ end
 
 function Syndra:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -969,7 +969,7 @@ end
 
 function KogMaw:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1081,7 +1081,7 @@ end
 
 function Lux:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1193,7 +1193,7 @@ end
 
 function Cassiopeia:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1299,7 +1299,7 @@ end
 
 function Karma:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1390,7 +1390,7 @@ end
 
 function Orianna:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1473,7 +1473,7 @@ end
 
 function Ryze:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1565,7 +1565,7 @@ end
 
 function Jhin:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1648,7 +1648,7 @@ end
 
 function Jayce:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "JayceShockBlast" then
 			self:Q()
 		end
@@ -1702,7 +1702,7 @@ end
 
 function Kennen:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1758,7 +1758,7 @@ end
 
 function Thresh:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() and myHero:GetSpellData(_Q).name == "ThreshQ" then
 			self:Q()
 		end
@@ -1834,7 +1834,7 @@ end
 
 function Amumu:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -1901,7 +1901,7 @@ end
 
 function Elise:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2017,7 +2017,7 @@ end
 
 function Zilean:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end
@@ -2615,7 +2615,7 @@ end
 
 function Bard:Tick()
 	if myHero.attackData.state == STATE_WINDUP then return end
-	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() the 
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
 		if KoreanMechanics.Spell.Q:Value() then
 			self:Q()
 		end	
