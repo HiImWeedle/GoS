@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -12,7 +12,7 @@ KoreanMechanics:MenuElement({type = MENU, id = "Spell", name = "Spell Settings"}
 KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})	
-KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.30 by Weedle and Sofie"})		
+KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.31 by Weedle and Sofie"})		
 
 
 local _AllyHeroes
@@ -3285,6 +3285,59 @@ function TwistedFate:Draw()
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.CircleMinimap(myHero.pos, 5500, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end	 	    	
+	    end		
+	end
+end
+
+class "DrMundo"
+
+function DrMundo:__init()
+	print("Weedle's Mundo Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end
+
+function DrMundo:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1050, min = 0, max = 1050, step = 25})
+
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+end
+
+function DrMundo:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+	end
+end	
+
+function DrMundo:Q()
+	if Ready(_Q) then
+local target =  _G.SDK.TargetSelector:GetTarget(1150)
+if target == nil then return end 	
+	local pos = GetPred(target, 2000, 0.25 + (Game.Latency()/1000))
+	Control.CastSpell(HK_Q, pos)
+end
+end
+
+function DrMundo:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
 	    end		
 	end
 end
