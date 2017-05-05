@@ -96,6 +96,17 @@ function HasBuff(unit, buffname)
 	return false
 end
 
+function EnemiesAround(pos, range)
+	local Count = 0
+	for i = 1, Game.HeroCount() do
+		local e = Game.Hero(i)
+		if e and e.team ~= myHero.team and not e.dead and e.distance <= range then
+			Count = Count + 1
+		end
+	end
+	return Count
+end
+
 local sqrt = math.sqrt 
 local function GetDistance(p1,p2)
 	return sqrt((p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y) + (p2.z - p1.z)*(p2.z - p1.z))
@@ -3761,9 +3772,9 @@ function Karthus:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Aimbot Key", key = string.byte("Q")})
 	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 10}) --0.625 delay
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({type = MENU, id = "E", name = "Auto E"})	
-	KoreanMechanics.Spell.E:MenuElement({id = "ON", name = "Enabled", value = true})
-	KoreanMechanics.Spell.E:MenuElement({id = "Mana", name = "Mana (%) for E", value = 10, min = 0, max = 100, step = 1})
+	KoreanMechanics.Spell:MenuElement({type = MENU, id = "AE", name = "Auto E"})	
+	KoreanMechanics.Spell.AE:MenuElement({id = "ON", name = "Enabled", value = true})
+	KoreanMechanics.Spell.AE:MenuElement({id = "Mana", name = "Mana (%) for E", value = 10, min = 0, max = 100, step = 1})
 	KoreanMechanics.Spell:MenuElement({id = "RToggle", name = "R Toggle Key", key = string.byte("T"), toggle = true})	
 	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "1. Change the Q HK in league settings to new key"})
 	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "2. Change the HK_Q in GOS settings to same key"})	
@@ -3796,7 +3807,7 @@ function Karthus:Tick()
 			self:Q2()
 		end
 	end
-	if KoreanMechanics.Spell.E.ON:Value() then
+	if KoreanMechanics.Spell.AE.ON:Value() then
 		self:E()
 	end
 end
@@ -3805,7 +3816,7 @@ function Karthus:Q()
 	if Ready(_Q) then
 local target =  _G.SDK.TargetSelector:GetTarget(975)
 if target == nil then Karthus:Q2() end 	
-	local pos = GetPred(target, math.huge, 0.625 + (Game.Latency()/1000))
+	local pos = GetPred(target, 1500, 0.5 + (Game.Latency()/1000))
 	Control.CastSpell(HK_Q, pos)
 end
 end
@@ -3826,15 +3837,15 @@ end
 end	
 
 function Karthus:E()
-	if Ready(_E) and (myHero.mana/myHero.maxMana >= KoreanMechanics.Spell.E.Mana:Value() / 100) then
-		for i = 1, Game.HeroCount() do 
-		local hero = Game.Hero(i) 
-			if hero.isEnemy and IsValidTarget(hero, 800) then
-				if hero.distance <= 425 and not HasBuff(myHero, "KarthusDefile") then
-					Control.CastSpell(HK_E)
-				elseif hero.distance > 425 and HasBuff(myHero, "KarthusDefile") then
-					Control.CastSpell(HK_E)
-				end
+	if Ready(_E) and (myHero.mana/myHero.maxMana >= KoreanMechanics.Spell.AE.Mana:Value() / 100) then
+		local Count = EnemiesAround(myHero, 425)
+		if Count > 0 then
+			if myHero:GetSpellData(_E).toggleState == 1 then
+				Control.CastSpell(HK_E)
+			end
+		elseif Count == 0 then 
+			if myHero:GetSpellData(_E).toggleState == 2 then
+				Control.CastSpell(HK_E)
 			end
 		end
 	end
