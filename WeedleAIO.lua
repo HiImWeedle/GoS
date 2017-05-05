@@ -105,7 +105,6 @@ local function GetDistance2D(p1,p2)
 	return sqrt((p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y))
 end
 
-
 local _OnVision = {}
 function OnVision(unit)
 	if _OnVision[unit.networkID] == nil then _OnVision[unit.networkID] = {state = unit.visible , tick = GetTickCount(), pos = unit.pos} end
@@ -185,6 +184,10 @@ end
 class "Ezreal"
 
 function Ezreal:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Ezreal Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -193,9 +196,9 @@ end
 
 function Ezreal:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -260,10 +263,10 @@ function Ezreal:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end  	
 	    end		
 	end
@@ -272,6 +275,10 @@ end
 class "Zed"
 
 function Zed:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Zed Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -280,7 +287,7 @@ end
 
 function Zed:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Max Q Combo Range", value = 1600, min = 0, max = 1600, step = 25})
+	----KoreanMechanics.Spell:MenuElement({id = "QR", name = "Max Q Combo Range", value = 1600, min = 0, max = 1600, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -328,7 +335,7 @@ function Zed:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 900, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    end		
 	end
@@ -337,6 +344,10 @@ end
 class "Ahri"
 
 function Ahri:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Ahri Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -345,9 +356,9 @@ end
 
 function Ahri:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 950, min = 0, max = 950, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 950, min = 0, max = 950, step = 10})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -399,10 +410,10 @@ function Ahri:Draw()
 					Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -411,6 +422,10 @@ end
 class "Blitzcrank"
 
 function Blitzcrank:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Blitzcrank Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -419,7 +434,7 @@ end
 
 function Blitzcrank:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 925, min = 0, max = 925, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 925, min = 0, max = 925, step = 10})
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
 
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -455,7 +470,7 @@ function Blitzcrank:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    end		
 	end
@@ -464,6 +479,10 @@ end
 class "Caitlyn"
 
 function Caitlyn:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Caitlyn Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -472,9 +491,9 @@ end
 
 function Caitlyn:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1250, min = 0, max = 1250, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1250, min = 0, max = 1250, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})			
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -538,10 +557,10 @@ function Caitlyn:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -550,6 +569,10 @@ end
 class "Brand"
 
 function Brand:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Brand Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -558,11 +581,11 @@ end
 
 function Brand:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
+	----KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})			
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -641,13 +664,13 @@ function Brand:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	    	
 	    end		
 	end
@@ -656,6 +679,10 @@ end
 class "Ziggs"
 
 function Ziggs:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Ziggs Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -664,11 +691,11 @@ end
 
 function Ziggs:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 850, min = 0, max = 850, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 850, min = 0, max = 850, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1000, min = 0, max = 1000, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 900, min = 0, max = 900, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 900, min = 0, max = 900, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})	
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -749,13 +776,13 @@ function Ziggs:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	    	
 	    end		
 	end
@@ -764,6 +791,10 @@ end
 class "Morgana"
 
 function Morgana:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Morgana Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -772,9 +803,9 @@ end
 
 function Morgana:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1300, min = 0, max = 1300, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1300, min = 0, max = 1300, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 900, min = 0, max = 900, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 900, min = 0, max = 900, step = 10})	
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -826,10 +857,10 @@ function Morgana:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    end		
 	end
@@ -838,6 +869,10 @@ end
 class "Syndra"
 
 function Syndra:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Syndra Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -846,11 +881,11 @@ end
 
 function Syndra:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 800, min = 0, max = 800, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 800, min = 0, max = 800, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 925, min = 0, max = 925, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 925, min = 0, max = 925, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 650, min = 0, max = 650, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 650, min = 0, max = 650, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})			
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -930,13 +965,13 @@ function Syndra:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -945,6 +980,10 @@ end
 class "KogMaw"
 
 function KogMaw:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Kog'Maw Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -953,9 +992,9 @@ end
 
 function KogMaw:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1175, min = 0, max = 1175, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1175, min = 0, max = 1175, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1200, min = 0, max = 1200, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1200, min = 0, max = 1200, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})	
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -1040,10 +1079,10 @@ function KogMaw:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KogMaw:GetKogRange() , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
@@ -1055,6 +1094,10 @@ end
 class "Lux"
 
 function Lux:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Lux Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1063,10 +1106,10 @@ end
 
 function Lux:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1175, min = 0, max = 1175, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1175, min = 0, max = 1175, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1200, min = 0, max = 1200, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1200, min = 0, max = 1200, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -1151,13 +1194,13 @@ function Lux:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
-	    	    Draw.CircleMinimap(myHero.pos, 3340 , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	    Draw.CircleMinimap(myHero.pos, RRange , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end	    	
 	    end		
 	end
@@ -1166,6 +1209,10 @@ end
 class "Cassiopeia"
 
 function Cassiopeia:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Cassiopeia Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1174,9 +1221,9 @@ end
 
 function Cassiopeia:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 850, min = 0, max = 850, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 850, min = 0, max = 850, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 800, min = 0, max = 800, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 800, min = 0, max = 800, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Usage", key = string.byte("E")})	
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
@@ -1257,13 +1304,13 @@ function Cassiopeia:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 825 , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	    Draw.Circle(myHero.pos, RRange , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end	    	
 	    end		
 	end
@@ -1272,6 +1319,10 @@ end
 class "Karma"
 
 function Karma:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Karma Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1280,7 +1331,7 @@ end
 
 function Karma:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 950, min = 0, max = 950, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 950, min = 0, max = 950, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})		
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
 	KoreanMechanics.Spell:MenuElement({id = "EMode", name = "self E Toggle", key = string.byte("T"), toggle = true})	
@@ -1356,13 +1407,13 @@ function Karma:Draw()
 				Draw.Text("Self Shield OFF", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
 			end 			 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 675, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end			
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 800, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	 			
 		end
 	end
@@ -1371,6 +1422,10 @@ end
 class "Orianna"
 
 function Orianna:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Orianna Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1379,7 +1434,7 @@ end
 
 function Orianna:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1225, min = 0, max = 1225, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1225, min = 0, max = 1225, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})	
 	KoreanMechanics.Spell:MenuElement({id = "EMode", name = "self E Toggle", key = string.byte("T"), toggle = true})
 
@@ -1434,7 +1489,7 @@ function Orianna:Draw()
 				Draw.Text("Self E OFF", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
 			end 				
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 		end
 	end
@@ -1443,6 +1498,10 @@ end
 class "Ryze"
 
 function Ryze:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Ryze Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1451,11 +1510,11 @@ end
 
 function Ryze:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1000, min = 0, max = 1000, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1000, min = 0, max = 1000, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 615, min = 0, max = 615, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 615, min = 0, max = 615, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Usage", key = string.byte("E")})	
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 615, min = 0, max = 615, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 615, min = 0, max = 615, step = 10})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -1521,13 +1580,13 @@ function Ryze:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	    	
 	    end		
 	end
@@ -1536,6 +1595,10 @@ end
 class "Jhin"
 
 function Jhin:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Jhin Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1545,7 +1608,7 @@ end
 function Jhin:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 2500, min = 0, max = 600, step = 10})		
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 2500, min = 0, max = 600, step = 10})		
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -1616,7 +1679,7 @@ function Jhin:Draw()
 	    	    Draw.Circle(myHero.pos, 600, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.Circleminimap(myHero.pos, 3000 , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
@@ -1628,6 +1691,10 @@ end
 class "Jayce"
 
 function Jayce:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Jayce Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1636,7 +1703,7 @@ end
 
 function Jayce:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Max Range", value = 1600, min = 0, max = 1600, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Max Range", value = 1600, min = 0, max = 1600, step = 10})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -1672,7 +1739,7 @@ function Jayce:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 		end
 	end
@@ -1681,6 +1748,10 @@ end
 class "Kennen"
 
 function Kennen:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Kennen Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1689,7 +1760,7 @@ end
 
 function Kennen:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 950, min = 0, max = 950, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 950, min = 0, max = 950, step = 10})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -1725,7 +1796,7 @@ function Kennen:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 		end
 	end
@@ -1734,6 +1805,10 @@ end
 class "Thresh"
 
 function Thresh:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Thresh Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1742,7 +1817,7 @@ end
 
 function Thresh:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1050, min = 0, max = 1050, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1050, min = 0, max = 1050, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})	
 	KoreanMechanics.Spell:MenuElement({id = "EMode", name = "E Pull Toggle", key = string.byte("T"), toggle = true})	
 
@@ -1802,7 +1877,7 @@ function Thresh:Draw()
 				Draw.Text("U Pull Mode OFF", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
 			end 			 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 		end
 	end
@@ -1811,6 +1886,10 @@ end
 class "Amumu"
 
 function Amumu:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Amumu Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1819,7 +1898,7 @@ end
 
 function Amumu:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1100, min = 0, max = 1100, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1100, min = 0, max = 1100, step = 10})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -1855,7 +1934,7 @@ function Amumu:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 		end
 	end
@@ -1864,6 +1943,10 @@ end
 class "Elise"
 
 function Elise:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Elise Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1872,11 +1955,11 @@ end
 
 function Elise:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "max Q Range", value = 625, min = 0, max = 625, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "max Q Range", value = 625, min = 0, max = 625, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 950, min = 0, max = 950, step = 10})		
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 950, min = 0, max = 950, step = 10})		
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Usage", key = string.byte("E")})	
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1075, min = 0, max = 1075, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1075, min = 0, max = 1075, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "EMode", name = "Spider E on Enemy Toggle", key = string.byte("T"), toggle = true})		
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
@@ -1956,16 +2039,16 @@ function Elise:Draw()
 				Draw.Text("Spider E on Enemies OFF", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
 			end 	
 			if KoreanMechanics.Draw.QD.Enabled:Value() and myHero:GetSpellData(_Q).name == "EliseHumanQ"  then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.QD.Enabled:Value() and myHero:GetSpellData(_Q).name ~= "EliseHumanQ" then
 	    		 Draw.Circle(myHero.pos, 475, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end	 
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() and myHero:GetSpellData(_E).name == "EliseHumanE" then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() and myHero:GetSpellData(_E).name ~= "EliseHumanE" then
 	    	    Draw.Circle(myHero.pos, 800, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
@@ -1977,6 +2060,10 @@ end
 class "Zilean"
 
 function Zilean:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Zilean Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -1986,9 +2073,9 @@ end
 function Zilean:Menu()
 	KoreanMechanics:MenuElement({id = "Speed", name = "Q Pred Speed", value = 1500, min = 500, max = 2000, step = 50})
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "max Q Range", value = 900, min = 0, max = 900, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "max Q Range", value = 900, min = 0, max = 900, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Usage", key = string.byte("E")})	
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 750, min = 0, max = 750, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "EMode", name = "Auto target E Toggle", key = string.byte("T"), toggle = true})	
 	KoreanMechanics.Spell:MenuElement({id = "RS", name = "R Settings", type = MENU})
 	KoreanMechanics.Spell.RS:MenuElement({id = "R", name = "R Usage", value = true})				
@@ -2085,10 +2172,10 @@ function Zilean:Draw()
 				Draw.Text("Smart E OFF", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
 			end 			 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-			    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+			    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, 900 , KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
@@ -2100,6 +2187,10 @@ end
 class "Corki"
 
 function Corki:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Corki Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2108,9 +2199,9 @@ end
 
 function Corki:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 825, min = 0, max = 825, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 825, min = 0, max = 825, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
-	KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 1300, min = 0, max = 1300, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 1300, min = 0, max = 1300, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2162,10 +2253,10 @@ function Corki:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.RR:Value(), KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	    Draw.Circle(myHero.pos, RRange, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end	 	    	
 	    end		
 	end
@@ -2174,6 +2265,10 @@ end
 class "Sivir"
 
 function Sivir:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Sivir Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2182,7 +2277,7 @@ end
 
 function Sivir:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1200, min = 0, max = 1200, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1200, min = 0, max = 1200, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2218,7 +2313,7 @@ function Sivir:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    end		
 	end
@@ -2227,6 +2322,10 @@ end
 class "Aatrox"
 
 function Aatrox:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Aatrox Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2235,9 +2334,9 @@ end
 
 function Aatrox:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 650, min = 0, max = 650, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 650, min = 0, max = 650, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1075, min = 0, max = 1075, step = 10})	
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1075, min = 0, max = 1075, step = 10})	
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2289,10 +2388,10 @@ function Aatrox:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end		    	
 	    end		
 	end
@@ -2301,6 +2400,10 @@ end
 class "Jinx"
 
 function Jinx:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Jinx Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2309,9 +2412,9 @@ end
 
 function Jinx:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1500, min = 0, max = 1500, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1500, min = 0, max = 1500, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("R")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 900, min = 0, max = 900, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 900, min = 0, max = 900, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})	
 
 	KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
@@ -2376,10 +2479,10 @@ function Jinx:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	 	    	
 	    end		
 	end
@@ -2388,6 +2491,10 @@ end
 class "Warwick"
 
 function Warwick:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Warwick Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2442,6 +2549,10 @@ end
 class "Annie"
 
 function Annie:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Annie Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2450,9 +2561,9 @@ end
 
 function Annie:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 600, min = 0, max = 600, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 600, min = 0, max = 600, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})	
-	KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 600, min = 0, max = 600, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 600, min = 0, max = 600, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
     KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2504,10 +2615,10 @@ function Annie:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.WD.Enabled:Value() then
-				Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+				Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 			end
 			if KoreanMechanics.Draw.RD.Enabled:Value() then
-				Draw.Circle(myHero.pos, KoreanMechanics.Spell.RR:Value(), KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+				Draw.Circle(myHero.pos, RRange, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 			end
 		end	 	    	
 	end		
@@ -2516,6 +2627,10 @@ end
 class "Ashe"
 
 function Ashe:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Ashe Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2524,7 +2639,7 @@ end
 
 function Ashe:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1200, min = 0, max = 1200, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1200, min = 0, max = 1200, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
 
 	KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
@@ -2573,7 +2688,7 @@ function Ashe:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.WD.Enabled:Value() then
-				Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+				Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 			end
 		end	 	    	
 	end		
@@ -2582,6 +2697,10 @@ end
 class "Bard"
 
 function Bard:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Bard Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2590,7 +2709,7 @@ end
 
 function Bard:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 925, min = 0, max = 925, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 925, min = 0, max = 925, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2626,7 +2745,7 @@ function Bard:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-				Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+				Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 			end
 		end	 	    	
 	end		
@@ -2635,6 +2754,10 @@ end
 class "LeeSin"
 
 function LeeSin:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Lee Sin Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2643,7 +2766,7 @@ end
 
 function LeeSin:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1100, min = 0, max = 1100, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1100, min = 0, max = 1100, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2679,7 +2802,7 @@ function LeeSin:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    end		
 	end
@@ -2688,6 +2811,10 @@ end
 class "Lissandra"
 
 function Lissandra:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Lissandra Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2696,9 +2823,9 @@ end
 
 function Lissandra:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 700, min = 0, max = 700, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 700, min = 0, max = 700, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1050, min = 0, max = 1050, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1050, min = 0, max = 1050, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2750,10 +2877,10 @@ function Lissandra:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -2762,6 +2889,10 @@ end
 class "Nami"
 
 function Nami:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Nami Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2770,9 +2901,9 @@ end
 
 function Nami:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
-	KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 2750, min = 0, max = 2750, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 2750, min = 0, max = 2750, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2824,10 +2955,10 @@ function Nami:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.RR:Value(), KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	    Draw.Circle(myHero.pos, RRange, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end
 	    end		
 	end
@@ -2836,6 +2967,10 @@ end
 class "Rengar"
 
 function Rengar:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Rengar Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2844,7 +2979,7 @@ end
 
 function Rengar:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1000, min = 0, max = 1000, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1000, min = 0, max = 1000, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
     KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2880,7 +3015,7 @@ function Rengar:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -2889,6 +3024,10 @@ end
 class "Veigar"
 
 function Veigar:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Veigar Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -2897,13 +3036,13 @@ end
 
 function Veigar:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 950, min = 0, max = 950, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 950, min = 0, max = 950, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 900, min = 0, max = 900, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 900, min = 0, max = 900, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 700, min = 0, max = 700, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 700, min = 0, max = 700, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})
-	KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 650, min = 0, max = 650, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "RR", name = "R Range", value = 650, min = 0, max = 650, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -2986,16 +3125,16 @@ function Veigar:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.RR:Value(), KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
+	    	    Draw.Circle(myHero.pos, RRange, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
 	    	end
 	    end		
 	end
@@ -3004,6 +3143,10 @@ end
 class "Soraka"
 
 function Soraka:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Soraka Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3012,9 +3155,9 @@ end
 
 function Soraka:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 800, min = 0, max = 800, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 800, min = 0, max = 800, step = 25})
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 925, min = 0, max = 925, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 925, min = 0, max = 925, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -3066,10 +3209,10 @@ function Soraka:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -3078,6 +3221,10 @@ end
 class "Skarner"
 
 function Skarner:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Skarner Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3086,7 +3233,7 @@ end
 
 function Skarner:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1000, min = 0, max = 1000, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1000, min = 0, max = 1000, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
     KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -3122,7 +3269,7 @@ function Skarner:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end
 	    end		
 	end
@@ -3131,6 +3278,10 @@ end
 class "Twitch"
 
 function Twitch:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Twitch Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3139,7 +3290,7 @@ end
 
 function Twitch:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
-	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 950, min = 0, max = 950, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 950, min = 0, max = 950, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
     KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -3175,7 +3326,7 @@ function Twitch:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.WR:Value(), KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    end		
 	end
@@ -3184,6 +3335,10 @@ end
 class "TwistedFate"
 
 function TwistedFate:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Twisted Fate Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3194,7 +3349,7 @@ end
 
 function TwistedFate:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1450, min = 0, max = 1450, step = 25}) --1000 speed
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1450, min = 0, max = 1450, step = 25}) --1000 speed
 
 	KoreanMechanics.Spell:MenuElement({id = "WG", name = "Gold Card Key", key = " "})
 	KoreanMechanics.Spell:MenuElement({id = "WB", name = "Blue Card Key", key = "E"})	
@@ -3226,7 +3381,7 @@ function TwistedFate:Tick()
 			Color = 2
 			self:W()
 		end
-		if KoreanMechanics.Spell.WR:Value() then
+		if WRange then
 			Color = 3
 			self:W()
 		end
@@ -3285,7 +3440,7 @@ function TwistedFate:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.RD.Enabled:Value() then
 	    	    Draw.CircleMinimap(myHero.pos, 5500, KoreanMechanics.Draw.RD.Width:Value(), KoreanMechanics.Draw.RD.Color:Value())
@@ -3297,6 +3452,10 @@ end
 class "DrMundo"
 
 function DrMundo:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Mundo Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3305,7 +3464,7 @@ end
 
 function DrMundo:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1050, min = 0, max = 1050, step = 25})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1050, min = 0, max = 1050, step = 25})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -3341,7 +3500,7 @@ function DrMundo:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    end		
 	end
@@ -3350,6 +3509,10 @@ end
 class "Xerath"
 
 function Xerath:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Xerath Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3358,11 +3521,11 @@ end
 
 function Xerath:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Toggle", key = string.byte("T"), toggle = true})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
---	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1100, min = 0, max = 1100, step = 10})	
+--	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1100, min = 0, max = 1100, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1050, min = 0, max = 1050, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1050, min = 0, max = 1050, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})			
 
 	KoreanMechanics.Draw:MenuElement({id = "Toggle", name = "Draw Q Toggle", value = true}) 	
@@ -3512,10 +3675,10 @@ function Xerath:Draw()
 	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 1100, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	
 	    	if RActive == "TRUE" then
 	    		Draw.Circle(mousePos, 300, 3, Draw.Color(255, 000, 000, 205))
@@ -3527,6 +3690,10 @@ end
 class "Ivern"
 
 function Ivern:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Ivern Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3535,7 +3702,7 @@ end
 
 function Ivern:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1075, min = 0, max = 1075, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1075, min = 0, max = 1075, step = 10})
 
 	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
     KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
@@ -3571,7 +3738,7 @@ function Ivern:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    end		
 	end
@@ -3580,6 +3747,10 @@ end
 class "Karthus"
 
 function Karthus:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Karthus Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3588,7 +3759,7 @@ end
 
 function Karthus:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Aimbot Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 10}) --0.625 delay
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 10}) --0.625 delay
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
 	KoreanMechanics.Spell:MenuElement({type = MENU, id = "E", name = "Auto E"})	
 	KoreanMechanics.Spell.E:MenuElement({id = "ON", name = "Enabled", value = true})
@@ -3706,10 +3877,10 @@ function Karthus:Draw()
 				Draw.Text("Auto R Off", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
 			end 			
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 			if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 425, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	    	
 	    end		
 	end
@@ -3718,6 +3889,10 @@ end
 class "Leblanc"
 
 function Leblanc:__init()
+	QRange = myHero:GetSpellData(_Q).range
+	WRange = myHero:GetSpellData(_W).range
+	ERange = myHero:GetSpellData(_E).range
+	RRange = myHero:GetSpellData(_R).range
 	print("Weedle's Leblanc Loaded")
 	Callback.Add("Tick", function() self:Tick() end)
 	Callback.Add("Draw", function() self:Draw() end)
@@ -3726,11 +3901,11 @@ end
 
 function Leblanc:Menu()
 	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
-	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 700, min = 0, max = 700, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 700, min = 0, max = 700, step = 10})
 	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
---	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 600, min = 0, max = 600, step = 10})	
+--	--KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 600, min = 0, max = 600, step = 10})	
 	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
-	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 925, min = 0, max = 925, step = 10})
+	--KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 925, min = 0, max = 925, step = 10})
 	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "1. Change the E HK in league settings to new key"})
 	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "2. Change the HK_E in GOS settings to same key"})		
 
@@ -3811,13 +3986,13 @@ function Leblanc:Draw()
 				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
 			end 
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, 600, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	    Draw.Circle(myHero.pos, WRange, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
 	    	end
 	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
-	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	    Draw.Circle(myHero.pos, ERange, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
 	    	end	    	
 	    end		
 	end
