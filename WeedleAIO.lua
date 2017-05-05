@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo", "Xerath", "Ivern"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo", "Xerath", "Ivern", "Karthus", "Leblanc"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -12,7 +12,7 @@ KoreanMechanics:MenuElement({type = MENU, id = "Spell", name = "Spell Settings"}
 KoreanMechanics:MenuElement({type = MENU, id = "Draw", name = "Draw Settings"})
 	KoreanMechanics.Draw:MenuElement({id = "Enabled", name = "Enable all Drawings", value = true})
 	KoreanMechanics.Draw:MenuElement({id = "OFFDRAW", name = "Draw text when Off", value = true})	
-KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.33 by Weedle and Sofie"})		
+KoreanMechanics:MenuElement({type = SPACE, name = "Version 0.34 by Weedle and Sofie"})		
 
 
 local _AllyHeroes
