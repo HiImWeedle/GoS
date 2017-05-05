@@ -3697,7 +3697,7 @@ function Karthus:E()
 	if Ready(_E) and (myHero.mana/myHero.maxMana >= KoreanMechanics.Spell.E.Mana:Value() / 100) then
 		for i = 1, Game.HeroCount() do 
 		local hero = Game.Hero(i) 
-			if hero.isEnemy and IsValidTarget(hero, 425) then
+			if hero.isEnemy and IsValidTarget(hero, 800) then
 				if hero.distance <= 425 and not HasBuff(myHero, "KarthusDefile") then
 					Control.CastSpell(HK_E)
 				elseif hero.distance > 425 and HasBuff(myHero, "KarthusDefile") then
