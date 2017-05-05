@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo", "Xerath", "Ivern"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -69,6 +69,11 @@ local function IsImmobileTarget(unit)
 		end
 	end
 	return false	
+end
+
+function IsValidTarget(unit, range, onScreen)
+    local range = range or 20000  
+    return unit and unit.distance <= range and not unit.dead and unit.valid and unit.visible and unit.isTargetable and not (onScreen and not unit.pos2D.onScreen)
 end
 
 local function GetBuffs(unit)
@@ -3365,6 +3370,236 @@ end
 end
 
 function DrMundo:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
+	    end		
+	end
+end
+
+class "Xerath"
+
+function Xerath:__init()
+	print("Weedle's Xerath Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end
+
+function Xerath:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Toggle", key = string.byte("T"), toggle = true})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1150, min = 0, max = 1150, step = 10})
+	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
+--	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 1100, min = 0, max = 1100, step = 10})	
+	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
+	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 1050, min = 0, max = 1050, step = 10})
+	KoreanMechanics.Spell:MenuElement({id = "R", name = "R Key", key = string.byte("R")})			
+
+	KoreanMechanics.Draw:MenuElement({id = "Toggle", name = "Draw Q Toggle", value = true}) 	
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
+    KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.WD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.WD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+end
+
+RActive = "FALSE"
+LastCast = 0
+QRange = 750
+QTick = 0 
+QCharge = false
+function Xerath:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if not Control.IsKeyDown(17) then
+			if KoreanMechanics.Spell.Q:Value() then
+				self:Qs()
+			end
+			if KoreanMechanics.Spell.W:Value() then
+				self:W()
+			end
+			if KoreanMechanics.Spell.E:Value() then
+				self:E()
+			end	
+			if KoreanMechanics.Spell.R:Value()  then
+				RActive = "TRUE"
+			end	
+			if RActive == "TRUE" and myHero:GetSpellData(_R).name == "XerathRMissileWrapper" then
+				self:R()
+				LastCast = Game.Timer()
+			end
+			if myHero:GetSpellData(_R).name == "XerathLocusOfPower2" then 
+				RActive = "FALSE"
+			end
+		end			
+	end
+end
+
+function Xerath:HaveXerathBuff(unit)
+	for i = 0, unit.buffCount do
+	    local buff = unit:GetBuff(i)
+	    if buff and buff.name == "XerathArcanopulseChargeUp" and buff.count > 0 and Game.Timer() < buff.expireTime then
+	        return buff.count
+	    end
+	end
+	return 0
+end
+
+QRange = 750
+QTick = 0 
+QCharge = false
+function Xerath:Qs()
+local target =  _G.SDK.TargetSelector:GetTarget(2000)
+	if QCharge == true then
+		QRange = 750 + 500*(GetTickCount()-QTick)/1000
+		if QRange > 1500 then QRange = 1500 end
+	end
+	local QBuff = Xerath:HaveXerathBuff(myHero)
+	if QCharge == false and QBuff > 0 then
+		QTick = GetTickCount()
+		QCharge = true
+	end
+	if QCharge == true and QBuff == 0 then
+		QCharge = false
+		QRange = 750 
+	end
+	if target == nil then return end 	
+	local pos = GetPred(target, 1600, (0.35 + Game.Latency())/1000)
+	ExtraRange = 75
+	if target.distance > 750 then
+		ExtraRange = 150	
+	end
+	if Control.IsKeyDown(HK_Q) and QCharge == true then
+		if QRange > target.distance + ExtraRange or QRange == 1500 then
+			if not pos:ToScreen().onScreen then
+			local pos2 = myHero.pos + Vector(myHero.pos,pos):Normalized() * math.random(530,760)
+				Control.CastSpell(HK_Q, pos2)
+			end
+			local pos3 = GetPred(target, math.huge, (0.35 + Game.Latency())/1000)
+			Control.CastSpell(HK_Q, pos3)
+		end
+	end
+end	
+
+
+function Xerath:W()
+local target =  _G.SDK.TargetSelector:GetTarget(1200)	
+if target == nil then return end 		
+	local pos = GetPred(target, math.huge, 0.35 + Game.Latency()/1000)
+	Control.CastSpell(HK_W, pos)
+end
+
+function Xerath:E()
+	if Ready(_E) then
+local target =  _G.SDK.TargetSelector:GetTarget(1150)	
+if target == nil then return end 		
+	local pos = GetPred(target, 1600, 0.25 + Game.Latency()/1000)
+	Control.CastSpell(HK_E, pos)
+end
+end	
+
+
+function Xerath:R()
+local hero = nil
+	for i = 1, Game.HeroCount() do
+		local hero = Game.Hero(i)
+		if hero.isEnemy and IsValidTarget(hero, math.huge) and GetDistance(hero.pos, mousePos) < 300 then 
+			targety = hero
+		end
+	end
+	if targety == nil then return end 	
+	local pos = GetPred(targety, math.huge, 0.45 + Game.Latency()/1000)
+	if pos:ToScreen().onScreen and Ready(_R) then
+		Control.SetCursorPos(pos)
+		DelayAction(function() Control.KeyDown(HK_R) end,0.01) 
+        DelayAction(function() Control.KeyUp(HK_R) end, 0.05 + Game.Latency()/1000) 	      
+	end
+end		
+
+function Xerath:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Spell.Q:Value() and KoreanMechanics.Draw.Toggle:Value() then
+				Draw.Text("Q Toggle ON", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Spell.Q:Value() and KoreanMechanics.Draw.Toggle:Value() then 
+				Draw.Text("Q Toggle Off", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
+			end 			
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, QRange, KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, 1100, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	end	
+	    	if RActive == "TRUE" then
+	    		Draw.Circle(mousePos, 300, 3, Draw.Color(255, 000, 000, 205))
+	    	end
+	    end		
+	end
+end
+
+class "Ivern"
+
+function Ivern:__init()
+	print("Weedle's Ivern Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end
+
+function Ivern:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 1075, min = 0, max = 1075, step = 10})
+
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+end
+
+function Ivern:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+	end	
+end
+
+function Ivern:Q()
+	if Ready(_Q) then
+local target =  _G.SDK.TargetSelector:GetTarget(1175)
+if target == nil then return end 	
+	local pos = GetPred(target, 1300, (0.25 + Game.Latency()/1000))
+	Control.CastSpell(HK_Q, pos)
+end
+end
+
+function Ivern:Draw()
 	if not myHero.dead then
 	   	if KoreanMechanics.Draw.Enabled:Value() then
 	   		local textPos = myHero.pos:To2D()
