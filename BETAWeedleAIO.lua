@@ -1,4 +1,4 @@
-local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo", "Xerath", "Ivern"}
+local KoreanChamps = {"Ezreal", "Zed", "Ahri", "Blitzcrank", "Caitlyn", "Brand", "Ziggs", "Morgana", "Syndra", "KogMaw", "Lux", "Cassiopeia", "Karma", "Orianna", "Ryze", "Jhin", "Jayce", "Kennen", "Thresh", "Amumu", "Elise", "Zilean", "Corki", "Sivir", "Aatrox", "Jinx", "Warwick", "Twitch", "Skarner", "Soraka", "Veigar", "Rengar", "Nami", "Lissandra", "LeeSin", "Bard", "Ashe", "Annie", "TwistedFate", "DrMundo", "Xerath", "Ivern", "Karthus", "Leblanc"}
 if not table.contains(KoreanChamps, myHero.charName)  then print("" ..myHero.charName.. " Is Not (Yet) Supported") return end
 
 local function Ready(spell)
@@ -3612,6 +3612,252 @@ function Ivern:Draw()
 			if KoreanMechanics.Draw.QD.Enabled:Value() then
 	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
 	    	end
+	    end		
+	end
+end
+
+class "Karthus"
+
+function Karthus:__init()
+	print("Weedle's Karthus Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end
+
+function Karthus:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Aimbot Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 875, min = 0, max = 875, step = 10}) --0.625 delay
+	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
+	KoreanMechanics.Spell:MenuElement({type = MENU, id = "E", name = "Auto E"})	
+	KoreanMechanics.Spell.E:MenuElement({id = "ON", name = "Enabled", value = true})
+	KoreanMechanics.Spell.E:MenuElement({id = "Mana", name = "Mana (%) for E", value = 10, min = 0, max = 100, step = 1})
+	KoreanMechanics.Spell:MenuElement({id = "RToggle", name = "R Toggle Key", key = string.byte("T"), toggle = true})	
+	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "1. Change the Q HK in league settings to new key"})
+	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "2. Change the HK_Q in GOS settings to same key"})	
+
+	KoreanMechanics.Draw:MenuElement({id = "Toggle", name = "Draw R Toggle", value = true}) 
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})    
+end
+
+function Karthus:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+		if KoreanMechanics.Spell.W:Value() then
+			self:W()
+		end		
+	end
+	if KoreanMechanics.Spell.RToggle:Value() then
+		self:R()
+	end
+	if not KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q2()
+		end
+	end
+	if KoreanMechanics.Spell.E.ON:Value() then
+		self:E()
+	end
+end
+
+function Karthus:Q()
+	if Ready(_Q) then
+local target =  _G.SDK.TargetSelector:GetTarget(975)
+if target == nil then Karthus:Q2() end 	
+	local pos = GetPred(target, math.huge, 0.625 + (Game.Latency()/1000))
+	Control.CastSpell(HK_Q, pos)
+end
+end
+
+function Karthus:Q2()
+	if Ready(_Q) then
+	Control.CastSpell(HK_Q, pos)
+end
+end
+
+function Karthus:W()
+	if Ready(_W) then
+local target =  _G.SDK.TargetSelector:GetTarget(975)
+if target == nil then return end 	
+	local pos = GetPred(target, math.huge, 0.5 + (Game.Latency()/1000))
+	Control.CastSpell(HK_W, pos)
+end
+end	
+
+function Karthus:E()
+	if Ready(_E) and (myHero.mana/myHero.maxMana >= KoreanMechanics.Spell.E.Mana:Value() / 100) then
+		for i = 1, Game.HeroCount() do 
+		local hero = Game.Hero(i) 
+			if hero.isEnemy and hero.valid and not hero.dead then
+				if hero.distance <= 425 and not HasBuff(myHero, "KarthusDefile") then
+					Control.CastSpell(HK_E)
+				elseif hero.distance > 425 and HasBuff(myHero, "KarthusDefile") then
+					Control.CastSpell(HK_E)
+				end
+			end
+		end
+	end
+end
+
+function Karthus:Rdmg(unit)
+local lvl = myHero:GetSpellData(_R).level	
+if lvl == nil then return 0 end 
+local AP = math.floor(myHero.ap)
+local Rdmg = CalcMagicalDamage(myHero, unit, ({250, 400, 550})[lvl] + (0.6 * AP))
+return Rdmg 
+end 
+
+function Karthus:R()
+	if Ready(_R) then
+		for i = 1, Game.HeroCount() do
+		local hero = Game.Hero(i) 
+			if hero.isEnemy and hero.valid and not hero.dead and Karthus:Rdmg(hero) > hero.health then
+				Control.CastSpell(HK_R) 
+			end
+		end
+	end
+end
+
+
+function Karthus:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and not KoreanMechanics.Hold:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Spell.RToggle:Value() and KoreanMechanics.Draw.Toggle:Value() then
+				Draw.Text("Auto R ON", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Spell.RToggle:Value() and KoreanMechanics.Draw.Toggle:Value() then 
+				Draw.Text("Auto R Off", 20, textPos.x - 80, textPos.y + 60, Draw.Color(255, 255, 000, 000)) 
+			end 			
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
+			if KoreanMechanics.Draw.ED.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, 425, KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	end	    	
+	    end		
+	end
+end
+
+class "Leblanc"
+
+function Leblanc:__init()
+	print("Weedle's Leblanc Loaded")
+	Callback.Add("Tick", function() self:Tick() end)
+	Callback.Add("Draw", function() self:Draw() end)
+	self:Menu()
+end	
+
+function Leblanc:Menu()
+	KoreanMechanics.Spell:MenuElement({id = "Q", name = "Q Key", key = string.byte("Q")})
+	KoreanMechanics.Spell:MenuElement({id = "QR", name = "Q Range", value = 700, min = 0, max = 700, step = 10})
+	KoreanMechanics.Spell:MenuElement({id = "W", name = "W Key", key = string.byte("W")})
+--	KoreanMechanics.Spell:MenuElement({id = "WR", name = "W Range", value = 600, min = 0, max = 600, step = 10})	
+	KoreanMechanics.Spell:MenuElement({id = "E", name = "E Key", key = string.byte("E")})
+	KoreanMechanics.Spell:MenuElement({id = "ER", name = "E Range", value = 925, min = 0, max = 925, step = 10})
+	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "1. Change the E HK in league settings to new key"})
+	KoreanMechanics.Spell:MenuElement({type = SPACE, name = "2. Change the HK_E in GOS settings to same key"})		
+
+	KoreanMechanics.Draw:MenuElement({id = "QD", name = "Draw Q range", type = MENU})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.QD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.QD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "WD", name = "Draw W range", type = MENU})
+    KoreanMechanics.Draw.WD:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.WD:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.WD:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
+    KoreanMechanics.Draw:MenuElement({id = "ED", name = "Draw E range", type = MENU})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Enabled", name = "Enabled", value = true})       
+    KoreanMechanics.Draw.ED:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
+    KoreanMechanics.Draw.ED:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)}) 
+end
+
+function Leblanc:Tick()
+	if KoreanMechanics.Enabled:Value() or KoreanMechanics.Hold:Value() then 
+		if KoreanMechanics.Spell.Q:Value() then
+			self:Q()
+		end
+		if KoreanMechanics.Spell.W:Value() then
+			self:W()
+		end
+		if KoreanMechanics.Spell.E:Value() then
+			self:E()
+		end
+	end
+	if not KoreanMechanics:Value() or KoreanMechanics.Hold:Value() then
+		if KoreanMechanics.Spell.E:Value() then
+			self:E2()
+		end
+	end
+end
+
+function Leblanc:Q()
+	if Ready(_Q) then
+local target =  _G.SDK.TargetSelector:GetTarget(800)
+if target == nil then return end 	
+	Control.CastSpell(HK_Q, target)
+end 
+end
+
+function Leblanc:W()
+	if Ready(_W) then
+local target =  _G.SDK.TargetSelector:GetTarget(800)
+if target == nil then return end 		
+	local pos = GetPred(target, 1600, (0.25 + Game.Latency())/1000)	
+	Control.CastSpell(HK_W, pos)
+end
+end	
+
+
+function Leblanc:E()
+	if Ready(_E) then
+local target =  _G.SDK.TargetSelector:GetTarget(1025)
+if target == nil then Leblanc:E2() end 	
+	local pos = GetPred(target, 1750, (0.25 + Game.Latency())/1000)	
+	Control.CastSpell(HK_E, pos)
+end
+end	
+
+function Leblanc:E2()
+	if Ready(_E) then
+	Control.CastSpell(HK_E, mousePos)
+end
+end
+
+function Leblanc:Draw()
+	if not myHero.dead then
+	   	if KoreanMechanics.Draw.Enabled:Value() then
+	   		local textPos = myHero.pos:To2D()
+	   		if KoreanMechanics.Enabled:Value() then
+				Draw.Text("Aimbot ON", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 000, 255, 000)) 		
+			end
+			if not KoreanMechanics.Enabled:Value() and KoreanMechanics.Draw.OFFDRAW:Value() then 
+				Draw.Text("Aimbot OFF", 20, textPos.x - 80, textPos.y + 40, Draw.Color(255, 255, 000, 000)) 
+			end 
+			if KoreanMechanics.Draw.QD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.QR:Value(), KoreanMechanics.Draw.QD.Width:Value(), KoreanMechanics.Draw.QD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.WD.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, 600, KoreanMechanics.Draw.WD.Width:Value(), KoreanMechanics.Draw.WD.Color:Value())
+	    	end
+	    	if KoreanMechanics.Draw.ED.Enabled:Value() then
+	    	    Draw.Circle(myHero.pos, KoreanMechanics.Spell.ER:Value(), KoreanMechanics.Draw.ED.Width:Value(), KoreanMechanics.Draw.ED.Color:Value())
+	    	end	    	
 	    end		
 	end
 end
