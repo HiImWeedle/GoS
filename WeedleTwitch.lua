@@ -4,7 +4,7 @@
 	WeedleTwitch:MenuElement({type = MENU, id = "Spells", name = "Spell Settings"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Items", name = "Items Settings"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Drawing", name = "Draw Settings"})
-	WeedleTwitch:MenuElement({type = SPACE, name = "Version 0.1"})
+	WeedleTwitch:MenuElement({type = SPACE, name = "Version 0.420"})
 	--Neccesarities
 	local function Ready(spell)
 		return myHero:GetSpellData(spell).currentCd == 0 and myHero:GetSpellData(spell).level > 0 and myHero:GetSpellData(spell).mana <= myHero.mana
