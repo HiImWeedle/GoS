@@ -3483,7 +3483,7 @@ local hero = nil
 			targety = hero
 		end
 	end
-	if targety == nil then return end 	
+	if targety == nil or targety.dead then return end 		
 	local pos = GetPred(targety, math.huge, 0.45 + Game.Latency()/1000)
 	if pos:ToScreen().onScreen and Ready(_R) then
 		Control.SetCursorPos(pos)
