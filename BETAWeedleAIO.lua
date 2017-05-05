@@ -3720,7 +3720,7 @@ function Karthus:R()
 	if Ready(_R) then
 		for i = 1, Game.HeroCount() do
 		local hero = Game.Hero(i) 
-			if hero.isEnemy and hero.valid and not hero.dead and Karthus:Rdmg(hero) > hero.health then
+			if hero.isEnemy and hero.valid and not hero.dead and Karthus:Rdmg(hero) > hero.health and hero.distance > 1000 then
 				Control.CastSpell(HK_R) 
 			end
 		end
