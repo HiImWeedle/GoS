@@ -1,6 +1,6 @@
 
     --Twitch by Weedle ^^ 
-	local WeedleTwitch = MenuElement({type = MENU, id = "WeedleTwitch", name = "Twitch by Weedle", leftIcon = "https://puu.sh/vCGfC/bdc95b55a1.png"})
+	local WeedleTwitch = MenuElement({type = MENU, id = "WeedleTwitch", name = "Twitch by Weedle"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Spells", name = "Spell Settings"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Items", name = "Items Settings"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Drawing", name = "Draw Settings"})
