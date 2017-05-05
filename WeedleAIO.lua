@@ -3441,7 +3441,7 @@ local target =  _G.SDK.TargetSelector:GetTarget(2000)
 	end
 	if target == nil then return end 	
 	local pos = GetPred(target, 1600, (0.35 + Game.Latency())/1000)
-	ExtraRange = 75
+	ExtraRange = 100
 	if target.distance > 750 then
 		ExtraRange = 150	
 	end
