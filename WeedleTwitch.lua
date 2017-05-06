@@ -10,17 +10,15 @@
 		return myHero:GetSpellData(spell).currentCd == 0 and myHero:GetSpellData(spell).level > 0 and myHero:GetSpellData(spell).mana <= myHero.mana
 	end
 
-	Force = false
+
 	local Orb = "NONE"
 	function TwitchTarget(range)
-		if Force == false then
-			if Orb == "NONE" then
-				target = GOS:GetTarget(range)
-			elseif Orb == "SDK" then
-				target = _G.SDK.TargetSelector:GetTarget(range)
-			end
-			return target
+		if Orb == "NONE" then
+			target = GOS:GetTarget(range)
+		elseif Orb == "SDK" then
+			target = _G.SDK.TargetSelector:GetTarget(range)
 		end
+		return target
 	end
 
 	local function BlockMovement()
@@ -101,16 +99,27 @@
    		return false
 	end
 
-	local sqrt = math.sqrt 
-	local function GetDistance(p1,p2)
-		return sqrt((p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y) + (p2.z - p1.z)*(p2.z - p1.z))
+	local function GetDistanceSqr(p1, p2)
+	    local dx = p1.x - p2.x
+	    local dz = p1.z - p2.z
+	    return (dx * dx + dz * dz)
+	end
+	
+	local sqrt = math.sqrt  
+	local function GetDistance(p1, p2)
+		return sqrt(GetDistanceSqr(p1, p2))
 	end
 
 	local function GetDistance2D(p1,p2)
 		return sqrt((p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y))
 	end
+	
+	function IsObjectOnLine(StartPos, EndPos, width, object)
+	    local pointSegment, pointLine, isOnSegment = VectorPointProjectionOnLineSegment(StartPos, EndPos, object.pos)
+	    return isOnSegment and GetDistanceSqr(pointSegment, object.pos) < width * width and GetDistanceSqr(StartPos, EndPos) > GetDistanceSqr(StartPos, object.pos)
+	end
 
-	local function VectorPointProjectionOnLineSegment(v1, v2, v)
+	function VectorPointProjectionOnLineSegment(v1, v2, v)
 	    assert(v1 and v2 and v, "VectorPointProjectionOnLineSegment: wrong argument types (3 <Vector> expected)")
 	    local cx, cy, ax, ay, bx, by = v.x, (v.z or v.y), v1.x, (v1.z or v1.y), v2.x, (v2.z or v2.y)
 	    local rL = ((cx - ax) * (bx - ax) + (cy - ay) * (by - ay)) / ((bx - ax) ^ 2 + (by - ay) ^ 2)
@@ -121,20 +130,20 @@
 	    return pointSegment, pointLine, isOnSegment
 	end	
 
-	local function ObjectOnLineSegment(StartPos, EndPos, width, objects, team)
-	    local object = nil 
-	    for i, object in pairs(objects) do
-	        if object ~= nil and object.valid and (not team or object.team == team) then
-	            local pointSegment, pointLine, isOnSegment = VectorPointProjectionOnLineSegment(StartPos, EndPos, object.pos)
-	            local w = width
-	            if isOnSegment and GetDistance2D(pointSegment, object.pos) < w^2 and GetDistance2D(StartPos, EndPos) > GetDistance2D(StartPos, object.pos) then
-	            	print(Vector(pointSegment, object.pos))
-	                return object
-	            end
-	        end
-	    end
-	    return false
-	end
+	--local function ObjectOnLineSegment(StartPos, EndPos, width, objects, team)
+	--    local object = nil 
+	--    for i, object in pairs(objects) do
+	--        if object ~= nil and object.valid and (not team or object.team == team) then
+	--            local pointSegment, pointLine, isOnSegment = VectorPointProjectionOnLineSegment(StartPos, EndPos, object.pos)
+	--            local w = width
+	--            if isOnSegment and GetDistance2D(pointSegment, object.pos) < w^2 and GetDistance2D(StartPos, EndPos) > GetDistance2D(StartPos, object.pos) then
+	--            	print(Vector(pointSegment, object.pos))
+	--                return object
+	--            end
+	--        end
+	--    end
+	--    return false
+	--end
 
 	function GetEnemyCount(range, pos)
 		local pos = pos or myHero.pos
@@ -309,6 +318,7 @@
 
 	--Deftsu
 	require "DamageLib"
+	require "2DGeometry"
 
 	--Class start
 	class "WeedleTwitch"
@@ -342,6 +352,7 @@
 		self:AddTable()
 		self:Menu() 
 		self:GetOrb()
+		QBuff = false
 		print("Twitch by Weedle Loaded succesfully")	
 	end
 
@@ -402,6 +413,11 @@
 
 	function WeedleTwitch:Tick()
 		if myHero.dead then return end	
+		if HasBuff(myHero, "TwitchHideInShadows") then
+			QBuff = true
+		else
+			QBuff = false
+		end
 		if WeedleTwitch.Spells.QS.Q:Value() then
 			if WeedleTwitch.Spells.QS.RK:Value() then
 				self:StealthRecall()
@@ -423,9 +439,9 @@
 			self:Clear()
 		end
 		WeedleTwitch:EStacks()
-		if Ready(_E) and WeedleTwitch.Spells.ES.E:Value() then
-			self:AutoE()
-		end
+--		if Ready(_E) and WeedleTwitch.Spells.ES.E:Value() then
+--			self:AutoE()
+--		end
 	end
 
 	function WeedleTwitch:StealthRecall()
@@ -442,7 +458,7 @@
 
 	local LastQ = 0 
 	function WeedleTwitch:EscapeLogic_1()
-		if Ready(_Q) and not HasBuff(myHero, "TwitchHideInShadows") and Game.Timer() - LastQ > 2 then
+		if Ready(_Q) and not QBuff and Game.Timer() - LastQ > 2 then
 			Control.CastSpell(HK_Q)
 			LastQ = Game.Timer()
 		end
@@ -452,16 +468,18 @@
 	local target = TwitchTarget(1050)
 	if target == nil then return end
 		if WeedleTwitch.Spells.WS.Flee:Value() and Ready(_W) then
-			if not HasBuff(myHero, "TwitchHideInShadows") or target.distance < 500 then
+			if not QBuff or target.distance < 500 then
 				local pos = GetPred(target, 1400, 0.1 + (Game.Latency()/1000))
 				TwitchCast(HK_W, pos, 100)
 			end
 		end
 	end 
 
-	checkCreeps = {}
+	Force = false
 	function WeedleTwitch:Combo()
-	local target = TwitchTarget(1300)
+		if Force == false then
+			local target = TwitchTarget(1300)
+		end 
 	if target == nil then return end
 		if IsValidTarget(myHero, 1300) then
 			if WeedleTwitch.Items.BC.Combo:Value() and GetItemSlot(myHero, 3144) >= 1 then
@@ -479,11 +497,11 @@
 					Control.CastSpell(ItemHotKey[GetItemSlot(myHero, 3142)])
 				end
 			end
-			if WeedleTwitch.Spells.WS.Combo:Value() and Ready(_W) and myHero.mana/myHero.maxMana >= WeedleTwitch.Spells.WS.Mana:Value()/100 then
+			if WeedleTwitch.Spells.WS.Combo:Value() and Ready(_W) and myHero.mana/myHero.maxMana >= WeedleTwitch.Spells.WS.Mana:Value()/100 and myHero.mana >= myHero:GetSpellData(_W).mana + myHero:GetSpellData(_E).mana then
 			local pos = GetPred(target, 1400, 0.1 + (Game.Latency()/1000))
 				if GetDistance(pos, myHero.pos) < 950 then
 				local AttackSpeed = 0.68 * myHero.attackSpeed --makes so much sense indeed ;-;
-					if target.distance < 950 and not HasBuff(myHero, "TwitchHideInShadows") then
+					if target.distance < 950 and not QBuff then
 						if AttackSpeed > 1.9 then
 							if myHero.attackData.state == 2 then
 								TwitchCast(HK_W, pos, 100)
@@ -494,7 +512,7 @@
 							end
 						end
 					end
-					if HasBuff(myHero, "TwitchHideInShadows") then
+					if QBuff then
 						if target.distance < 550 then
 							if AttackSpeed > 1.9 then
 								if myHero.attackData.state == 2 then
@@ -514,27 +532,31 @@
 					if GetEnemyCount(1500) >= WeedleTwitch.Spells.RS.Count:Value() and target.distance <= 850 then
 						Control.CastSpell(HK_R)
 						LastR = Game.Timer()
+						Force = false
 					end
 				end
 				if myHero.range == 850 and target.distance > 850 then
 					for i = 1, Game.MinionCount() do
 					local Minion = Game.Minion(i)
-	 					if IsValidTarget(Minion, 850) then
-	    					checkCreeps[i] = Minion
+	 					if IsValidTarget(Minion, 850) and Minion.isEnemy --[[and IsObjectOnLine(myHero.pos,myHero.pos+(target.pos-myHero.pos):Normalized()*1000,100,Minion)]] then
+	 					local PredPos = GetPred(target, 1500, 0.2 + (Game.Latency()/1000))
+	    				local LS = LineSegment(myHero.pos, myHero.pos+(PredPos-myHero.pos):Normalized()*1000)
+	    					if LS:__distance(Minion) <= 50 then
+	    					Force = true 
+	    						if Force == true then
+	    							if Orb == "SDK" then
+										_G.SDK.Orbwalker.ForceTarget = Minion
+									elseif Orb == "NONE" then
+										GOS:ForceTarget(Minion)
+									end
+	  							else
+	  								Force = false	
+	  							end
+	  						end
 	  					end
-					end
-					local obj = ObjectOnLineSegment(myHero.pos,myHero.pos+(target.pos-myHero.pos):Normalized()*100,100,checkCreeps,300-myHero.team)
-					if obj then
-						if Orb == "SDK" then
-							Force = true
-							_G.SDK.Orbwalker.ForceTarget = obj
-						elseif Orb == "NONE" then
-							Force = true
-							GOS:ForceTarget(obj)
-						end
-					elseif not obj then
-						Force = false	
-					end				
+					end			
+				else 
+					Force = false
 				end
 			end
 		end
@@ -559,11 +581,11 @@
 	function WeedleTwitch:Harass()
 	local target = TwitchTarget(1300)
 	if target == nil then return end
-		if WeedleTwitch.Spells.WS.Harass:Value() and Ready(_W) and myHero.mana/myHero.maxMana >= WeedleTwitch.Spells.WS.Mana:Value()/100 then
+		if WeedleTwitch.Spells.WS.Harass:Value() and Ready(_W) and myHero.mana/myHero.maxMana >= WeedleTwitch.Spells.WS.Mana:Value()/100 and myHero.mana >= myHero:GetSpellData(_W).mana + myHero:GetSpellData(_E).mana then
 		local pos = GetPred(target, 1400, 0.1 + (Game.Latency()/1000))
 			if GetDistance(pos, myHero.pos) < 950 then
 			local AttackSpeed = 0.68 * myHero.attackSpeed
-				if target.distance < 950 and not HasBuff(myHero, "TwitchHideInShadows") then
+				if target.distance < 950 and not QBuff then
 					if AttackSpeed > 1.9 then
 						if myHero.attackData.state == 2 then
 							TwitchCast(HK_W, pos, 100)
@@ -574,7 +596,7 @@
 						end
 					end
 				end
-				if HasBuff(myHero, "TwitchHideInShadows") then
+				if QBuff then
 					if target.distance < 550 then
 						if AttackSpeed > 1.9 then
 							if myHero.attackData.state == 2 then
@@ -591,36 +613,38 @@
 		end
 	end	
 
-	local LastE = 0 
+	--[[
 	function WeedleTwitch:AutoE()
-		if WeedleTwitch.Spells.ES.E:Value() then
-			local target = TwitchTarget(1300)
-			if target == nil then return end
-			if IsValidTarget(target, 1300) then
-				if WeedleTwitch:Edmg(target) + (WeedleTwitch:Pdmg(target) / 6)>= target.health then
-					Control.CastSpell(HK_E)
-				end
-				if myHero.health/myHero.maxHealth <= 0.05 and GetEnemyCount(1300) >= 1 then
-					Control.CastSpell(HK_E)
-				end
-				if WeedleTwitch.Spells.ES.ET:Value() then
-					if target.distance >= 1100 and target.distance <= 1200 and TwitchPoison[target.networkID].count >= WeedleTwitch.Spells.ES.Count:Value() and Game.Timer() - LastE > 3 then
+		if WeedleTwitch.Spells.ES.E:Value() then --NOT TESTED YET, it was using TwitchTarget, but wanna try this, need to make it more efficient tho
+			for i = 1, Game.HeroCount() do
+			local target = Game.Hero(i)
+				if IsValidTarget(target, 1300) and target.isEnemy and target.distance < 1200 then
+					if WeedleTwitch:Edmg(target) + (WeedleTwitch:Pdmg(target) / 6)>= target.health then
 						Control.CastSpell(HK_E)
-						LastE = Game.Timer()
 					end
-					local Poison = HaveTwitchBuff(target)
-					if Poison and Poison.duration < 0.3 and target.distance > 575 and Game.Timer() - LastE > 3 then
+					if myHero.health/myHero.maxHealth <= 0.07 and GetEnemyCount(1300) >= 1 then
 						Control.CastSpell(HK_E)
+					end
+					if WeedleTwitch.Spells.ES.ET:Value() then
+						if target.distance >= 1100 and target.distance <= 1200 and TwitchPoison[target.networkID].count >= WeedleTwitch.Spells.ES.Count:Value() and Game.Timer() - LastE > 3 then
+							Control.CastSpell(HK_E)
+							LastE = Game.Timer()
+						end
+						local Poison = HaveTwitchBuff(target)
+						if Poison and Poison.duration < 0.3 and target.distance > 575 and Game.Timer() - LastE > 3 then
+							Control.CastSpell(HK_E)
+						end
 					end
 				end
 			end
 		end
-	end
+	end]]
 
+	local LastE = 0 
 	function WeedleTwitch:EStacks()
 		for i = 1, Game.HeroCount() do
 		local hero = Game.Hero(i)
-			if hero and hero.isEnemy and hero.distance < 1200 then
+			if IsValidTarget(hero, 1250) and hero.isEnemy then
 			local Poison = HaveTwitchBuff(hero)
 				if Poison then
 					if Poison.duration > 5.75 and Game.Timer() - TwitchPoison[hero.networkID].timer > 0.35 then
@@ -633,6 +657,23 @@
 					end
 				else
 					TwitchPoison[hero.networkID].count = 0
+				end
+				if WeedleTwitch.Spells.ES.E:Value() and Ready(_E) then 
+					if WeedleTwitch:Edmg(hero) + (WeedleTwitch:Pdmg(hero) / 6)>= hero.health then
+						Control.CastSpell(HK_E)
+					end
+					if myHero.health/myHero.maxHealth <= 0.07 and Game.Timer() - LastE > 3 then
+						Control.CastSpell(HK_E)
+					end
+					if WeedleTwitch.Spells.ES.ET:Value() then
+						if hero.distance >= 1100 and hero.distance <= 1200 and TwitchPoison[hero.networkID].count >= WeedleTwitch.Spells.ES.Count:Value() and Game.Timer() - LastE > 3 then
+							Control.CastSpell(HK_E)
+							LastE = Game.Timer()
+						end
+						if Poison and Poison.duration < 0.3 and hero.distance > 575 and Game.Timer() - LastE > 3 then
+							Control.CastSpell(HK_E)
+						end
+					end	
 				end
 			end
 		end
