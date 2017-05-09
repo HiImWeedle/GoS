@@ -3392,7 +3392,7 @@ function TwistedFate:Tick()
 			Color = 2
 			self:W()
 		end
-		if WRange then
+		if KoreanMechanics.Spell.WR:Value() then
 			Color = 3
 			self:W()
 		end
