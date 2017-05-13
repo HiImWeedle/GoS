@@ -4,7 +4,7 @@
 	WeedleTwitch:MenuElement({type = MENU, id = "Spells", name = "Spell Settings"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Items", name = "Items Settings"})
 	WeedleTwitch:MenuElement({type = MENU, id = "Drawing", name = "Draw Settings"})
-	WeedleTwitch:MenuElement({type = SPACE, name = "Version 420"})
+	WeedleTwitch:MenuElement({type = SPACE, name = "Version 0.420"})
 	--Neccesarities
 	local function Ready(spell)
 		return myHero:GetSpellData(spell).currentCd == 0 and myHero:GetSpellData(spell).level > 0 and myHero:GetSpellData(spell).mana <= myHero.mana
@@ -477,7 +477,12 @@
 
 	Force = false
 	function WeedleTwitch:Combo()
-		if Force == false then
+		if myHero.range == 550 then
+			Force = false
+			_G.SDK.Orbwalker.ForceTarget = nil			
+			local target = TwitchTarget(1300)		
+		elseif Force == false and myHero.range == 850 then
+			_G.SDK.Orbwalker.ForceTarget = nil		
 			local target = TwitchTarget(1300)
 		end 
 	if target == nil then return end
@@ -532,7 +537,6 @@
 					if GetEnemyCount(1500) >= WeedleTwitch.Spells.RS.Count:Value() and target.distance <= 850 then
 						Control.CastSpell(HK_R)
 						LastR = Game.Timer()
-						Force = false
 					end
 				end
 				if myHero.range == 850 and target.distance > 850 then
@@ -540,8 +544,8 @@
 					local Minion = Game.Minion(i)
 	 					if IsValidTarget(Minion, 850) and Minion.isEnemy --[[and IsObjectOnLine(myHero.pos,myHero.pos+(target.pos-myHero.pos):Normalized()*1000,100,Minion)]] then
 	 					local PredPos = GetPred(target, 1500, 0.2 + (Game.Latency()/1000))
-	    				local LS = LineSegment(myHero.pos, myHero.pos+(PredPos-myHero.pos):Normalized()*1000)
-	    					if LS:__distance(Minion) <= 50 then
+	    				local LS = LineSegment(myHero.pos, myHero.pos+(PredPos-myHero.pos):Normalized()*850)
+	    					if LS:__distance(Minion) <= 50 and GetDistance(Minion.pos, PredPos) < target.distance  then
 	    					Force = true 
 	    						if Force == true then
 	    							if Orb == "SDK" then
@@ -563,6 +567,7 @@
 	end
 
 	function WeedleTwitch:Clear()
+	Force = false
 	local Minions = nil
 	local Count = 0
 		if WeedleTwitch.Spells.WS.Clear:Value() then
@@ -579,6 +584,7 @@
     end
 
 	function WeedleTwitch:Harass()
+	Force = false
 	local target = TwitchTarget(1300)
 	if target == nil then return end
 		if WeedleTwitch.Spells.WS.Harass:Value() and Ready(_W) and myHero.mana/myHero.maxMana >= WeedleTwitch.Spells.WS.Mana:Value()/100 and myHero.mana >= myHero:GetSpellData(_W).mana + myHero:GetSpellData(_E).mana then
