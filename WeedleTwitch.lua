@@ -383,9 +383,12 @@
 		self:Menu() 
 		if _G.EOWLoaded then
 			Orb = 1
-			EOW:AddCallback(EOW.AfterAttack, function() 
-				self:AAW(pos) 
-			end)
+			local Mode =  GetMode()
+			if Mode == "Combo" or Mode == "Harass" then
+				EOW:AddCallback(EOW.AfterAttack, function() 
+					self:AAW(pos) 
+				end)
+			end
 		end
 		if _G.SDK and _G.SDK.Orbwalker then
 			Orb = 2
