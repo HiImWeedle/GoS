@@ -124,7 +124,7 @@
 	local function EnemyAround()
 		for i = 1, Game.HeroCount() do 
 		local Hero = Game.Hero(i) 
-			if Hero.dead == false and Hero.team == TEAM_ENEMY and GetDistanceSqr(myHero.pos, Hero.pos) < 722500 then
+			if Hero.dead == false and Hero.team == TEAM_ENEMY and GetDistanceSqr(myHero.pos, Hero.pos) < 1440000 then
 				return true
 			end
 		end
