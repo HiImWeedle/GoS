@@ -383,14 +383,7 @@
 		self:Menu() 
 		if _G.EOWLoaded then
 			Orb = 1
-			local Mode =  GetMode()
-			if Mode == "Combo" or Mode == "Harass" then
-				EOW:AddCallback(EOW.AfterAttack, function() 
-					self:AAW(pos) 
-				end)
-			end
-		end
-		if _G.SDK and _G.SDK.Orbwalker then
+		elseif _G.SDK and _G.SDK.Orbwalker then
 			Orb = 2
 		end
 		self:AddTable()
@@ -483,10 +476,6 @@
 			self:Clear()
 		end
 		Twitch:EStacks()
-	end
-
-	function Twitch:AAW(pos)
-		TwitchCast(HK_W, pos, 100)
 	end
 
 	function Twitch:StealthRecall()
@@ -588,22 +577,13 @@
 			local Dist2 = GetDistanceSqr(pos, myHero.pos)
 				if Dist2 < 902500 then
 					if QBuff == false then
-						if Orb == 1 then
-							self:AAW(pos)
-						else
-							if myHero.attackData.state == STATE_WINDDOWN  then
-								TwitchCast(HK_W, pos, 100)
-							end
+						if myHero.attackData.state == STATE_WINDDOWN  then
+							TwitchCast(HK_W, pos, 100)
 						end
 					elseif QBuff and Dist2 < 302500 then
-							if Orb == 1 then 
-								EOW:AddCallback(EOW.AfterAttack, function() TwitchCast(HK_W, pos, 100) end)
-							else
-								if myHero.attackData.state == STATE_WINDDOWN then
-									TwitchCast(HK_W, pos, 100)
-								end
+							if myHero.attackData.state == STATE_WINDDOWN then
+								TwitchCast(HK_W, pos, 100)
 							end
-
 					end
 				end
 			end
@@ -664,20 +644,12 @@
 		local pos = GetPred(target, 1400, 0.1 + (Game.Latency()/1000))
 		local Dist = GetDistanceSqr(pos, myHero.pos)
 			if Dist < 902500 and QBuff == false then
-				if Orb == 1 then
-					self:AAW(pos)
-				else
-					if myHero.attackData.state == STATE_WINDDOWN  then
-						TwitchCast(HK_W, pos, 100)
-					end
+				if myHero.attackData.state == STATE_WINDDOWN  then
+					TwitchCast(HK_W, pos, 100)
 				end
 			elseif QBuff and Dist < 302500 then
-					if Orb == 1 then
-						self:AAW(pos)
-					else
-						if myHero.attackData.state == STATE_WINDDOWN  then
-							TwitchCast(HK_W, pos, 100)
-						end
+					if myHero.attackData.state == STATE_WINDDOWN  then
+						TwitchCast(HK_W, pos, 100)
 					end
 			end
 		end
@@ -825,9 +797,9 @@
 		end
 	end
 
-	Callback.Add("Load", function()
- 		if _G[myHero.charName] then 
+	function OnLoad()
+ 		if _G[myHero.charName] and myHero.charName == "Twitch" then 
  			_G[myHero.charName]()
  			print("Welcome back " .. myHero.name .. ", have a nice day!")
 		end
-	end)
+	end
