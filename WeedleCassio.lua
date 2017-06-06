@@ -22,7 +22,7 @@
 	local function HasPoison(unit)
 		for i = 0, unit.buffCount do 
 		local buff = unit:GetBuff(i)
-			if buff.type == 23 and Game.Timer() < buff.expireTime - 0.25 --[[ability traveltime]] then
+			if buff.type == 23 and Game.Timer() < buff.expireTime - 0.141 --[[ability traveltime]] then
 				return true
 			end
 		end
@@ -258,7 +258,7 @@
 	local MinWRange = 420 * 420
 	local WMinCRange = 500 
 	local WMaxCRange = 800 	
-	local ERange = 690 * 690
+	local ERange = 685 * 685
 	local RRange = 700 * 700
 
 	function Cassiopeia:__init()
