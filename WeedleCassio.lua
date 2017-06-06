@@ -344,7 +344,7 @@
 		Cass.d.R:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
 		Cass.d.R:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})				
 		Cass:MenuElement({name = " ", drop = {"Script Information"}})
-		Cass:MenuElement({name = "Script Version", drop = {"0.1 (TEST VERSION)"}})
+		Cass:MenuElement({name = "Script Version", drop = {"0.12 (TEST VERSION)"}})
 		Cass:MenuElement({name = "League Version", drop = {"7.11"}})
 		Cass:MenuElement({name = "Author", drop = {"Weedle"}})
 		if Cass.c.Block:Value() then
