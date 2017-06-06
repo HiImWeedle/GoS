@@ -670,7 +670,7 @@
 	end
 
 	function Cassiopeia:AutoE()
-		if Ready(_E) and myHero.mana/myHero.maxMana > Cass.m.EW:Value()/100 then
+		if Ready(_E) and IsRecalling() == false and myHero.mana/myHero.maxMana > Cass.m.EW:Value()/100 then
 			for i = 1, Game.MinionCount() do 
 			local Minion = Game.Minion(i) 
 				if IsValidCreep(Minion, 690) and GetDistanceSqr(Minion.pos, myHero.pos) < ERange then 
