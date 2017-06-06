@@ -130,6 +130,16 @@
 		end
 		return false
 	end
+	
+	local function IsRecalling()
+		for i = 1, 63 do
+		local buff = myHero:GetBuff(i) 
+			if buff.count > 0 and buff.name == "recall" and Game.Timer() < buff.expireTime then
+				return true
+			end
+		end 
+		return false
+	end
 
 	local function EnemyAround()
 		for i = 1, Game.HeroCount() do 
@@ -248,7 +258,7 @@
 	local MinWRange = 420 * 420
 	local WMinCRange = 500 
 	local WMaxCRange = 800 	
-	local ERange = 700 * 700
+	local ERange = 690 * 690
 	local RRange = 700 * 700
 
 	function Cassiopeia:__init()
@@ -502,7 +512,7 @@
 		if HasTear() then
 		Tear = true 
 		local Timer = Game.Timer()
-			if Ready(_Q) and Timer - LastQ > 4 and myHero.mana/myHero.maxMana > Cass.t.Mana:Value()/100 then
+			if Ready(_Q) and IsRecalling() == false and Timer - LastQ > 4 and myHero.mana/myHero.maxMana > Cass.t.Mana:Value()/100 then
 				Control.CastSpell(HK_Q)
 				LastQ = Timer
 			end
