@@ -50,7 +50,7 @@
  	local function RStacks()
 		for i = 1, 63 do 
 		local Buff = myHero:GetBuff(i)
-			if Buff.name:lower() == "kogmawlivingartillerycost" then
+			if Buff.name:lower() == "kogmawlivingartillerycost" and Game.Timer() < Buff.expireTime then
 				return Buff.count
 			end
 		end
@@ -311,7 +311,7 @@
 		Kog.d.R:MenuElement({id = "Width", name = "Width", value = 1, min = 1, max = 5, step = 1})
 		Kog.d.R:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})				
 		Kog:MenuElement({name = " ", drop = {"Script Information"}})
-		Kog:MenuElement({name = "Script Version", drop = {"1.0"}})
+		Kog:MenuElement({name = "Script Version", drop = {"1.1"}})
 		Kog:MenuElement({name = "League Version", drop = {"7.11"}})
 		Kog:MenuElement({name = "Author", drop = {"Weedle"}})
 	end
