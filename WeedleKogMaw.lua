@@ -25,7 +25,7 @@
 	local function GetTarget(range) --temp version
 	local target = nil 
 		if Orb == 1 then
-			target = EOW:GetTarget(range)
+			target = EOW:GetTarget(range, EOW.easykill_acd)
 		elseif Orb == 2 then 
 			target = _G.SDK.TargetSelector:GetTarget(range)
 		elseif Orb == 3 then
