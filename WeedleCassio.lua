@@ -627,7 +627,7 @@
 				end
 			end
 		end
-		if Cass.c.E:Value() and Ready(_E) and ((HasPoison(target) or Dist < MinWRange) or self:Edmg(target) * 2  > target.health) and myHero.mana/myHero.maxMana > Cass.m.E:Value()/100 then 
+		if Cass.c.E:Value() and Ready(_E) and ((HasPoison(target) or Dist < MinWRange or Ready(_Q) == false) or self:Edmg(target) * 2  > target.health) and myHero.mana/myHero.maxMana > Cass.m.E:Value()/100 then 
 			if Dist < ERange then
 				Control.CastSpell(HK_E, target)
 			end
