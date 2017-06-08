@@ -551,9 +551,5 @@
 		end
 	end
 
-	function OnLoad()
- 		if _G[myHero.charName] and myHero.charName == "KogMaw" then 
- 			_G[myHero.charName]()
- 			print("Welcome back " .. myHero.name .. ", have a nice day!")
-		end
-	end
+	if _G[myHero.charName]() then print("Welcome back " ..myHero.name) end
+
