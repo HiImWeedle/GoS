@@ -9,7 +9,7 @@
 
 		if myHero.charName ~= "Orianna" then return end
 
-	local Sversion, Lversion = 1.00, 7.13
+	local Sversion, Lversion = 1.01, 7.13
 	local TEAM_ALLY = myHero.team
 	local TEAM_JUNGLE = 300
 	local TEAM_ENEMY = 300 - TEAM_ALLY
@@ -391,11 +391,15 @@
 		Menu.A:MenuElement({id = "ON", name = "Aimbot Toggle key", key = 77, toggle = true})
 		Menu.A:MenuElement({id = "Q", name = "Q key", key = string.byte("Q")})		
 
-		Menu.M:MenuElement({name = " ", drop = {"Combo, Harass [%]"}})
+		Menu.M:MenuElement({name = " ", drop = {"Combo [%]"}})
 		Menu.M:MenuElement({id = "Q", name = "Q", value = 10, min = 0, max = 100, step = 1})
 		Menu.M:MenuElement({id = "W", name = "W", value = 10, min = 0, max = 100, step = 1})
 		Menu.M:MenuElement({id = "E", name = "E", value = 10, min = 0, max = 100, step = 1})
 		Menu.M:MenuElement({id = "R", name = "R", value = 10, min = 0, max = 100, step = 1})
+		Menu.M:MenuElement({name = " ", drop = {"Harass [%]"}})
+		Menu.M:MenuElement({id = "HQ", name = "Q", value = 10, min = 0, max = 100, step = 1})
+		Menu.M:MenuElement({id = "HW", name = "W", value = 10, min = 0, max = 100, step = 1})
+		Menu.M:MenuElement({id = "HE", name = "E", value = 10, min = 0, max = 100, step = 1})	
 
 		Menu.D:MenuElement({id = "ON", name = "Enable Drawings", value = true})
 		Menu.D:MenuElement({id = "T", name = "Enable Text", value = true})
@@ -542,8 +546,8 @@
 		local D = GetDistanceSqr(target.pos, h)
     	local F = IsFacing(target)		
     	local bR = target.boundingRadius
-    	local EC = Menu.H.E:Value() and Ready(_E) and MP > Menu.M.E:Value() 
-    	if Menu.H.Q:Value() and Ready(_Q) and MP > Menu.M.Q:Value() then
+    	local EC = Menu.H.E:Value() and Ready(_E) and MP > Menu.M.HE:Value() 
+    	if Menu.H.Q:Value() and Ready(_Q) and MP > Menu.M.HQ:Value() then
     		local Pos = GetPred(target, self.Q.speed, self.Q.delay + Game.Latency()/1000) 
     		local Dist = GetDistanceSqr(Pos, h) - bR * bR
     		if EC then 
@@ -577,7 +581,7 @@
     			end
     		end
     	end
-    	if Menu.H.W:Value() and Ready(_W) and MP > Menu.M.W:Value() then 
+    	if Menu.H.W:Value() and Ready(_W) and MP > Menu.M.HW:Value() then 
     		local Pos = GetPred(target, huge, self.W.delay + Game.Latency()/1000)
     		local Dist = GetDistanceSqr(Bpos, Pos) - bR * bR 
     		if Dist < self.W.width2 then 
