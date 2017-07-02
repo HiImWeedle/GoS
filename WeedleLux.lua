@@ -394,10 +394,10 @@
 
 		Menu.A:MenuElement({id = "ON", name = "Aimbot Toggle key", key = 77, toggle = true})
 		Menu.A:MenuElement({id = "AE", name = "Auto E2", value = false})
-		Menu.A:MenuElement({id = "Q", name = "Q key", key = 49})
-		Menu.A:MenuElement({id = "W", name = "W key", key = 50})
-		Menu.A:MenuElement({id = "E", name = "E key", key = 51})
-		Menu.A:MenuElement({id = "R", name = "R key", key = 52})
+		Menu.A:MenuElement({id = "Q", name = "Q key", key = string.byte("Q")})
+		Menu.A:MenuElement({id = "W", name = "W key", key = string.byte("W")})
+		Menu.A:MenuElement({id = "E", name = "E key", key = string.byte("E")})
+		Menu.A:MenuElement({id = "R", name = "R key", key = string.byte("R")})
 
 		Menu.M:MenuElement({name = " ", drop = {"Combo, Harass [%]"}})
 		Menu.M:MenuElement({id = "Q", name = "Q", value = 10, min = 0, max = 100, step = 1})
