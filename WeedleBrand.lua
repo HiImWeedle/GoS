@@ -1,10 +1,12 @@
 	--[[
-		 __      __                  .___.__           __________                           .___
-		/  \    /  \ ____   ____   __| _/|  |   ____   \______   \____________    ____    __| _/
-		\   \/\/   // __ \_/ __ \ / __ | |  | _/ __ \   |    |  _/\_  __ \__  \  /    \  / __ | 
-		 \        /\  ___/\  ___// /_/ | |  |_\  ___/   |    |   \ |  | \// __ \|   |  \/ /_/ | 
-		  \__/\  /  \___  >\___  >____ | |____/\___  >  |______  / |__|  (____  /___|  /\____ | 
-		       \/       \/     \/     \/           \/          \/             \/     \/      \/ 
+
+	  _________      .__       .__  __    ___________.__                 __________                           .___
+	 /   _____/_____ |__|______|__|/  |_  \_   _____/|__|______   ____   \______   \____________    ____    __| _/
+	 \_____  \\____ \|  \_  __ \  \   __\  |    __)  |  \_  __ \_/ __ \   |    |  _/\_  __ \__  \  /    \  / __ | 
+	 /        \  |_> >  ||  | \/  ||  |    |     \   |  ||  | \/\  ___/   |    |   \ |  | \// __ \|   |  \/ /_/ | 
+	/_______  /   __/|__||__|  |__||__|    \___  /   |__||__|    \___  >  |______  / |__|  (____  /___|  /\____ | 
+		\/|__|                             \/                    \/          \/             \/     \/      \/ 
+
 	--]]
 
 	if myHero.charName ~= "Brand" then return end
@@ -23,7 +25,7 @@
 	require "2DGeometry"
 	require "DamageLib"			 	
 
-	local Menu = MenuElement({id = "WeedleBrand", name = "Weedle | Brand", type = MENU, leftIcon = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/BrandIcon"..N..".png"})
+	local Menu = MenuElement({id = "WeedleBrand", name = "Weedle | Spirit Fire Brand", type = MENU, leftIcon = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/BrandIcon"..N..".png"})
 		Menu:MenuElement({name = " ", drop = {"General Settings"}})
 		Menu:MenuElement({id = "C", name = "Combo", type = MENU})		
 		Menu:MenuElement({id = "H", name = "Harass", type = MENU})
@@ -372,7 +374,7 @@
 		self:Menu() 
 		Callback.Add("Tick", function() self:Tick() end)
 		Callback.Add("Draw", function() self:Draw() end)
-		print("Weedle | Brand v"..Sversion.." | Loaded")
+		print("Weedle | Spirit Fire Brand v"..Sversion.." | Loaded")
 	end
 
 	function WeedleBrand:Menu()
