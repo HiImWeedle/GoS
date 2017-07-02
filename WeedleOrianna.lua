@@ -102,7 +102,8 @@
 	local function HasBuff(unit, buffname,D,s)
 		local D = D or 1 
 		local s = s or 1 
-		for K, Buff in pairs(GetBuffs(unit)) do
+		for i = 1, unit.buffCount do 
+		local Buff = unit:GetBuff(i)
 			if Buff.name == buffname and Buff.count > 0 and Game.Timer() + D/s < Buff.expireTime then
 				return true
 			end
