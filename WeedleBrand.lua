@@ -327,7 +327,7 @@
 			average.count = average.count + 1
 		end 
 
-		if sTar then 
+		if sTar and sTar.type ~= lst[1].type then 
 			local org = GetPred(sTar,s,d)
 			average.x = average.x + org.x 
 			average.y = average.y + org.y 
