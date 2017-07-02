@@ -388,7 +388,7 @@
 		Menu.H:MenuElement({id = "E", name = "Use E", value = true, leftIcon = self.Icons.E})
 
 		Menu.A:MenuElement({id = "ON", name = "Aimbot Toggle key", key = 77, toggle = true})
-		Menu.A:MenuElement({id = "Q", name = "Q key", key = 49})		
+		Menu.A:MenuElement({id = "Q", name = "Q key", key = string.byte("Q")})		
 
 		Menu.M:MenuElement({name = " ", drop = {"Combo, Harass [%]"}})
 		Menu.M:MenuElement({id = "Q", name = "Q", value = 10, min = 0, max = 100, step = 1})
