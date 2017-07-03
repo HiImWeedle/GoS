@@ -9,7 +9,7 @@
 
 		if myHero.charName ~= "Orianna" then return end
 
-	local Sversion, Lversion = 1.01, 7.13
+	local Sversion, Lversion = 1.03, 7.13
 	local TEAM_ALLY = myHero.team
 	local TEAM_JUNGLE = 300
 	local TEAM_ENEMY = 300 - TEAM_ALLY
@@ -421,22 +421,29 @@
 		Menu.D.R:MenuElement({id = "Color", name = "Color", color = Draw.Color(255, 255, 255, 255)})
 	end
 
+
 	function DarkStarOrianna:Tick()
 		if myHero.dead == false and Game.IsChatOpen() == false then	
 			local h = myHero.pos
-			self:Ball(h)
+			local t = Game.Timer()
+			self:Ball(h,t)
 			local Mode = GetMode()
 			if Mode == 1 then 
-				self:Combo(h)
+				self:Combo(h,t)
 			elseif Mode == 2 then 
-				self:Harass(h)
+				self:Harass(h,t)
 			end
 			self:Aimbot(h)
 		end
 	end
 
 	local Bpos = myHero.pos
-	function DarkStarOrianna:Ball(h)
+	local WCast, Wtime, Wpos = false, 0 ,Bpos 
+	function DarkStarOrianna:Ball(h,t) 
+		if t > Wtime and WCast then 
+			Bpos = Wpos
+			WCast = false 
+		end
 		for i = 1, Game.ParticleCount() do 
 			local p = Game.Particle(i)
 			if p.name == "Orianna_Base_Q_yomu_ring_green.troy" then 
@@ -457,7 +464,7 @@
 		end
 	end	
 
-	function DarkStarOrianna:Combo(h)
+	function DarkStarOrianna:Combo(h,t)
 		local target = GetTarget(1325)
 		if target == nil then 
 			return 
@@ -480,9 +487,10 @@
         	local Pos = GetPred(target, self.Q.speed, self.Q.delay + Game.Latency()/1000)
         	if Menu.C.W:Value() and myHero:GetSpellData(_W).currentCd <= 0.6 and MP > Menu.M.W:Value() then 
         		local list = GetHeroesInRange(self.Q.mrange2,h)
-        		Pos = GetBestCircularCastPos(self.W.width2, list, self.Q.speed, self.Q.delay,target)
+        		Pos = GetBestCircularCastPos(self.W.width2, list, self.Q.speed, Game.Latency()/1000,target)
         	end
             local Dist = GetDistanceSqr(Pos, h) - bR * bR	
+            local Dis = GetDistanceSqr(Bpos, target.pos)
         	if EC then 
     			local Ehero = myHero 
     			local Closest = GetDistanceSqr(h, Pos)
@@ -501,15 +509,27 @@
     			else 
     				Pos = h + (Pos - h):Normalized()*(GetDistance(Pos, h) + 0.5*bR)
     				if F and Dist < self.Q.range2 then 
+    					Wtime = t + Dis/self.Q.speed2	
+    				    WCast = true
+    					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
     				elseif Dist < 0.97*self.Q.range2 then 
+    					Wtime = t + Dis/self.Q.speed2	
+    				    WCast = true
+    					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
     				end
     			end
     		else 
      			if F and Dist < self.Q.range2 then 
-     				Control.CastSpell(HK_Q, Pos)
+     				Wtime = t + Dis/self.Q.speed2	
+    				WCast = true
+    				Wpos = Pos  
+    				Control.CastSpell(HK_Q, Pos)
     			elseif Dist < 0.97*self.Q.range2 then 
+    				Wtime = t + Dis/self.Q.speed2	
+    				WCast = true
+    				Wpos = Pos  
     				Control.CastSpell(HK_Q, Pos)
     			end
     		end
@@ -537,7 +557,7 @@
     	end
     end
 
-	function DarkStarOrianna:Harass(h)
+	function DarkStarOrianna:Harass(h,t)
 		local target = GetTarget(1325)
 		if target == nil then 
 			return 
@@ -548,8 +568,9 @@
     	local bR = target.boundingRadius
     	local EC = Menu.H.E:Value() and Ready(_E) and MP > Menu.M.HE:Value() 
     	if Menu.H.Q:Value() and Ready(_Q) and MP > Menu.M.HQ:Value() then
-    		local Pos = GetPred(target, self.Q.speed, self.Q.delay + Game.Latency()/1000) 
+    		local Pos = GetPred(target, self.Q.speed, Game.Latency()/1000) 
     		local Dist = GetDistanceSqr(Pos, h) - bR * bR
+    		local Dis = GetDistanceSqr(Bpos, target.pos)
     		if EC then 
     			local Ehero = myHero 
     			local Closest = GetDistanceSqr(h, Pos)
@@ -568,15 +589,27 @@
     			else 
     				Pos = h + (Pos - h):Normalized()*(GetDistance(Pos, h) + 0.5*bR)
     				if F and Dist < self.Q.range2 then 
+    					Wtime = t + Dis/self.Q.speed2	
+    				    WCast = true
+    					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
     				elseif Dist < 0.97*self.Q.range2 then 
+    					Wtime = t + Dis/self.Q.speed2	
+    				    WCast = true
+    					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
     				end
     			end
     		else 
     			if F and Dist < self.Q.range2 then 
+    				Wtime = t + Dis/self.Q.speed2	
+    				WCast = true
+    				Wpos = Pos  
     				Control.CastSpell(HK_Q, Pos)
     			elseif Dist < 0.97*self.Q.range2 then 
+    				Wtime = t + Dis/self.Q.speed2	
+    				WCast = true
+    				Wpos = Pos  
     				Control.CastSpell(HK_Q, Pos)
     			end
     		end
