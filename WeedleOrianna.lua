@@ -9,7 +9,7 @@
 
 		if myHero.charName ~= "Orianna" then return end
 
-	local Sversion, Lversion = 1.03, 7.13
+	local Sversion, Lversion = 1.04, 7.13
 	local TEAM_ALLY = myHero.team
 	local TEAM_JUNGLE = 300
 	local TEAM_ENEMY = 300 - TEAM_ALLY
@@ -366,7 +366,7 @@
 			E = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/OriannaE.png",
 			R = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/OriannaR.png"}
 		self.range = 1265625
-		self.Q = {speed = 1200, speed2 = 1440000, delay = 0.25, range = 825, range2 = 680625, mrange = 1050, mrange2 = 1102500, width = 140}
+		self.Q = {speed = 1200, speed2 = 1440000, delay = 0.25, range = 825, range2 = 680625, mrange = 960, mrange2 = 1102500, width = 140}
 		self.W = {speed = huge, speed2 = huge, delay = 0.25, width = 230, width2 = 52900}
 		self.E = {speed = 1800, speed2 = 3240000, delay = 0.25, range = 1100, width = 140, width2 = 19600}
 		self.R = {speed = huge, delay = 1, width = 360 ,dwidth = 380, width2 = 122500}
@@ -422,7 +422,7 @@
 	end
 
 
-	function DarkStarOrianna:Tick()
+	function DarkStarOrianna:Tick()		
 		if myHero.dead == false and Game.IsChatOpen() == false then	
 			local h = myHero.pos
 			local t = Game.Timer()
@@ -482,9 +482,24 @@
     		if Dist < self.W.width2 then 
     			Control.CastSpell(HK_W)
     		end
-    	end        
+    	end 
+      	if RC and (Ready(_Q) == false or Menu.C.Q:Value() == false) then 
+    		local Count = 0 
+    		for i = 1, Game.HeroCount() do 
+    			local H = Game.Hero(i)
+    			if H.team == TEAM_ENEMY and H.dead == false and H.isTargetable then 
+    				local Pos = GetPred(H, self.R.speed, self.R.delay + Game.Latency()/1000)
+    				if GetDistanceSqr(Pos, Bpos) < self.R.width2 then 
+    					Count = Count + 1 
+    				end
+    			end
+    		end
+    		if Count >= Menu.C.Count:Value() or (Menu.C.F:Value() and Count >= 1) then 
+    			Control.CastSpell(HK_R)
+    		end
+    	end  	       
         if Menu.C.Q:Value() and Ready(_Q) and MP > Menu.M.Q:Value() then 
-        	local Pos = GetPred(target, self.Q.speed, self.Q.delay + Game.Latency()/1000)
+        	local Pos = GetPred(target, self.Q.speed, Game.Latency()/1000)
         	if Menu.C.W:Value() and myHero:GetSpellData(_W).currentCd <= 0.6 and MP > Menu.M.W:Value() then 
         		local list = GetHeroesInRange(self.Q.mrange2,h)
         		Pos = GetBestCircularCastPos(self.W.width2, list, self.Q.speed, Game.Latency()/1000,target)
@@ -508,45 +523,36 @@
     				Control.CastSpell(HK_E, Ehero)
     			else 
     				Pos = h + (Pos - h):Normalized()*(GetDistance(Pos, h) + 0.5*bR)
-    				if F and Dist < self.Q.range2 then 
+    				if Dist > self.Q.range2 then 
+    					Pos = h + (Pos - h):Normalized()*self.Q.range
+    				end
+    				if F and Dist < self.Q.mrange2 then 
     					Wtime = t + Dis/self.Q.speed2	
     				    WCast = true
     					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
-    				elseif Dist < 0.97*self.Q.range2 then 
+    				elseif Dist < 0.97*self.Q.mrange2 then 
     					Wtime = t + Dis/self.Q.speed2	
     				    WCast = true
     					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
     				end
     			end
-    		else 
-     			if F and Dist < self.Q.range2 then 
+    		else
+    		    if Dist > self.Q.range2 then 
+    				Pos = h + (Pos - h):Normalized()*self.Q.range
+    			end 
+     			if F and Dist < self.Q.mrange2 then 
      				Wtime = t + Dis/self.Q.speed2	
     				WCast = true
     				Wpos = Pos  
     				Control.CastSpell(HK_Q, Pos)
-    			elseif Dist < 0.97*self.Q.range2 then 
+    			elseif Dist < 0.97*self.Q.mrange2 then 
     				Wtime = t + Dis/self.Q.speed2	
     				WCast = true
     				Wpos = Pos  
     				Control.CastSpell(HK_Q, Pos)
     			end
-    		end
-    	end
-    	if RC and (Ready(_Q) == false or Menu.C.Q:Value() == false) then 
-    		local Count = 0 
-    		for i = 1, Game.HeroCount() do 
-    			local H = Game.Hero(i)
-    			if H.team == TEAM_ENEMY and H.dead == false and H.isTargetable then 
-    				local Pos = GetPred(H, self.R.speed, self.R.delay + Game.Latency()/1000)
-    				if GetDistanceSqr(Pos, Bpos) < self.R.width2 then 
-    					Count = Count + 1 
-    				end
-    			end
-    		end
-    		if Count >= Menu.C.Count:Value() or (Menu.C.F:Value() and Count >= 1) then 
-    			Control.CastSpell(HK_R)
     		end
     	end
     	if EC and Ready(_Q) == false and myHero.activeSpell.name ~= "OrianaDetonateCommand" then 
@@ -588,12 +594,15 @@
     				Control.CastSpell(HK_E, Ehero)
     			else 
     				Pos = h + (Pos - h):Normalized()*(GetDistance(Pos, h) + 0.5*bR)
-    				if F and Dist < self.Q.range2 then 
+					if Dist > self.Q.range2 then 
+    					Pos = h + (Pos - h):Normalized()*self.Q.range
+    				end   				
+    				if F and Dist < self.Q.mrange2 then 
     					Wtime = t + Dis/self.Q.speed2	
     				    WCast = true
     					Wpos = Pos  
     					Control.CastSpell(HK_Q, Pos)
-    				elseif Dist < 0.97*self.Q.range2 then 
+    				elseif Dist < 0.97*self.Q.mrange2 then 
     					Wtime = t + Dis/self.Q.speed2	
     				    WCast = true
     					Wpos = Pos  
@@ -601,12 +610,15 @@
     				end
     			end
     		else 
-    			if F and Dist < self.Q.range2 then 
+    			if Dist > self.Q.range2 then 
+    				Pos = h + (Pos - h):Normalized()*self.Q.range
+    			end 
+    			if F and Dist < self.Q.mrange2 then 
     				Wtime = t + Dis/self.Q.speed2	
     				WCast = true
     				Wpos = Pos  
     				Control.CastSpell(HK_Q, Pos)
-    			elseif Dist < 0.97*self.Q.range2 then 
+    			elseif Dist < 0.97*self.Q.mrange2 then 
     				Wtime = t + Dis/self.Q.speed2	
     				WCast = true
     				Wpos = Pos  
