@@ -1,3 +1,4 @@
+	-- Secret Twisted Fate Kappa -- 
 	if myHero.charName ~= "TwistedFate" then return end
 
 	local function Ready()
