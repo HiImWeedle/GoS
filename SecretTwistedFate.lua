@@ -1,3 +1,5 @@
+	if myHero.charName ~= "TwistedFate" then return end
+
 	local function Ready()
 		local W = myHero:GetSpellData(_W)
 		return W.currentCd == 0 and W.level > 0 and W.mana <= myHero.mana and W.name == "PickACard"
@@ -87,4 +89,3 @@
 	end
 
 	function OnLoad() TF() end  
-
