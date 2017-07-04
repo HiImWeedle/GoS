@@ -1,4 +1,4 @@
-	-- Secret Twisted Fate Kappa -- 
+	-- Secret Twisted Fate Kappa -- Use without Orb it's more fun ^^ 
 	if myHero.charName ~= "TwistedFate" then return end
 
 	local function Ready()
@@ -26,13 +26,14 @@
 		self.Icons = {
 			G = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/TFG.png",
 			B = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/TFB.png",
-			R = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/TFR.png"}	
+			R = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/TFR.png"}
+		self.Qrange = myHero:GetSpellData(_Q).range
 		self:Menu()
 		Callback.Add("Tick", function() self:Tick() end)
 		Callback.Add("Draw", function() 
 			if myHero.dead == false and Menu.D.Q:Value() then
 				local h = myHero.pos 
-				Draw.Circle(h, 1450, Menu.D.W:Value(), Menu.D.C:Value())
+				Draw.Circle(h, self.Qrange, Menu.D.W:Value(), Menu.D.C:Value())
 			end
 		end)	
 	end
