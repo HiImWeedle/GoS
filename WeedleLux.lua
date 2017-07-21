@@ -11,7 +11,7 @@
 	if myHero.charName ~= "Lux" then return end
 
 	math.randomseed(os.clock()*100000000) 
-	local Sversion, Lversion, N = 1.00, 7.13, math.random(1,10)
+	local Sversion, Lversion, N = 1.00, 7.14, math.random(1,10)
 	local TEAM_ALLY = myHero.team
 	local TEAM_JUNGLE = 300
 	local TEAM_ENEMY = 300 - TEAM_ALLY
