@@ -9,7 +9,7 @@
 
 		if myHero.charName ~= "Orianna" then return end
 
-	local Sversion, Lversion = 1.04, 7.13
+	local Sversion, Lversion = 1.04, 7.14
 	local TEAM_ALLY = myHero.team
 	local TEAM_JUNGLE = 300
 	local TEAM_ENEMY = 300 - TEAM_ALLY
