@@ -47,8 +47,8 @@
 
 	function Poopy:__init()
 		self.ForceTarget = nil	
+		self.Ecast = false		
 		self.CanCast = false
-		self.Etime = -1000
 		self.Q = {range = 430, range2 = 184900, delay = 0.25}
 		self.W = {range = 400, range2 = 160000}
 		self.E = {range = 475, range2 = 225625, speed = 1800}
@@ -71,7 +71,17 @@
 	end	
 
 	function Poopy:Tick()
-		if myHero.dead == false and Game.IsChatOpen() == false then 
+		if myHero.dead == false and Game.IsChatOpen() == false then
+			self.Ecast = false  
+			local path = myHero.pathing 
+			if path.hasMovePath then 
+				for i = path.pathIndex, path.pathCount do 
+					if path.isDashing and path.dashSpeed == 1800 then 
+						self.Ecast = true 
+						break 
+					end
+				end
+			end
 			local WMode = Menu.W:Value()
 			if WMode == 1 then 
 				self:WLogics()
@@ -106,7 +116,7 @@
 
     function Poopy:WLogics() 
     	local activeSpell = myHero.activeSpell
-    	if Ready(_W) and Game.Timer() > self.Etime then 
+    	if Ready(_W) and self.Ecast == false then 
     		for i = 1, Game.HeroCount() do 
     		local Hero = Game.Hero(i)
     			if Hero.dead == false and Hero.team == TEAM_ENEMY and Hero.visible and GetDistanceSqr(Hero.pos, myHero.pos) < self.W.range2 then 
