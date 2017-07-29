@@ -1,8 +1,8 @@
 	if myHero.charName ~= "Poppy" then return end 
 
-	local Version, Author = 0.92, "Weedle"
+	local Version, Author = 666, "Weedle"
 	local Icons = { 
-		P = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyIcon1.png",
+		P = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyIcon2.png",
 		Q = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyQ.png",
 		W = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyW.png",
 		E = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyE.png"}
