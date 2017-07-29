@@ -115,7 +115,6 @@
     end
 
     function Poopy:WLogics() 
-    	local activeSpell = myHero.activeSpell
     	if Ready(_W) and self.Ecast == false then 
     		for i = 1, Game.HeroCount() do 
     		local Hero = Game.Hero(i)
