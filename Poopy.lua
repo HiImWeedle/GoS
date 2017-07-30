@@ -5,7 +5,8 @@
 		P = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyIcon2.png",
 		Q = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyQ.png",
 		W = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyW.png",
-		E = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyE.png"}
+		E = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppyE.png",
+		Skin = "https://raw.githubusercontent.com/HiImWeedle/GoS/master/Icons/PoppySkin1.png"}
 	local TEAM_ALLY = myHero.team
 	local TEAM_JUNGLE = 300
 	local TEAM_ENEMY = 300 - TEAM_ALLY
@@ -25,6 +26,7 @@
 		Menu.Drawings:MenuElement({id = "TS", name = "Force Target Color", color = Draw.Color(255, 255, 000, 100)})
 		Menu.Drawings:MenuElement({id = "W", name = "Enable W Drawings", value = true})
 		Menu.Drawings:MenuElement({id = "E", name = "Enable E Drawings", value = false})
+		Menu:MenuElement({id = "SkinHack", name = "Amazing Premium Skinhack", value = false, leftIcon = Icons.Skin})
 		Menu:MenuElement({name = " ", drop = {"-----------------------Script Info----------------------"}})
 		Menu:MenuElement({name = "Script Version", drop = {Version}})
 		Menu:MenuElement({name = "Author", drop = {Author}})
@@ -42,6 +44,8 @@
 		local spellData = myHero:GetSpellData(spell)
 		return spellData.currentCd == 0 and spellData.level > 0 and spellData.mana <= myHero.mana
 	end	
+
+	local SkinHack = Sprite("MenuElement\\PoppySkin1.png", 0.3)	
 
 	class "Poopy"
 
@@ -180,6 +184,10 @@
     			else
     				Draw.Circle(heroPos, self.E.range, 5, Draw.Color(80, 50, 000, 205))
     			end
+    		end
+    		if Menu.SkinHack:Value() then 
+    			local pos = myHero.pos:To2D()
+    			SkinHack:Draw(pos.x - 90, pos.y - 115)
     		end
     	end
     end
