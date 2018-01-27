@@ -3,6 +3,7 @@ _G.WR_CHANGELOG = {
     - Added ChangeLog 
     - Added Auto-Update 
     - Added Twitch 
+    
 ]],
     ["Twitch"] = [[Twitch v0.1
     -Initial Release
