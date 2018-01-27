@@ -2,10 +2,5 @@ _G.WR_CHANGELOG = {
     ["Global"] = [[ChangeLog for v0.1
     - Added ChangeLog 
     - Added Auto-Update 
-    - Added Twitch TEST TEST TEST TEST TEST
-]],
-    ["Twitch"] = [[Twitch v0.1
-    -Initial Release
-    -W, E and R usage
 ]]
 }
