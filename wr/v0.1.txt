@@ -1,5 +1,5 @@
 _G.WR_CHANGELOG = {
-    ["Global"] = [[ChangeLog
+    ["Global"] = [[ChangeLog for v0.1
     - Added ChangeLog 
     - Added Auto-Update 
     - Added Twitch TEST TEST TEST TEST TEST
