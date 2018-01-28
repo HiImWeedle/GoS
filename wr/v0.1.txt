@@ -16,11 +16,6 @@ _G.WR_CHANGELOG = {
     - R Only On Immobile
     - Q/E Spell Weaving Added 
 ]],
-    ["Darius"] = [[Darius v0.1
-    - Initial Release
-    - Auto R On Killable Added 
-    - Anti Dash Added  
-]],
     ["Draven"] = [[Draven v0.1
     - Initial Release
     - Auto Catch Added 
