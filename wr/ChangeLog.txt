@@ -1,0 +1,6 @@
+v0.3
+- Draven Axe Catching Improved (Should be much better now)
+- Darius and Pantheon added (Per request of @Axall)
+- Various bugfixes
+From now on new updates will be shown much clearer as well ingame
+(it will show a text onScreen telling u to reload to complete the update)
