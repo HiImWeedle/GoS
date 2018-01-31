@@ -2,6 +2,7 @@ _G.WR_CHANGELOG = {
     ["Global"] = [[ChangeLog
     - Added Pantheon and Darius 
     - Draven updated 
+    - Various bugfixes
     
 ]],
     ["Ashe"] = [[Ashe v0.1
