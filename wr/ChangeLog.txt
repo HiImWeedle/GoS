@@ -1,6 +1,15 @@
+v0.2 
+- Some bugfixes 
+- Riven Combo and TF cardPicker fixed
+
 v0.3 
 - Draven Axe Catching Improved (Should be much better now)
 - Darius and Pantheon added (Per request of @Axall)
 - Various bugfixes
 From now on new updates will be shown much clearer as well ingame
 (it will show a text onScreen telling u to reload to complete the update)
+
+v0.4
+- EXT doesnt crash after games anymore (Except Ashe, will be fixed soon)
+- Fixed a bug that was causing scripts not to execute properly, all champs should be smoother now (Thanks @ARojnic for reporting)
+- Lots of improvements on Vayne and new condemn logic  (Everything should work now)
