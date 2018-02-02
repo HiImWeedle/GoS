@@ -1,0 +1,71 @@
+_G.WR_CHANGELOG = {
+    ["Global"] = [[ChangeLog
+    - New/Improved Vayne Condemn Logics
+    - Crash Fixes for EXT after game end
+    - Various bugfixes
+    
+]],
+    ["Ashe"] = [[Ashe v0.1
+    - Initial Release
+    - Q Auto Reset Added
+    - E on Vision Lost Added 
+    - R for TF/Duel Added 
+]],
+    ["Corki"] = [[Corki v0.1
+    - Initial Release
+    - R Only On Immobile
+    - Q/E Spell Weaving Added 
+]],
+    ["Darius"] = [[Darius v0.1
+    - Initial Release
+    - Q Position Helper
+    - W Auto Attack Reset
+    - Auto Ult When Killable
+]],    
+    ["Draven"] = [[Draven v0.2
+    - Auto Catch Improved
+    - AntiGapCloser Added
+    - R Killable Added
+]],
+    ["Jax"] = [[Jax v0.1
+    - Initial Release
+    - Ward Jump Added 
+    - Combo/Flee Added
+    - W Auto Reset Added 
+]],
+    ["Kayle"] = [[Kayle v0.1
+    - Initial Release
+    - Auto Heal/Ult Added 
+    - Combo/Flee Added  
+]],
+    ["Pantheon"] = [[Pantheon v0.1
+    - Initial Release 
+    - Auto Q Harass
+    - Full Combo
+]],
+    ["Riven"] = [[Riven v0.2
+    - Combo, Harass and Flee Added 
+    - Combo Fixed    
+    - R on Killable Added 
+]],
+    ["Teemo"] = [[Teemo v0.1
+    - Initial Release
+    - Auto Blind on Melee Range 
+    - Auto R on Dash  
+]],
+    ["TwistedFate"] = [[TwistedFate v0.2
+    - Gold Card on Ult 
+    - Auto Q on Immobile
+    - Fixed CardPicker
+]],
+    ["Twitch"] = [[Twitch v0.1
+    -Initial Release
+    -W, E and R usage
+]],
+    ["Vayne"] = [[Vayne v0.2
+    - New/Improved Condemn Logic
+    - Prestigious Auto Stun Added 
+    - Prestigious Tumble Added
+    - Anti Gap Closer Added  
+]]
+}
