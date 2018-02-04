@@ -13,3 +13,8 @@ v0.4
 - EXT doesnt crash after games anymore (Except Ashe, will be fixed soon)
 - Fixed a bug that was causing scripts not to execute properly, all champs should be smoother now (Thanks @ARojnic for reporting)
 - Lots of improvements on Vayne and new condemn logic  (Everything should work now)
+
+v0.5 
+- Ezreal Added (Per request of @streamz) 
+- A lot of bugfixes 
+- New Pred added (Will recieve 3 more updates) 
