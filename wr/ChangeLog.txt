@@ -18,3 +18,13 @@ v0.5
 - Ezreal Added (Per request of @streamz) 
 - A lot of bugfixes 
 - New Pred added (Will recieve 3 more updates) 
+
+v0.6
+- Darius Combo Fixed
+- Riven Rework
+- Vayne Tumble Fixed
+- Corki Rework
+- Lucian Added
+- Syndra Added
+- Blitzcrank Added
+- small Improvements
