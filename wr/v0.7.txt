@@ -1,0 +1,94 @@
+_G.WR_CHANGELOG = {
+    ["Global"] = [[ChangeLog
+    - Darius Updated 
+    - Orianna Added
+    - Jhin Added 
+    - Lucian Added autoHarrass and extended Q 
+    - Various Bugfixes
+    
+]],
+    ["Ashe"] = [[Ashe v0.1
+    - Initial Release
+    - Q Auto Reset Added
+    - E on Vision Lost Added 
+    - R for TF/Duel Added 
+]],
+    ["Blitzcrank"] = [[Blitzcrank v0.1
+    - Initial Release
+]],
+    ["Corki"] = [[Corki v0.2
+    - Reworked 
+    - Added lots of functions 
+]],
+    ["Darius"] = [[Darius v0.3
+    - Added Item Usage(Tiamat, both Hydras and Youmuus)
+    - Fixed W bug
+    - Combo logic upgraded
+]],    
+    ["Draven"] = [[Draven v0.2
+    - Auto Catch Improved
+    - AntiGapCloser Added
+    - R Killable Added
+]],
+    ["Ezreal"] = [[Ezreal v0.1 
+    - Initial Release
+    - SpellWeaving Q, W 
+    - R to KS between 1500 - 2000 range 
+    - BaseUlt and more R options soon after pred update
+]],
+    ["Jax"] = [[Jax v0.1
+    - Initial Release
+    - Ward Jump Added 
+    - Combo/Flee Added
+    - W Auto Reset Added 
+]],
+    ["Jhin"] = [[Jhin v0.1 
+    - Initial Release 
+]],
+    ["Kayle"] = [[Kayle v0.1
+    - Initial Release
+    - Auto Heal/Ult Added 
+    - Combo/Flee Added  
+]],
+    ["Lucian"] = [[Lucian v0.2 
+    - Added AutoHarass
+    - Added Extended Q 
+]],
+    ["Orianna"] = [[Orianna v0.1 
+    - Initial Release 
+]],
+    ["Pantheon"] = [[Pantheon v0.1
+    - Initial Release 
+    - Auto Q Harass
+    - Full Combo
+]],
+    ["Riven"] = [[Riven v0.3
+    - Reworked 
+    - Combo, Harass and Flee Added 
+    - Combo Fixed    
+    - R on Killable Added 
+]],
+    ["Syndra"] = [[Syndra v0.1 
+    - Initial Release 
+]], 
+    ["Teemo"] = [[Teemo v0.1
+    - Initial Release
+    - Auto Blind on Melee Range 
+    - Auto R on Dash  
+]],
+    ["TwistedFate"] = [[TwistedFate v0.2
+    - Gold Card on Ult 
+    - Auto Q on Immobile
+    - Fixed CardPicker
+]],
+    ["Twitch"] = [[Twitch v0.1
+    -Initial Release
+    -W, E and R usage
+]],
+    ["Vayne"] = [[Vayne v0.3
+    - New/Improved Condemn Logic
+    - Prestigious Auto Stun Added 
+    - Prestigious Tumble Added
+    - Anti Gap Closer Added  
+]]
+}
