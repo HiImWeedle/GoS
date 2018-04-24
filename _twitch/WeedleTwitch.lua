@@ -4,7 +4,8 @@
 		Actual script can be found in Common/RATIRL.lua
 	--]]
 
-	local id              = myHero.networkID
+	local open            = io.open 
+	local time            = os.time()
 	local common      	  = COMMON_PATH
 	local save       	  = "ExtW.save"
 	local ratirl     	  = "RATIRL.lua"
@@ -17,21 +18,21 @@
 	end
 
 	local function UpdateSave()
-		local save_file   = io.open(common..save, "w")
-		save_file:write(id)
+		local save_file   = open(common..save, "w")
+		save_file:write(time)
 		save_file:close()
 	end
 
 	local function CheckSave()
-		local save_file, save_id
+		local save_file, save_time
 		if not FileExist(common..save) then 
 			DownloadFile(ratirl_url, common..ratirl)
 			UpdateSave()
 		else
-			save_file      = io.open(common..save)
-			save_id        = save_file:read()
+			save_file      = open(common..save)
+			save_time      = save_file:read()
 			save_file:close()		
-			if id ~= tonumber(save_id) then 
+			if time - tonumber(save_time) >= 300 then 
 				DownloadFile(ratirl_url, common..ratirl)
 				UpdateSave()
 			end
