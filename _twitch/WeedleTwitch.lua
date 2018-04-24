@@ -31,7 +31,7 @@
 			save_file      = io.open(common..save)
 			save_id        = save_file:read()
 			save_file:close()		
-			if id ~= save_check then 
+			if id ~= tonumber(save_id) then 
 				DownloadFile(ratirl_url, common..ratirl)
 				UpdateSave()
 			end
