@@ -43,4 +43,4 @@
 	end
 
 	CheckSave()
-	require(ratirl)
+	require("RATIRL")
