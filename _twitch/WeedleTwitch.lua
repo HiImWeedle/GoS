@@ -1,7 +1,7 @@
 
 	--[[
 		WeedleTwitch.lua
-		Actual script can be found in Common/RATIRL.lua
+		U can find the script code in Common/RATIRL.lua
 	--]]
 
 	local open            = io.open 
